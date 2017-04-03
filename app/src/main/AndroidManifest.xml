@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sona.opticalillusions">
+    <!--android:versionCode="1"
+    android:versionName="1.0" ^ -->
+
+    <!--<uses-sdk
+        android:minSdkVersion="16"
+        android:targetSdkVersion="25" />
+     -->
 
     <application
         android:allowBackup="true"
@@ -19,6 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--
+        <service android:name="test"> </service>
+        <receiver android:name="test"></receiver>
+        <provider android:name="test" android:authorities="test"></provider>
+        -->
+
     </application>
 
 </manifest>
