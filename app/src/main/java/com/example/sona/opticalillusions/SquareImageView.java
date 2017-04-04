@@ -1,8 +1,7 @@
-package com.example.sona.opticalillusions;
+/*package com.example.sona.opticalillusions;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 public class SquareImageView extends android.support.v7.widget.AppCompatImageView {
     public SquareImageView(Context context) {
@@ -22,4 +21,4 @@ public class SquareImageView extends android.support.v7.widget.AppCompatImageVie
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         setMeasuredDimension(getMeasuredWidth(), getMeasuredWidth()); //Snap to width
     }
-}
+}*/

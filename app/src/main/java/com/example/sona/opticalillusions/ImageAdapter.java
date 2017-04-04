@@ -6,15 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
+
+import com.example.sona.opticalillusions.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageAdapter extends BaseAdapter {
-    private final List<Item> mItems = new ArrayList<>();
+final class ImageAdapter extends BaseAdapter {
+    private final List<Item> mItems = new ArrayList<Item>();
     private final LayoutInflater mInflater;
 
-    ImageAdapter(Context context) {
+    public ImageAdapter(Context context) {
         mInflater = LayoutInflater.from(context);
 
         mItems.add(new Item("Red",       R.drawable.thumbcafewall));
@@ -24,6 +26,7 @@ public class ImageAdapter extends BaseAdapter {
         mItems.add(new Item("Green",     R.drawable.thumbhering));
         mItems.add(new Item("Cyan",      R.drawable.thumbhermanngrid))*/
     }
+
 
     @Override
     public int getCount() {
@@ -41,24 +44,21 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = convertView;
+    public View getView(int i, View view, ViewGroup viewGroup) {
+        View v = view;
         ImageView picture;
-        TextView name;
 
         if (v == null) {
-            v = mInflater.inflate(R.layout.grid_item, parent, false);
+            v = mInflater.inflate(R.layout.grid_item, viewGroup, false);
             v.setTag(R.id.picture, v.findViewById(R.id.picture));
-            v.setTag(R.id.text, v.findViewById(R.id.text));
         }
 
         picture = (ImageView) v.getTag(R.id.picture);
-        name = (TextView) v.getTag(R.id.text);
 
-        Item item = getItem(position);
+
+        Item item = getItem(i);
 
         picture.setImageResource(item.drawableId);
-        name.setText(item.name);
 
         return v;
     }

@@ -3,4 +3,5 @@
     <item name="gridView" type="id">gridView</item>
     <item name="buttonStart" type="id">buttonStart</item>
     <item name="buttonInfo" type="id">buttonInfo</item>
+    <item name="picture" type="id">picture</item>
 </resources>
