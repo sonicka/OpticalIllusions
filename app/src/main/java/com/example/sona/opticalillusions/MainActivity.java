@@ -14,6 +14,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity{
 
     Button startButton;
+    Button infoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +25,17 @@ public class MainActivity extends AppCompatActivity{
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(MainActivity.this, GridViewActivity.class));
+                startActivity(new Intent(MainActivity.this, IllusionsGridActivity.class));
             }
         });
-        //Here MainActivity.this is a Current Class Reference (context)
+        infoButton = (Button)findViewById(R.id.buttonInfo);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, InfoActivity.class));
+            }
+        });
     }
+
+
 }

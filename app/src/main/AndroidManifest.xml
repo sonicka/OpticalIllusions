@@ -16,7 +16,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar">
+        android:theme="@style/Theme.AppCompat">
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -28,27 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".GridViewActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/illusions"
-            android:theme="@style/FullscreenTheme"></activity>
-
-        <!--
-          <activity
-              android:name=".FullscreenActivity"
-              android:configChanges="orientation|keyboardHidden|screenSize"
-              android:label="@string/app_name"
-              android:theme="@style/FullscreenTheme">
-              <intent-filter>
-                  <action android:name="android.intent.action.MAIN" />
-
-                  <category android:name="android.intent.category.LAUNCHER" />
-
-              </intent-filter>
-          </activity>
-        -->
-
 
         <!--
         <service android:name="test"> </service>
@@ -58,7 +37,13 @@
 
         <activity
             android:name=".IllusionsGridActivity"
-            android:label="@string/title_activity_illusions_grid"></activity>
+            android:label="@string/title_activity_illusions_grid" />
+        <activity
+            android:name=".InfoActivity"
+            android:label="@string/title_activity_info" />
+        <activity android:name=".ImageAdapter" />
+        <activity android:name=".IllusionGridAcitivity" />
+        <activity android:name=".SquareImageView"></activity>
     </application>
 
 </manifest>

@@ -5,12 +5,10 @@
     <string name="start">Start</string>
     <string name="info">Info</string>
 
-
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_illusions_grid">IllusionsGridActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_illusions_grid">Illusions Preview</string>
+    <string name="title_activity_info">About</string>
+    <string name="title_favourites">Favourites</string>
+    <string name="title_categories">Categories</string>
+    <string name="title_search">Search</string>
 
 </resources>
