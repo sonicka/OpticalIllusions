@@ -11,19 +11,19 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.02"
         app:srcCompat="@drawable/main_logo" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonStart"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:text="Start" />
+        android:text="@string/start"
+       />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonInfo"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.02"
-        android:text="Info" />
+        android:text="@string/info" />
 </LinearLayout>

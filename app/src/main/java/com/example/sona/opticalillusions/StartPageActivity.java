@@ -1,17 +1,17 @@
 package com.example.sona.opticalillusions;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 /**
  * Created by Soňa on 04-Apr-17.
  */
 
-public class MainActivity extends AppCompatActivity{
+public class StartPageActivity extends Activity {
 
     Button startButton;
 
@@ -21,10 +21,10 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
 
         startButton = (Button)findViewById(R.id.buttonStart);
-        startButton.setOnClickListener(new View.OnClickListener() {
+        startButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //startActivity(new Intent(MainActivity.this, GridViewActivity.class));
+                //startActivity(new Intent(StartPageActivity.this, GridViewActivity.class));
             }
         });
         //Here MainActivity.this is a Current Class Reference (context)

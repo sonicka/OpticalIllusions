@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="gridView" type="id">gridView</item>
+    <item name="buttonStart" type="id">buttonStart</item>
+    <item name="buttonInfo" type="id">buttonInfo</item>
+</resources>
