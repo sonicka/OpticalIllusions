@@ -43,7 +43,8 @@
             android:label="@string/title_activity_info" />
         <activity android:name=".ImageAdapter" />
         <activity android:name=".IllusionGridAcitivity" />
-        <activity android:name=".SquareImageView"></activity>
+        <activity android:name=".SquareImageView" />
+        <activity android:name=".IllusionsCategoriesActivity"></activity>
     </application>
 
 </manifest>
