@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+
+import java.util.ArrayList;
 
 /**
  * Created by Soňa on 04-Apr-17.

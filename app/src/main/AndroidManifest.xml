@@ -20,7 +20,6 @@
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="none"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,10 +40,11 @@
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info" />
-        <activity android:name=".ImageAdapter" />
-        <activity android:name=".IllusionGridAcitivity" />
-        <activity android:name=".SquareImageView" />
-        <activity android:name=".IllusionsCategoriesActivity"></activity>
+        <activity android:name=".IllusionsListActivity"
+            android:label="Categories"
+            android:theme="@style/Theme.AppCompat"/>
+        <activity android:name=".FavouritesActivity"
+            android:label="Favourite Illusions"/>
     </application>
 
 </manifest>

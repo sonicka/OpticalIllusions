@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="gridView" type="id">gridView</item>
+    <item name="listView" type="id">listView</item>
     <item name="bottomNavigation" type="id">bottomNavigation</item>
     <item name="buttonStart" type="id">buttonStart</item>
     <item name="buttonInfo" type="id">buttonInfo</item>
+    <item name="buttonFavourites" type="id">buttonFavourites</item>
+    <item name="buttonSwitchToList" type="id">buttonSwitchToList</item>
+    <item name="buttonSearch" type="id">buttonSearch</item>
     <item name="picture" type="id">picture</item>
-    <item name="listView" type="id">listView</item>
+    <item name="gridView2" type="id">gridView2</item>
 </resources>
