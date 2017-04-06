@@ -7,7 +7,9 @@
     <item name="buttonInfo" type="id">buttonInfo</item>
     <item name="buttonFavourites" type="id">buttonFavourites</item>
     <item name="buttonSwitchToList" type="id">buttonSwitchToList</item>
+    <item name="buttonSwitchToGris" type="id">buttonSwitchToGrid</item>
     <item name="buttonSearch" type="id">buttonSearch</item>
+    <item name="buttonRemove" type="id">buttonRemove</item>
     <item name="picture" type="id">picture</item>
     <item name="gridView2" type="id">gridView2</item>
 </resources>

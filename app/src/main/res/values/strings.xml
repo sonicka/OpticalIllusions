@@ -7,12 +7,11 @@
 
     <string name="title_activity_illusions_grid">Illusions Preview</string>
     <string name="title_activity_info">About</string>
-    <string name="title_favourites">Favourites</string>
-    <string name="title_categories">Categories</string>
-    <string name="title_search">Search</string>
-    <string name="menu_search">Search</string>
-    <string name="menu_favourites">Favourites</string>
+    <string name="search">Search</string>
+    <string name="remove">Remove</string>
+    <string name="favourites">Favourites</string>
     <string name="menu_change_to_list">Categories</string>
+    <string name="menu_change_to_grid">Pic preview</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
