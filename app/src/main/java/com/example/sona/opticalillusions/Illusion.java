@@ -9,18 +9,22 @@ import android.net.LinkAddress;
 public class Illusion {
     private String name;
     private String id;
-    private Category category;
+    private String category;
     private String description;
     private int picture;
-    private LinkAddress animation;
+    private String animation;
     private IllusionManagerImpl manager;
+
+    public Illusion () {
+
+    }
 
     public Illusion(String name, int picture) {
         this.name = name;
         this.picture = picture;
     }
 
-    public Illusion(String name, String id, Category category, String description, int picture, IllusionManagerImpl manager) {
+    public Illusion(String name, String id, String category, String description, int picture, IllusionManagerImpl manager) {
         this.name = name;
         this.id = id;
         this.category = category;
@@ -29,7 +33,7 @@ public class Illusion {
         this.manager = manager;
     }
 
-    public Illusion(String name, String id, Category category, String description, int picture, LinkAddress animation, IllusionManagerImpl manager) {
+    public Illusion(String name, String id, String category, String description, int picture, String animation, IllusionManagerImpl manager) {
         this.name = name;
         this.id = id;
         this.category = category;
@@ -37,6 +41,15 @@ public class Illusion {
         this.picture = picture;
         this.animation = animation;
         this.manager = manager;
+    }
+
+    public Illusion(String name, String id, String category, String description, int picture, String animation) {
+        this.name = name;
+        this.id = id;
+        this.category = category;
+        this.description = description;
+        this.picture = picture;
+        this.animation = animation;
     }
 
     public String getName() {
@@ -47,6 +60,10 @@ public class Illusion {
         return id;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -55,7 +72,7 @@ public class Illusion {
         return picture;
     }
 
-    public LinkAddress getAnimation() {
+    public String getAnimation() {
         return animation;
     }
 }
