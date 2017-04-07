@@ -1,12 +1,16 @@
-package com.example.sona.opticalillusions;
-import android.graphics.drawable.Drawable;
-import android.net.LinkAddress;
+package com.example.sona.opticalillusions.model;
+
+import com.example.sona.opticalillusions.IllusionManagerImpl;
+
+import java.util.ArrayList;
+
+import io.realm.RealmObject;
 
 /**
- * Created by Soňa on 05-Apr-17.
+ * Created by Soňa on 07-Apr-17.
  */
 
-public class Illusion {
+public class Illusion extends RealmObject {
 
     private int id;
     private String name;
@@ -15,7 +19,6 @@ public class Illusion {
     private int thumbnail;
     private int picture;
     private String animation;
-    private IllusionManagerImpl manager;
 
     public Illusion () {
 
@@ -36,63 +39,74 @@ public class Illusion {
         this.animation = animation;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public int getId() {
         return id;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getThumbnail() {
-        return thumbnail;
-    }
-
-    public int getPicture() {
-        return picture;
-    }
-
-    public String getAnimation() {
-        return animation;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public void setCategory(String category) {
         this.category = category;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getThumbnail() {
+        return thumbnail;
     }
 
     public void setThumbnail(int thumbnail) {
         this.thumbnail = thumbnail;
     }
 
+    public int getPicture() {
+        return picture;
+    }
+
     public void setPicture(int picture) {
         this.picture = picture;
+    }
+
+    public String getAnimation() {
+        return animation;
     }
 
     public void setAnimation(String animation) {
         this.animation = animation;
     }
 
-    public void setManager(IllusionManagerImpl manager) {
-        this.manager = manager;
+
+
+    @Override
+    public String toString() {
+        return "Illusion{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", description='" + description + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", picture=" + picture +
+                ", animation='" + animation + '\'' +
+                '}';
     }
 }
