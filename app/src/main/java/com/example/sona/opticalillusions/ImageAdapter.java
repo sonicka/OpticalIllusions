@@ -6,8 +6,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+
 import java.util.ArrayList;
 import java.util.List;
+
+/**
+ * Created by Soňa on 04-Apr-17.
+ */
 
 final class ImageAdapter extends BaseAdapter {
     private final List<Item> images = new ArrayList<>();

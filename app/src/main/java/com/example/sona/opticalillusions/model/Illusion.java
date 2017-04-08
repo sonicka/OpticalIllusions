@@ -1,9 +1,5 @@
 package com.example.sona.opticalillusions.model;
 
-import com.example.sona.opticalillusions.IllusionManagerImpl;
-
-import java.util.ArrayList;
-
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -23,7 +19,6 @@ public class Illusion extends RealmObject {
     private String animation;
 
     public Illusion () {
-
     }
 
     public Illusion(String name, int picture) {

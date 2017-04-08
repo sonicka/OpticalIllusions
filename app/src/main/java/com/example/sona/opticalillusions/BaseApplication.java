@@ -1,7 +1,6 @@
 package com.example.sona.opticalillusions;
 
 import android.app.Application;
-import android.support.v7.app.AppCompatActivity;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;

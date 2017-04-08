@@ -1,22 +1,19 @@
 package com.example.sona.opticalillusions;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import io.realm.Realm;
-import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
-
 import com.example.sona.opticalillusions.model.Illusion;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 /**
  * Created by Soňa on 04-Apr-17.
@@ -85,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, IllusionsGridActivity.class));
+                startActivity(new Intent(MainActivity.this, IllusionsListActivity.class));
             }
         });
         infoButton = (Button) findViewById(R.id.buttonInfo);
@@ -102,50 +99,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("DATABASE", "<<<<<<DB DOES NOT EXIST BOOOO>>>>>");
         }
     }
-
-    //private void addToDb (final Illusion illusion) {
-        //illusion = realm.copyToRealm(illusion);
-//        realm.executeTransactionAsync(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm bgRealm) {
-//                illusion = bgRealm.createObject(Illusion.class);
-//
-//            }
-//        }, new Realm.Transaction.OnSuccess() {
-//            @Override
-//            public void onSuccess() {
-//                Log.v("DATABASE", "OBJECT INSERTED");
-//            }
-//        }, new Realm.Transaction.OnError() {
-//            @Override
-//            public void onError(Throwable error) {
-//                Log.e("DATABASE", error.getMessage());
-//            }
-//        });
-    ///}
-
-//    private void addToDb (String id, String name, String category, String description, String thumbnail, int picture, String animation) {
-//        realm.executeTransactionAsync(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm bgRealm) {
-//                Illusion illusion = bgRealm.createObject(Illusion.class);
-//                illusion.setName("John");
-//                illusion.setDescription("john@corporation.com");
-//            }
-//        }, new Realm.Transaction.OnSuccess() {
-//            @Override
-//            public void onSuccess() {
-//                Log.v("DATABASE", "OBJECT INSERTED");
-//            }
-//        }, new Realm.Transaction.OnError() {
-//            @Override
-//            public void onError(Throwable error) {
-//                Log.e("DATABASE", error.getMessage());
-//            }
-//        });
-//    }
-
-//    private void refreshViews () {
+    //    private void refreshViews () {
 //        RealmResults<Illusion> r = realm.where(Illusion.class).findAll();
 //
 //    }

@@ -12,4 +12,9 @@
     <item name="buttonRemove" type="id">buttonRemove</item>
     <item name="picture" type="id">picture</item>
     <item name="gridView2" type="id">gridView2</item>
+    <item name="tv_grid_item" type="id">tv_grid_item</item>
+    <item name="tv_list_item" type="id">tv_list_item</item>
+    <item name="rv_illusion_list" type="id">rv_illusion_list</item>
+    <item name="rv_illusion_grid" type="id">rv_illusion_grird</item>
+    <item name="tv_view_holder_instance" type="id">view_holder_instance</item>
 </resources>

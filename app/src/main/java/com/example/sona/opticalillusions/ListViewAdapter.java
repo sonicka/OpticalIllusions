@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 /**
@@ -15,10 +14,30 @@ import android.widget.TextView;
 public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ListViewHolder> {
 
     private static final String TAG = ListViewAdapter.class.getSimpleName();
+    final private ListItemClickListener onClickListener;
     private int numberOfListItems;
 
-    public ListViewAdapter(int numberOfListItems) {
+    public interface ListItemClickListener {
+        void onListItemClick (int clickedItemIndex);
+    }
+
+//    private LayoutInflater mInflater;
+//    private Realm mRealm;
+//    private RealmResults<Illusion> mResults;
+//
+//    public ListViewAdapter(Context context, Realm realm, RealmResults<Illusion> results) {
+//        mRealm = realm;
+//        mInflater = LayoutInflater.from(context);
+//        mResults = results;
+//    }
+//
+//    public Illusion getItem(int position) {
+//        return mResults.get(position);
+//    }
+
+    public ListViewAdapter(int numberOfListItems, ListItemClickListener listener) {
         this.numberOfListItems = numberOfListItems;
+        onClickListener = listener;
     }
 
     @Override
@@ -44,17 +63,26 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.ListVi
     }
 
 
-    class ListViewHolder extends RecyclerView.ViewHolder {
+    class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView listItemView;
+        TextView viewHolderIndex;
 
         public ListViewHolder(View itemView) {
             super(itemView);
 
             listItemView = (TextView) itemView.findViewById(R.id.tv_list_item);
+            viewHolderIndex = (TextView) itemView.findViewById(R.id.tv_view_holder_instance);
+            itemView.setOnClickListener(this);
         }
 
         void bind (int listIndex) {
             listItemView.setText(String.valueOf(listIndex));
+        }
+
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            onClickListener.onListItemClick(clickedPosition);
         }
     }
 }
