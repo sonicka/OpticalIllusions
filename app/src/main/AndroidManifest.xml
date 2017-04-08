@@ -40,11 +40,14 @@
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info" />
-        <activity android:name=".IllusionsListActivity"
+        <activity
+            android:name=".IllusionsListActivity"
             android:label="Categories"
-            android:theme="@style/Theme.AppCompat"/>
-        <activity android:name=".FavouritesActivity"
-            android:label="Favourite Illusions"/>
+            android:theme="@style/Theme.AppCompat" />
+        <activity
+            android:name=".FavouritesActivity"
+            android:label="Favourite Illusions" />
+        <activity android:name=".ViewIllusionActivity"></activity>
     </application>
 
 </manifest>

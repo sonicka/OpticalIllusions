@@ -1,5 +1,7 @@
 package com.example.sona.opticalillusions;
 
+import com.example.sona.opticalillusions.model.Illusion;
+
 import java.util.ArrayList;
 
 /**

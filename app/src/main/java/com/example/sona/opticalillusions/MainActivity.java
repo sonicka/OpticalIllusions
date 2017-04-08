@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
                                     oppelkundt, poggendorf, ponzo, rubinvase, verticalhorizontal, zollner};
 
 
-//        for (int i = 0; i<allIllusions.length; i++) {
-//            Log.v("LALA", allIllusions[i].toString());
-//        }
+        for (int i = 0; i<allIllusions.length; i++) {
+            Log.v("LALA", allIllusions[i].toString());
+        }
 
         //Realm database initialization
         Realm.init(this);
@@ -58,25 +58,28 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         realm = Realm.getInstance(config);
 
+
+
         realm.beginTransaction();
         for (int i = 0; i < allIllusions.length; i++) {
 
-            Illusion illusion = realm.createObject(Illusion.class);
-            illusion.setId(allIllusions[i].getId());
+            //Illusion illusion = realm.createObject(Illusion.class, allIllusions[i].getId());
+            Illusion illusion = new Illusion();
             illusion.setName(allIllusions[i].getName());
             illusion.setDescription(allIllusions[i].getDescription());
             illusion.setCategory(allIllusions[i].getCategory());
             illusion.setThumbnail(allIllusions[i].getThumbnail());
             illusion.setPicture(allIllusions[i].getPicture());
             illusion.setAnimation(allIllusions[i].getAnimation());
-            //  realm.copyToRealm(allIllusions[i]);
-            //Log.v("Insertion Check", "added: " + allIllusions[i].toString());
-
+            realm.copyToRealmOrUpdate(illusion);
+            Log.v("Insertion Check", "added: " + allIllusions[i].toString());
         }
         realm.commitTransaction();
 
-        List<Illusion> list = realm.where(Illusion.class).findAll();
-        Log.v("LOL", list.toString());
+
+        RealmResults<Illusion> list = realm.where(Illusion.class).findAll();
+        Log.v("LOL", String.valueOf(list.size()));
+
 
         startButton = (Button) findViewById(R.id.buttonStart);
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -121,26 +124,26 @@ public class MainActivity extends AppCompatActivity {
 //        });
     ///}
 
-    private void addToDb (String id, String name, String category, String description, String thumbnail, int picture, String animation) {
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm bgRealm) {
-                Illusion illusion = bgRealm.createObject(Illusion.class);
-                illusion.setName("John");
-                illusion.setDescription("john@corporation.com");
-            }
-        }, new Realm.Transaction.OnSuccess() {
-            @Override
-            public void onSuccess() {
-                Log.v("DATABASE", "OBJECT INSERTED");
-            }
-        }, new Realm.Transaction.OnError() {
-            @Override
-            public void onError(Throwable error) {
-                Log.e("DATABASE", error.getMessage());
-            }
-        });
-    }
+//    private void addToDb (String id, String name, String category, String description, String thumbnail, int picture, String animation) {
+//        realm.executeTransactionAsync(new Realm.Transaction() {
+//            @Override
+//            public void execute(Realm bgRealm) {
+//                Illusion illusion = bgRealm.createObject(Illusion.class);
+//                illusion.setName("John");
+//                illusion.setDescription("john@corporation.com");
+//            }
+//        }, new Realm.Transaction.OnSuccess() {
+//            @Override
+//            public void onSuccess() {
+//                Log.v("DATABASE", "OBJECT INSERTED");
+//            }
+//        }, new Realm.Transaction.OnError() {
+//            @Override
+//            public void onError(Throwable error) {
+//                Log.e("DATABASE", error.getMessage());
+//            }
+//        });
+//    }
 
 //    private void refreshViews () {
 //        RealmResults<Illusion> r = realm.where(Illusion.class).findAll();

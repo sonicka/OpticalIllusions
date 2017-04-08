@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.sona.opticalillusions.model.Illusion;
+
 import java.util.ArrayList;
 
 import static com.example.sona.opticalillusions.R.id.listView;
