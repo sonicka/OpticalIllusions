@@ -31,22 +31,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        allIllusions = new ArrayList<>();
-//        allIllusions.add(cafewall); allIllusions.add(colordiff1); allIllusions.add(colordiff2); allIllusions.add(ebbinghaus);
-//        allIllusions.add(hering); allIllusions.add(hermanngrid); allIllusions.add(illusorycontours); allIllusions.add(impossiblestairs);
-//        allIllusions.add(impossibletriangle); allIllusions.add(jastrow); allIllusions.add(motion1); allIllusions.add(motion2);
-//        allIllusions.add(mullerlyer); allIllusions.add(neckercube); allIllusions.add(oppelkundt); allIllusions.add(poggendorf);
-//        allIllusions.add(ponzo); allIllusions.add(rubinvase); allIllusions.add(verticalhorizontal); allIllusions.add(zollner);
-
-        Illusion[] allIllusions = {cafewall, colordiff1, colordiff2, ebbinghaus, hering, hermanngrid, illusorycontours,
-                                    impossiblestairs, impossibletriangle, jastrow, motion1, motion2, mullerlyer, neckercube,
-                                    oppelkundt, poggendorf, ponzo, rubinvase, verticalhorizontal, zollner};
-
-
-        for (int i = 0; i<allIllusions.length; i++) {
-            Log.v("LALA", allIllusions[i].toString());
-        }
-
         //Realm database initialization
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration
@@ -55,28 +39,32 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         realm = Realm.getInstance(config);
 
-
-
         realm.beginTransaction();
-        for (int i = 0; i < allIllusions.length; i++) {
-
-            //Illusion illusion = realm.createObject(Illusion.class, allIllusions[i].getId());
-            Illusion illusion = new Illusion();
-            illusion.setName(allIllusions[i].getName());
-            illusion.setDescription(allIllusions[i].getDescription());
-            illusion.setCategory(allIllusions[i].getCategory());
-            illusion.setThumbnail(allIllusions[i].getThumbnail());
-            illusion.setPicture(allIllusions[i].getPicture());
-            illusion.setAnimation(allIllusions[i].getAnimation());
-            realm.copyToRealmOrUpdate(illusion);
-            Log.v("Insertion Check", "added: " + allIllusions[i].toString());
-        }
+        realm.copyToRealmOrUpdate(cafewall);
+        realm.copyToRealmOrUpdate(colordiff1);
+        realm.copyToRealmOrUpdate(colordiff2);
+        realm.copyToRealmOrUpdate(ebbinghaus);
+        realm.copyToRealmOrUpdate(hering);
+        realm.copyToRealmOrUpdate(hermanngrid);
+        realm.copyToRealmOrUpdate(illusorycontours);
+        realm.copyToRealmOrUpdate(impossiblestairs);
+        realm.copyToRealmOrUpdate(impossibletriangle);
+        realm.copyToRealmOrUpdate(jastrow);
+        realm.copyToRealmOrUpdate(motion1);
+        realm.copyToRealmOrUpdate(motion2);
+        realm.copyToRealmOrUpdate(mullerlyer);
+        realm.copyToRealmOrUpdate(neckercube);
+        realm.copyToRealmOrUpdate(oppelkundt);
+        realm.copyToRealmOrUpdate(poggendorf);
+        realm.copyToRealmOrUpdate(ponzo);
+        realm.copyToRealmOrUpdate(rubinvase);
+        realm.copyToRealmOrUpdate(verticalhorizontal);
+        realm.copyToRealmOrUpdate(zollner);
         realm.commitTransaction();
 
-
         RealmResults<Illusion> list = realm.where(Illusion.class).findAll();
-        Log.v("LOL", String.valueOf(list.size()));
-
+        Log.v("ADDED", String.valueOf(list.size()));
+        Log.v("ADDED", list.toString());
 
         startButton = (Button) findViewById(R.id.buttonStart);
         startButton.setOnClickListener(new View.OnClickListener() {

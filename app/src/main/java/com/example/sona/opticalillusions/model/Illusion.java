@@ -24,6 +24,9 @@ public class Illusion extends RealmObject {
     public Illusion(String name, int picture) {
         this.name = name;
         this.picture = picture;
+
+    }  public Illusion(String name) {
+        this.name = name;
     }
 
     public Illusion(int id, String name, String category, String description, int thumbnail, int picture, String animation) {
