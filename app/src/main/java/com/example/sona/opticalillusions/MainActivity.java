@@ -22,6 +22,7 @@ import io.realm.RealmResults;
 public class MainActivity extends AppCompatActivity {
 
     //ArrayList<Illusion> allIllusions;
+    private RealmHelper realmHelper;
     private Realm realm;
     Button startButton;
     Button infoButton;
@@ -39,28 +40,33 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         realm = Realm.getInstance(config);
 
-        realm.beginTransaction();
-        realm.copyToRealmOrUpdate(cafewall);
-        realm.copyToRealmOrUpdate(colordiff1);
-        realm.copyToRealmOrUpdate(colordiff2);
-        realm.copyToRealmOrUpdate(ebbinghaus);
-        realm.copyToRealmOrUpdate(hering);
-        realm.copyToRealmOrUpdate(hermanngrid);
-        realm.copyToRealmOrUpdate(illusorycontours);
-        realm.copyToRealmOrUpdate(impossiblestairs);
-        realm.copyToRealmOrUpdate(impossibletriangle);
-        realm.copyToRealmOrUpdate(jastrow);
-        realm.copyToRealmOrUpdate(motion1);
-        realm.copyToRealmOrUpdate(motion2);
-        realm.copyToRealmOrUpdate(mullerlyer);
-        realm.copyToRealmOrUpdate(neckercube);
-        realm.copyToRealmOrUpdate(oppelkundt);
-        realm.copyToRealmOrUpdate(poggendorf);
-        realm.copyToRealmOrUpdate(ponzo);
-        realm.copyToRealmOrUpdate(rubinvase);
-        realm.copyToRealmOrUpdate(verticalhorizontal);
-        realm.copyToRealmOrUpdate(zollner);
-        realm.commitTransaction();
+        realmHelper = new RealmHelper(realm);
+        realmHelper.save(cafewall);
+        realmHelper.save(colordiff1);
+        realmHelper.save(colordiff2);
+
+//        realm.beginTransaction();
+//        realm.copyToRealmOrUpdate(cafewall);
+//        realm.copyToRealmOrUpdate(colordiff1);
+//        realm.copyToRealmOrUpdate(colordiff2);
+//        realm.copyToRealmOrUpdate(ebbinghaus);
+//        realm.copyToRealmOrUpdate(hering);
+//        realm.copyToRealmOrUpdate(hermanngrid);
+//        realm.copyToRealmOrUpdate(illusorycontours);
+//        realm.copyToRealmOrUpdate(impossiblestairs);
+//        realm.copyToRealmOrUpdate(impossibletriangle);
+//        realm.copyToRealmOrUpdate(jastrow);
+//        realm.copyToRealmOrUpdate(motion1);
+//        realm.copyToRealmOrUpdate(motion2);
+//        realm.copyToRealmOrUpdate(mullerlyer);
+//        realm.copyToRealmOrUpdate(neckercube);
+//        realm.copyToRealmOrUpdate(oppelkundt);
+//        realm.copyToRealmOrUpdate(poggendorf);
+//        realm.copyToRealmOrUpdate(ponzo);
+//        realm.copyToRealmOrUpdate(rubinvase);
+//        realm.copyToRealmOrUpdate(verticalhorizontal);
+//        realm.copyToRealmOrUpdate(zollner);
+//        realm.commitTransaction();
 
         RealmResults<Illusion> list = realm.where(Illusion.class).findAll();
         Log.v("ADDED", String.valueOf(list.size()));
