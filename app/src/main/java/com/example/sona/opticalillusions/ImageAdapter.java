@@ -1,44 +1,56 @@
 package com.example.sona.opticalillusions;
 
+import android.app.Activity;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.example.sona.opticalillusions.model.Illusion;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Soňa on 04-Apr-17.
  */
 
 final class ImageAdapter extends BaseAdapter {
-    private final List<Item> images = new ArrayList<>();
-    //private final LayoutInflater mInflater;
+    private final ArrayList<Item> listItems = new ArrayList<>();
     private Context context;
+    private AdapterView.OnItemClickListener onClickListener;
 
-    public ImageAdapter(Context c) {
-        context = c;
-        //mInflater = LayoutInflater.from(context);
-
-        images.add(new Item ("Cafe wall", R.drawable.thumbcafewall));
-        images.add(new Item ("Hering", R.drawable.thumbhering));
-        images.add(new Item ("Ebbinghaus", R.drawable.thumbebbinghaus));
-        images.add(new Item ("Color difference 1", R.drawable.thumbcolordifference01));
-        images.add(new Item ("Color difference 2", R.drawable.thumbcolordifference02));
-        images.add(new Item ("Hermann Grid", R.drawable.thumbhermanngrid));
+    public interface GridItemClickListener {
+        void onListItemClick (int clickedItemIndex);
     }
+
+    public ImageAdapter (Context c, ArrayList<Illusion> list, AdapterView.OnItemClickListener listener) {
+        context = c;
+
+        for (Illusion i : list) {
+            listItems.add(new Item(i.getName(), i.getThumbnail()));
+        }
+        this.onClickListener = listener;
+    }
+
+//    public ImageAdapter(Context c, ArrayList<Illusion> list) {
+//        context = c;
+//
+//        for (Illusion i : list) {
+//            listItems.add(new Item(i.getName(), i.getThumbnail()));
+//        }
+//    }
 
     @Override
     public int getCount() {
-        return images.size();
+        return listItems.size();
     }
 
     @Override
     public Item getItem(int i) {
-        return null;
+        return listItems.get(i);
     }
 
     @Override
@@ -47,19 +59,19 @@ final class ImageAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup viewGroup) {
-        ImageView imageView;
-        if (convertView == null) {
-            imageView = new ImageView(context);
-            imageView.setLayoutParams(new GridView.LayoutParams(300, 300));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(20, 20, 20, 20);
-        } else {
-            imageView = (ImageView) convertView;
+    public View getView(int position, View convertView, ViewGroup parent) {
+
+        if(convertView==null){
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            convertView = inflater.inflate(R.layout.illusion_grid_item, parent, false);
         }
 
-        imageView.setImageResource(images.get(position).getDrawableId());
-        return imageView;
+        Item item = listItems.get(position);
+
+        ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_grid_item);
+        imageViewItem.setImageResource(item.drawableId);
+
+        return convertView;
     }
 
     private static class Item {
@@ -75,4 +87,6 @@ final class ImageAdapter extends BaseAdapter {
             return drawableId;
         }
     }
+
+
 }

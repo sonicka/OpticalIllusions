@@ -1,5 +1,6 @@
 package com.example.sona.opticalillusions;
 
+import com.example.sona.opticalillusions.model.FavouriteIllusion;
 import com.example.sona.opticalillusions.model.Illusion;
 
 import java.util.ArrayList;
@@ -28,6 +29,19 @@ public class RealmHelper {
             }
         });
     }
+
+    public void save(final FavouriteIllusion illusion) {
+        if(illusion == null) {
+            throw new IllegalArgumentException("illusion is null");
+        }
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                FavouriteIllusion i = realm.copyToRealmOrUpdate(illusion);
+            }
+        });
+    }
+
     //READ
     public ArrayList<String> retrieve() {
         ArrayList<String> illusionNames = new ArrayList<>();

@@ -44,6 +44,23 @@ public class MainActivity extends AppCompatActivity {
         realmHelper.save(cafewall);
         realmHelper.save(colordiff1);
         realmHelper.save(colordiff2);
+        realmHelper.save(ebbinghaus);
+        realmHelper.save(hering);
+        realmHelper.save(hermanngrid);
+        realmHelper.save(illusorycontours);
+        realmHelper.save(impossiblestairs);
+        realmHelper.save(impossibletriangle);
+        realmHelper.save(jastrow);
+        realmHelper.save(motion1);
+        realmHelper.save(motion2);
+        realmHelper.save(mullerlyer);
+        realmHelper.save(neckercube);
+        realmHelper.save(oppelkundt);
+        realmHelper.save(poggendorf);
+        realmHelper.save(ponzo);
+        realmHelper.save(rubinvase);
+        realmHelper.save(verticalhorizontal);
+        realmHelper.save(zollner);
 
 //        realm.beginTransaction();
 //        realm.copyToRealmOrUpdate(cafewall);

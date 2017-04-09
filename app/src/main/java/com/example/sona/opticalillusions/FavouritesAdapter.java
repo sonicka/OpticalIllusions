@@ -7,25 +7,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.sona.opticalillusions.model.Illusion;
+import com.example.sona.opticalillusions.model.FavouriteIllusion;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 /**
- * Created by Soňa on 05-Apr-17.
+ * Created by Soňa on 09-Apr-17.
  */
 
-public class ListAdapter extends BaseAdapter {
-
+final class FavouritesAdapter extends BaseAdapter {
+    private final ArrayList<Item> listItems = new ArrayList<>();
     private Context context;
-    private ArrayList<Item> listItems = new ArrayList<>();
 
-    public ListAdapter(Context c, ArrayList<Illusion> list) {
+    public FavouritesAdapter(Context c, List<FavouriteIllusion> list) {
         context = c;
 
-        for (Illusion i : list) {
+        for (FavouriteIllusion i : list) {
             listItems.add(new Item(i.getName(), i.getThumbnail()));
         }
     }
@@ -36,12 +36,12 @@ public class ListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
-        return listItems.get(position);
+    public Item getItem(int i) {
+        return listItems.get(i);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(int i) {
         return 0;
     }
 
@@ -50,15 +50,13 @@ public class ListAdapter extends BaseAdapter {
 
         if(convertView==null){
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            convertView = inflater.inflate(R.layout.illusion_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.illusion_grid_item, parent, false);
         }
 
         Item item = listItems.get(position);
 
-        ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_list_item);
-        TextView textViewItem = (TextView) convertView.findViewById(R.id.tv_list_item);
+        ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_grid_item);
         imageViewItem.setImageResource(item.drawableId);
-        textViewItem.setText(item.name);
 
         return convertView;
     }

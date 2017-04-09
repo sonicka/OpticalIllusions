@@ -3,37 +3,64 @@ package com.example.sona.opticalillusions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
+
+import com.example.sona.opticalillusions.model.Illusion;
+
+import java.util.ArrayList;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
+
 /**
  * Created by Soňa on 04-Apr-17.
  */
 
-public class IllusionsGridActivity extends AppCompatActivity implements GridViewAdapter.GridItemClickListener {
+public class IllusionsGridActivity extends AppCompatActivity {
     Button favouritesButton;
     Button switchViewButton;
     Button searchButton;
-    private GridViewAdapter adapter;
-    private static final int NUM_GRID_ITEMS = 100;
-    private RecyclerView view;
+    private ImageAdapter adapter;
+    private GridView gridView;
+    private Realm realm;
+    private ArrayList<Illusion> listIllusions = new ArrayList<>();
+    private AdapterView.OnItemClickListener listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_illusions_grid);
 
-        //gridView = new GridView(this);
-       // gridView = (GridView) findViewById(R.id.gridView);
-       // adapter = new ImageAdapter(this);
-       // gridView.setAdapter(adapter);
-        view = (RecyclerView) findViewById(R.id.rv_illusion_grid);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
-        view.setLayoutManager(layoutManager);
-        view.setHasFixedSize(true);
-        adapter = new GridViewAdapter(NUM_GRID_ITEMS, this);
-        view.setAdapter(adapter);
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        realm = Realm.getInstance(config);
+
+
+        RealmResults<Illusion> list = realm.where(Illusion.class).findAll();
+        Log.v("ROFL", String.valueOf(list.size()));
+
+        for (Illusion i : list) {
+            listIllusions.add(i);
+        }
+
+        gridView = new GridView(this);
+        gridView = (GridView) findViewById(R.id.gv_illusion_grid);
+        adapter = new ImageAdapter(this, listIllusions, listener);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    startActivity(new Intent(IllusionsGridActivity.this, ViewIllusionActivity.class));
+            }
+        });
 
         favouritesButton = (Button)findViewById(R.id.buttonFavourites);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
@@ -58,8 +85,8 @@ public class IllusionsGridActivity extends AppCompatActivity implements GridView
         });*/
     }
 
-    @Override
-    public void onListItemClick(int clickedItemIndex) {
-        startActivity(new Intent(IllusionsGridActivity.this, MainActivity.class));
-    }
+//    @Override
+//    public void onListItemClick(int clickedItemIndex) {
+//        startActivity(new Intent(IllusionsGridActivity.this, MainActivity.class));
+//    }
 }

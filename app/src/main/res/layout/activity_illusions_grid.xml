@@ -3,8 +3,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_illusion_grid"
+    <GridView
+        android:id="@+id/gv_illusion_grid"
         android:layout_width="match_parent"
         android:layout_height="370dp"/>
         <!--android:columnWidth="100dp"-->
