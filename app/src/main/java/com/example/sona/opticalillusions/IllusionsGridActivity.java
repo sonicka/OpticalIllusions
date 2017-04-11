@@ -3,9 +3,7 @@ package com.example.sona.opticalillusions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
@@ -15,21 +13,14 @@ import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
 
 /**
  * Created by Soňa on 04-Apr-17.
  */
 
-public class IllusionsGridActivity extends AppCompatActivity {
-    Button favouritesButton;
-    Button switchViewButton;
-    Button searchButton;
-    private ImageAdapter adapter;
-    private GridView gridView;
-    private Realm realm;
-    private ArrayList<Illusion> listIllusions = new ArrayList<>();
-    private AdapterView.OnItemClickListener listener;
+public class IllusionsGridActivity extends AppCompatActivity /*implements SearchView.OnQueryTextListener */{
+    private Button searchButton;
+    private ImageAdapter imageAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,52 +32,63 @@ public class IllusionsGridActivity extends AppCompatActivity {
                 .Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build();
-        realm = Realm.getInstance(config);
+        Realm realm = Realm.getInstance(config);
 
+        RealmHelper realmHelper = new RealmHelper(realm);
+        ArrayList<Illusion> listIllusions = realmHelper.dbToList(realm.where(Illusion.class).findAll());
 
-        RealmResults<Illusion> list = realm.where(Illusion.class).findAll();
-        Log.v("ROFL", String.valueOf(list.size()));
+        imageAdapter = new ImageAdapter(this, listIllusions);
+        GridView gridView = (GridView) findViewById(R.id.gv_illusion_grid);
+        gridView.setAdapter(imageAdapter);
+        gridView.setOnItemClickListener(new OnIllusionClickListener(this));
 
-        for (Illusion i : list) {
-            listIllusions.add(i);
-        }
-
-        gridView = new GridView(this);
-        gridView = (GridView) findViewById(R.id.gv_illusion_grid);
-        adapter = new ImageAdapter(this, listIllusions, listener);
-        gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    startActivity(new Intent(IllusionsGridActivity.this, ViewIllusionActivity.class));
-            }
-        });
-
-        favouritesButton = (Button)findViewById(R.id.buttonFavourites);
+        Button favouritesButton = (Button) findViewById(R.id.b_favourites);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(IllusionsGridActivity.this, FavouritesActivity.class));
             }
         });
-        switchViewButton = (Button)findViewById(R.id.buttonSwitchToList);
+
+        Button switchViewButton = (Button) findViewById(R.id.b_switch_to_list);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(IllusionsGridActivity.this, IllusionsListActivity.class));
             }
         });
-        /*searchButton = (Button)findViewById(R.id.buttonSearch);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(IllusionsGridActivity.this, .class));
-            }
-        });*/
+
+//        TODO search initialization
+//        SearchView searchView;
+//        SearchManager searchManager = (SearchManager)
+//                getSystemService(Context.SEARCH_SERVICE);
+//        searchMenuItem = menu.findItem(R.id.search);
+//        searchView = (SearchView) new SearchView(R.id.sv_search);
+//
+//        searchView.setSearchableInfo(searchManager.
+//                getSearchableInfo(getComponentName()));
+//        searchView.setSubmitButtonEnabled(true);
+//        searchView.setOnQueryTextListener(this);
+
     }
 
-//    @Override
-//    public void onListItemClick(int clickedItemIndex) {
-//        startActivity(new Intent(IllusionsGridActivity.this, MainActivity.class));
-//    }
+/*    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        imageAdapter.getFilter().filter(newText);
+
+        // use to enable search view popup text
+//        if (TextUtils.isEmpty(newText)) {
+//            friendListView.clearTextFilter();
+//        }
+//        else {
+//            friendListView.setFilterText(newText.toString());
+//        }
+
+        return true;
+    }*/
 }

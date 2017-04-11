@@ -6,30 +6,31 @@
     <ListView
         android:id="@+id/id_list_view"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:descendantFocusability="blocksDescendants" /><!--todo-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/buttonFavourites"
+            android:id="@+id/b_favourites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/favourites" />
 
         <Button
-            android:id="@+id/buttonSwitchToGrid"
+            android:id="@+id/b_switch_to_grid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/menu_change_to_grid" />
 
         <Button
-            android:id="@+id/buttonSearch"
+            android:id="@+id/b_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

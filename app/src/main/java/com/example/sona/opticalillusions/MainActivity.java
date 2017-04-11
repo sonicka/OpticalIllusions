@@ -21,18 +21,13 @@ import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
-    //ArrayList<Illusion> allIllusions;
-    private RealmHelper realmHelper;
     private Realm realm;
-    Button startButton;
-    Button infoButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Realm database initialization
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration
                 .Builder()
@@ -40,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         realm = Realm.getInstance(config);
 
-        realmHelper = new RealmHelper(realm);
+        RealmHelper realmHelper = new RealmHelper(realm);
         realmHelper.save(cafewall);
         realmHelper.save(colordiff1);
         realmHelper.save(colordiff2);
@@ -62,41 +57,16 @@ public class MainActivity extends AppCompatActivity {
         realmHelper.save(verticalhorizontal);
         realmHelper.save(zollner);
 
-//        realm.beginTransaction();
-//        realm.copyToRealmOrUpdate(cafewall);
-//        realm.copyToRealmOrUpdate(colordiff1);
-//        realm.copyToRealmOrUpdate(colordiff2);
-//        realm.copyToRealmOrUpdate(ebbinghaus);
-//        realm.copyToRealmOrUpdate(hering);
-//        realm.copyToRealmOrUpdate(hermanngrid);
-//        realm.copyToRealmOrUpdate(illusorycontours);
-//        realm.copyToRealmOrUpdate(impossiblestairs);
-//        realm.copyToRealmOrUpdate(impossibletriangle);
-//        realm.copyToRealmOrUpdate(jastrow);
-//        realm.copyToRealmOrUpdate(motion1);
-//        realm.copyToRealmOrUpdate(motion2);
-//        realm.copyToRealmOrUpdate(mullerlyer);
-//        realm.copyToRealmOrUpdate(neckercube);
-//        realm.copyToRealmOrUpdate(oppelkundt);
-//        realm.copyToRealmOrUpdate(poggendorf);
-//        realm.copyToRealmOrUpdate(ponzo);
-//        realm.copyToRealmOrUpdate(rubinvase);
-//        realm.copyToRealmOrUpdate(verticalhorizontal);
-//        realm.copyToRealmOrUpdate(zollner);
-//        realm.commitTransaction();
-
         RealmResults<Illusion> list = realm.where(Illusion.class).findAll();
-        Log.v("ADDED", String.valueOf(list.size()));
-        Log.v("ADDED", list.toString());
 
-        startButton = (Button) findViewById(R.id.buttonStart);
+        Button startButton = (Button) findViewById(R.id.buttonStart);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, IllusionsListActivity.class));
+                startActivity(new Intent(MainActivity.this, IllusionsGridActivity.class));
             }
         });
-        infoButton = (Button) findViewById(R.id.buttonInfo);
+        Button infoButton = (Button) findViewById(R.id.buttonInfo);
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
             Log.e("DATABASE", "<<<<<<DB DOES NOT EXIST BOOOO>>>>>");
         }
     }
+
     //    private void refreshViews () {
-//        RealmResults<Illusion> r = realm.where(Illusion.class).findAll();
-//
-//    }
+    //        RealmResults<Illusion> r = realm.where(Illusion.class).findAll();
+    //    }
 
     @Override
     protected void onDestroy() {
@@ -141,5 +111,4 @@ public class MainActivity extends AppCompatActivity {
     Illusion rubinvase          = new Illusion(18, "Rubin vase", "", "", R.drawable.thumb_rubin_vase, R.drawable.rubin_vase, "");
     Illusion verticalhorizontal = new Illusion(19, "Vertical-horizontal illusion", "", "", R.drawable.thumb_vertical_horizontal, R.drawable.vertical_horizontal, "");
     Illusion zollner            = new Illusion(20, "Zollner illusion", "", "", R.drawable.thumb_zollner, R.drawable.zollner, "");
-
 }

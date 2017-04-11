@@ -26,29 +26,30 @@ final class FavouritesAdapter extends BaseAdapter {
         context = c;
 
         for (FavouriteIllusion i : list) {
-            listItems.add(new Item(i.getName(), i.getThumbnail()));
+            listItems.add(new Item(i.getId(), i.getName(), i.getCategory(), i.getDescription(),
+                    i.getThumbnail(), i.getPicture(), i.getAnimation()));
         }
     }
 
     @Override
-    public int getCount() {
+    public int getCount () {
         return listItems.size();
     }
 
     @Override
-    public Item getItem(int i) {
+    public Item getItem ( int i){
         return listItems.get(i);
     }
 
     @Override
-    public long getItemId(int i) {
+    public long getItemId ( int i){
         return 0;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView ( int position, View convertView, ViewGroup parent){
 
-        if(convertView==null){
+        if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.illusion_grid_item, parent, false);
         }
@@ -56,18 +57,8 @@ final class FavouritesAdapter extends BaseAdapter {
         Item item = listItems.get(position);
 
         ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_grid_item);
-        imageViewItem.setImageResource(item.drawableId);
+        imageViewItem.setImageResource(item.thumbnail);
 
         return convertView;
-    }
-
-    private static class Item {
-        public final String name;
-        public final int drawableId;
-
-        Item(String name, int drawableId) {
-            this.name = name;
-            this.drawableId = drawableId;
-        }
     }
 }

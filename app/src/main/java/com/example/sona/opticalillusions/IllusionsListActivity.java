@@ -1,4 +1,5 @@
 package com.example.sona.opticalillusions;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,23 +13,13 @@ import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import io.realm.RealmResults;
-
-//TODO ONITEMCLICKLISTENER
 
 public class IllusionsListActivity extends AppCompatActivity {
 
     private Realm realm;
-    Button favouritesButton;
-    Button switchViewButton;
-    Button searchButton;
+    private Button searchButton;
 
-    private ListView listView;
-    private ListAdapter adapter;
-    ArrayList<Illusion> illusions = new ArrayList<>();
-
-    Illusion cafewall = new Illusion("Cafe wall", R.drawable.cafewall);
-    Illusion hering = new Illusion("Hering illusion", R.drawable.hering);
+    private ArrayList<Illusion> illusions = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,31 +33,29 @@ public class IllusionsListActivity extends AppCompatActivity {
                 .build();
         realm = Realm.getInstance(config);
 
+        RealmHelper realmHelper = new RealmHelper(realm);
+        ArrayList<Illusion> listIllusions = realmHelper.dbToList(realm.where(Illusion.class).findAll());
 
-        RealmResults<Illusion> list = realm.where(Illusion.class).findAll();
+        ListView listView = (ListView) findViewById(R.id.id_list_view);
+        listView.setAdapter(new ListAdapter(this, listIllusions));
+        listView.setOnItemClickListener(new OnIllusionClickListener(this));
 
-        for (Illusion i : list) {
-            illusions.add(i);
-        }
-
-        adapter = new ListAdapter(this, illusions);
-        listView = (ListView) findViewById(R.id.id_list_view);
-        listView.setAdapter(adapter);
-
-        favouritesButton = (Button) findViewById(R.id.buttonFavourites);
+        Button favouritesButton = (Button) findViewById(R.id.b_favourites);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(IllusionsListActivity.this, FavouritesActivity.class));
             }
         });
-        switchViewButton = (Button) findViewById(R.id.buttonSwitchToGrid);
+
+        Button switchViewButton = (Button) findViewById(R.id.b_switch_to_grid);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(IllusionsListActivity.this, IllusionsGridActivity.class));
             }
         });
+
         /*searchButton = (Button)findViewById(R.id.buttonSearch);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +65,7 @@ public class IllusionsListActivity extends AppCompatActivity {
         });*/
     }
 
-    @Override
+    @Override //TODO naco?
     protected void onDestroy() {
         super.onDestroy();
         realm.close();

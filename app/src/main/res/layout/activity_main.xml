@@ -25,6 +25,5 @@
         android:id="@+id/buttonInfo"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.02"
         android:text="@string/info" />
 </LinearLayout>

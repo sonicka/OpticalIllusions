@@ -16,30 +16,53 @@ public class RealmHelper {
 
     private Realm realm;
 
-    public RealmHelper(Realm realm) {
+    RealmHelper(Realm realm) {
         this.realm = realm;
     }
 
-    //WRITE
-    public void save(final Illusion illusion) {
+    void save(final Illusion illusion) {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                Illusion i = realm.copyToRealmOrUpdate(illusion);
+                realm.copyToRealmOrUpdate(illusion);
             }
         });
     }
 
     public void save(final FavouriteIllusion illusion) {
-        if(illusion == null) {
-            throw new IllegalArgumentException("illusion is null");
-        }
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                FavouriteIllusion i = realm.copyToRealmOrUpdate(illusion);
+                realm.copyToRealmOrUpdate(illusion);
             }
         });
+    }
+
+    void saveItem (final Item item) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                FavouriteIllusion i = new FavouriteIllusion(item.id, item.name, item.category, item.description,
+                        item.thumbnail, item.picture, item.animation);
+                realm.copyToRealmOrUpdate(i);
+            }
+        });
+    }
+
+    ArrayList<FavouriteIllusion> dbFavouritesToList (RealmResults<FavouriteIllusion> results) {
+        ArrayList<FavouriteIllusion> list = new ArrayList<>();
+        for (FavouriteIllusion i : results) {
+            list.add(i);
+        }
+        return list;
+    }
+
+    ArrayList<Illusion> dbToList (RealmResults<Illusion> results) {
+        ArrayList<Illusion> list = new ArrayList<>();
+        for (Illusion i : results) {
+            list.add(i);
+        }
+        return list;
     }
 
     //READ

@@ -26,7 +26,8 @@ public class ListAdapter extends BaseAdapter {
         context = c;
 
         for (Illusion i : list) {
-            listItems.add(new Item(i.getName(), i.getThumbnail()));
+            listItems.add(new Item(i.getId(), i.getName(), i.getCategory(), i.getDescription(),
+                    i.getThumbnail(), i.getPicture(), i.getAnimation()));
         }
     }
 
@@ -57,19 +58,9 @@ public class ListAdapter extends BaseAdapter {
 
         ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_list_item);
         TextView textViewItem = (TextView) convertView.findViewById(R.id.tv_list_item);
-        imageViewItem.setImageResource(item.drawableId);
+        imageViewItem.setImageResource(item.thumbnail);
         textViewItem.setText(item.name);
 
         return convertView;
-    }
-
-    private static class Item {
-        public final String name;
-        public final int drawableId;
-
-        Item(String name, int drawableId) {
-            this.name = name;
-            this.drawableId = drawableId;
-        }
     }
 }
