@@ -1,8 +1,8 @@
 package com.example.sona.opticalillusions;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
@@ -18,7 +18,7 @@ import io.realm.RealmConfiguration;
  * Created by Soňa on 04-Apr-17.
  */
 
-public class IllusionsGridActivity extends AppCompatActivity /*implements SearchView.OnQueryTextListener */{
+public class IllusionsGridActivity extends Activity /*implements SearchView.OnQueryTextListener */{
     private Button searchButton;
     private ImageAdapter imageAdapter;
 
@@ -59,7 +59,11 @@ public class IllusionsGridActivity extends AppCompatActivity /*implements Search
         });
 
 //        TODO search initialization
-//        SearchView searchView;
+//          SearchView searchView = (SearchView) findViewById(R.id.sv_search);
+//            searchView = new SearchView(this);
+//          SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//          searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+          //searchView.setIconifiedByDefault(false);
 //        SearchManager searchManager = (SearchManager)
 //                getSystemService(Context.SEARCH_SERVICE);
 //        searchMenuItem = menu.findItem(R.id.search);

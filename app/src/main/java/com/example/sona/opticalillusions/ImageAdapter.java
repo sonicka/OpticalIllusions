@@ -23,7 +23,6 @@ final class ImageAdapter extends BaseAdapter implements Filterable {
     private Context context;
 
     private IllusionFilter illusionFilter;
-    private ArrayList<Illusion> illusionList;
     private ArrayList<Illusion> filteredList;
 
     public ImageAdapter (Context c, ArrayList<Illusion> list) {
@@ -32,7 +31,6 @@ final class ImageAdapter extends BaseAdapter implements Filterable {
             listItems.add(new Item(i.getId(), i.getName(), i.getCategory(), i.getDescription(),
                     i.getThumbnail(), i.getPicture(), i.getAnimation()));
         }
-        this.illusionList = list;
         this.filteredList = list;
     }
 
@@ -87,7 +85,7 @@ final class ImageAdapter extends BaseAdapter implements Filterable {
             FilterResults filterResults = new FilterResults();
             if (constraint != null && constraint.length() > 0) {
                 ArrayList<Illusion> tempList = new ArrayList<>();
-                for (Illusion i : illusionList) {
+                for (Illusion i : filteredList) {
                     if (i.getName().toLowerCase().contains(constraint.toString().toLowerCase())
                             || i.getDescription().toLowerCase().contains(constraint.toString().toLowerCase())
                             || i.getCategory().toLowerCase().contains(constraint.toString().toLowerCase())) {
@@ -97,8 +95,8 @@ final class ImageAdapter extends BaseAdapter implements Filterable {
                 filterResults.count = tempList.size();
                 filterResults.values = tempList;
             } else {
-                filterResults.count = illusionList.size();
-                filterResults.values = illusionList;
+                filterResults.count = filteredList.size();
+                filterResults.values = filteredList;
             }
             return filterResults;
         }

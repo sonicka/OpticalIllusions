@@ -37,21 +37,35 @@
         <activity
             android:name=".IllusionsGridActivity"
             android:label="@string/title_activity_illusions_grid"
-            android:theme="@style/Theme.AppCompat"/>
+            android:theme="@style/Theme.AppCompat">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivity" />
+        </activity>
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info" />
         <activity
             android:name=".IllusionsListActivity"
             android:label="Categories"
-            android:theme="@style/Theme.AppCompat"/>
+            android:theme="@style/Theme.AppCompat">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivity" />
+        </activity>
         <activity
             android:name=".FavouritesActivity"
-            android:label="Favourite Illusions" />
+            android:label="Favourite Illusions">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".SearchableActivity">
+            </meta-data>
+        </activity>
         <activity
             android:name=".ViewIllusionActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".SearchActivity"
+        <activity
+            android:name=".SearchActivity"
             android:launchMode="singleTop">
             <intent-filter >
                 <action android:name="android.intent.action.SEARCH" />

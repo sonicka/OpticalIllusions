@@ -29,12 +29,11 @@
             android:layout_weight="1"
             android:text="@string/menu_change_to_grid" />
 
-        <Button
-            android:id="@+id/b_search"
+        <SearchView
+            android:id="@+id/sv_search_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/search" />
+            android:layout_weight="1" />
     </LinearLayout>
 
 </LinearLayout>

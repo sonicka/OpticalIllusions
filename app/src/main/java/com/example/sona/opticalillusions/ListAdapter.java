@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +19,7 @@ import java.util.ArrayList;
  * Created by Soňa on 05-Apr-17.
  */
 
-public class ListAdapter extends BaseAdapter {
+public class ListAdapter extends BaseAdapter implements Filterable {
 
     private Context context;
     private ArrayList<Item> listItems = new ArrayList<>();
@@ -43,13 +45,13 @@ public class ListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return listItems.indexOf(getItem(position));
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView==null){
+        if (convertView == null){
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.illusion_list_item, parent, false);
         }
@@ -62,5 +64,10 @@ public class ListAdapter extends BaseAdapter {
         textViewItem.setText(item.name);
 
         return convertView;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
     }
 }

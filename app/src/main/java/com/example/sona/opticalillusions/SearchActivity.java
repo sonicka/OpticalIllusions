@@ -1,13 +1,13 @@
 package com.example.sona.opticalillusions;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-public class SearchActivity extends ListActivity {
+public class SearchActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

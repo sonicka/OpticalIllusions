@@ -3,6 +3,7 @@ package com.example.sona.opticalillusions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -53,6 +54,21 @@ public class IllusionsListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(IllusionsListActivity.this, IllusionsGridActivity.class));
+            }
+        });
+
+        SearchView searchView = (SearchView) findViewById(R.id.sv_search_list);
+        final ListAdapter adapter = new ListAdapter(this, illusions);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                adapter.getFilter().filter(newText);
+                return false;
             }
         });
 
