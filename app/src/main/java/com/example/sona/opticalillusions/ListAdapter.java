@@ -33,16 +33,17 @@ public class ListAdapter extends BaseAdapter implements Filterable {
             listItems.add(new Item(i.getId(), i.getName(), i.getCategory(), i.getDescription(),
                     i.getThumbnail(), i.getPicture(), i.getAnimation()));
         }
+        filteredIllusions.addAll(list);
     }
 
     @Override
     public int getCount() {
-        return listItems.size();
+        return filteredIllusions.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return listItems.get(position);
+        return filteredIllusions.get(position);
     }
 
     @Override

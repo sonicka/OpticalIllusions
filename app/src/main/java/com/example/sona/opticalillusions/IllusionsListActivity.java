@@ -18,7 +18,6 @@ import io.realm.RealmConfiguration;
 public class IllusionsListActivity extends AppCompatActivity {
 
     private Realm realm;
-    private Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
