@@ -18,28 +18,30 @@ import java.util.ArrayList;
 
 final class ImageAdapter extends BaseAdapter {
     private final ArrayList<Item> listItems = new ArrayList<>();
+    private ArrayList<Illusion> illusions = new ArrayList<>();
     private Context context;
 
     //private IllusionFilter illusionFilter;
     //private ArrayList<Illusion> filteredList;
 
-    public ImageAdapter (Context c, ArrayList<Illusion> list) {
+    public ImageAdapter (Context c, ArrayList<Illusion> illusions) {
         context = c;
-        for (Illusion i : list) {
-            listItems.add(new Item(i.getId(), i.getName(), i.getCategory(), i.getDescription(),
-                    i.getThumbnail(), i.getPicture(), i.getAnimation()));
-        }
+        this.illusions = illusions;
+//        for (Illusion i : list) {
+//            listItems.add(new Item(i.getId(), i.getName(), i.getCategory(), i.getDescription(),
+//                    i.getThumbnail(), i.getPicture(), i.getAnimation()));
+//        }
         //this.filteredList = list;
     }
 
     @Override
     public int getCount() {
-        return listItems.size();
+        return illusions.size();
     }
 
     @Override
-    public Item getItem(int i) {
-        return listItems.get(i);
+    public Illusion getItem(int i) {
+        return illusions.get(i);
     }
 
     @Override
@@ -55,10 +57,10 @@ final class ImageAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.illusion_grid_item, parent, false);
         }
 
-        Item item = listItems.get(position);
+        Illusion item = illusions.get(position);
 
         ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_grid_item);
-        imageViewItem.setImageResource(item.thumbnail);
+        imageViewItem.setImageResource(item.getThumbnail());
 
         return convertView;
     }

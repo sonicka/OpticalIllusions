@@ -3,15 +3,23 @@ package com.example.sona.opticalillusions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.sona.opticalillusions.model.Illusion;
+
+import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class ViewIllusionActivity extends AppCompatActivity {
+    private ArrayList<Illusion> list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +43,20 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
-        final Item item = (Item) getIntent().getExtras().get("item");
+        final Illusion item = (Illusion) getIntent().getExtras().get("item");
+        list = helper.dbToList(realm.where(Illusion.class).findAll());
+        Log.v("HOHO", String.valueOf(list.size()));
+        Log.v("HOHO", list.toString());
 
         try {
             TextView title = (TextView) findViewById(R.id.tv_title);
-            title.setText(item.name);
+            title.setText(item.getName());
 
             TextView category = (TextView) findViewById(R.id.tv_category);
-            category.setText(item.category);
+            category.setText(item.getCategory());
 
             ImageView imageView = (ImageView) findViewById(R.id.iv_view_illusion);
-            imageView.setImageResource(item.picture);
+            imageView.setImageResource(item.getPicture());
         } catch (NullPointerException e) {
             //TODO
         }
@@ -69,7 +80,20 @@ public class ViewIllusionActivity extends AppCompatActivity {
         addToFavourites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helper.saveItem(item);
+                helper.save(item);
+            }
+        });
+
+        ImageAdapter adapter = new ImageAdapter(this, list);
+        GridView gridView = (GridView) findViewById(R.id.gv_small_preview);
+        gridView.setAdapter(adapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Illusion i = (Illusion) parent.getItemAtPosition(position);
+                Intent intent = new Intent(ViewIllusionActivity.this, ViewIllusionActivity.class);
+                intent.putExtra("item", i);
+                startActivity(intent);
             }
         });
     }

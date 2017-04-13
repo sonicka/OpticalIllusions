@@ -22,33 +22,31 @@ import java.util.ArrayList;
 public class ListAdapter extends BaseAdapter implements Filterable {
 
     private Context context;
-    private ArrayList<Item> listItems = new ArrayList<>();
+    //private ArrayList<Item> listItems = new ArrayList<>();
+    private ArrayList<Illusion> allIllusions = new ArrayList<>();
     private ArrayList<Illusion> filteredIllusions = new ArrayList<>();
     private IllusionFilter filter = new IllusionFilter();
 
     public ListAdapter(Context c, ArrayList<Illusion> list) {
         context = c;
-
-        for (Illusion i : list) {
-            listItems.add(new Item(i.getId(), i.getName(), i.getCategory(), i.getDescription(),
-                    i.getThumbnail(), i.getPicture(), i.getAnimation()));
-        }
-        filteredIllusions.addAll(list);
+        allIllusions = list;
+        filteredIllusions.addAll(allIllusions);
+        getFilter();
     }
 
     @Override
     public int getCount() {
-        return filteredIllusions.size();
+        return allIllusions.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return filteredIllusions.get(position);
+        return allIllusions.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return listItems.indexOf(getItem(position));
+        return allIllusions.indexOf(getItem(position));
     }
 
     @Override
@@ -59,12 +57,12 @@ public class ListAdapter extends BaseAdapter implements Filterable {
             convertView = inflater.inflate(R.layout.illusion_list_item, parent, false);
         }
 
-        Item item = listItems.get(position);
+        Illusion illusion = filteredIllusions.get(position);
 
         ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_list_item);
         TextView textViewItem = (TextView) convertView.findViewById(R.id.tv_list_item);
-        imageViewItem.setImageResource(item.thumbnail);
-        textViewItem.setText(item.name);
+        imageViewItem.setImageResource(illusion.getThumbnail());
+        textViewItem.setText(illusion.getName());
 
         return convertView;
     }

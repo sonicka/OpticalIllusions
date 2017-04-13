@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -37,7 +38,15 @@ public class IllusionsListActivity extends AppCompatActivity {
         final ListAdapter adapter = new ListAdapter(this, listIllusions);
         ListView listView = (ListView) findViewById(R.id.id_list_view);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new OnIllusionClickListener(this));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Illusion i = (Illusion) parent.getItemAtPosition(position);
+                Intent intent = new Intent(IllusionsListActivity.this, ViewIllusionActivity.class);
+                intent.putExtra("item", i);
+                startActivity(intent);
+            }
+        });
 
         Button favouritesButton = (Button) findViewById(R.id.b_favourites);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
