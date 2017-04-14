@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
@@ -30,11 +31,11 @@ public class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, Recyc
     }
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView image;
+        public final CircleImageView image;
 
         public SimpleViewHolder(View view) {
             super(view);
-            image = (ImageView) view.findViewById(R.id.iv_small_preview);
+            image = (CircleImageView) view.findViewById(R.id.iv_small_preview);
         }
     }
 

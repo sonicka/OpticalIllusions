@@ -6,12 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 import android.widget.SearchView;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -35,8 +37,24 @@ public class IllusionsListActivity extends AppCompatActivity {
         RealmHelper realmHelper = new RealmHelper(realm);
         ArrayList<Illusion> listIllusions = realmHelper.dbToList(realm.where(Illusion.class).findAll());
 
-        final ListAdapter adapter = new ListAdapter(this, listIllusions);
-        ListView listView = (ListView) findViewById(R.id.id_list_view);
+        HashMap<String, List<Illusion>> hashMap = new HashMap<>();
+        List<String> headers = new ArrayList<>();
+        headers.add("All Illusions");
+        hashMap.put("All Illusions", listIllusions);
+
+        for (Illusion i : listIllusions) {
+            if (!headers.contains(i.getCategory())) {
+                headers.add(i.getCategory());
+                ArrayList<Illusion> list = new ArrayList<>();
+                list.add(i);
+                hashMap.put(i.getCategory(), list);
+            } else {
+                hashMap.get(i.getCategory()).add(i);
+            }
+        }
+
+        final ListAdapter adapter = new ListAdapter(this, headers, hashMap, listIllusions);
+        ExpandableListView listView = (ExpandableListView) findViewById(R.id.id_list_view);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

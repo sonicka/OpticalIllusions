@@ -31,16 +31,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="20sp"
-            android:adjustViewBounds="true"
-            android:text="TextView" />
+            android:adjustViewBounds="true" />
 
         <TextView
             android:id="@+id/tv_category"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="end"
-            android:textAlignment="gravity"
-            android:text="TextView" />
+            android:textAlignment="gravity"/>
 
     </LinearLayout>
 
@@ -49,12 +47,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:scaleType="centerInside"
-        />
+        android:scaleType="centerInside" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
         android:paddingTop="10dp">
@@ -63,39 +60,26 @@
             android:id="@+id/b_last_viewed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="last viewed" />
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/b_all_illusions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="all illusions" />
+            android:layout_weight="1"/>
 
         <Button
             android:id="@+id/b_to_favourites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="favourite" />
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
     <android.support.v17.leanback.widget.HorizontalGridView
+        android:id="@+id/gv_small_preview"
         android:layout_width="wrap_content"
         android:layout_height="120dp"
-        android:id="@+id/gv_small_preview"
-        android:gravity="bottom"
-        />
-
-
-    <!--<GridView-->
-        <!--android:id="@+id/gv_small_preview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:numColumns="2"-->
-        <!--android:rotation="270" />-->
+        android:gravity="bottom" />
 
 </LinearLayout>

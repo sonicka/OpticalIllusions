@@ -92,23 +92,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     Illusion cafewall           = new Illusion(1, "Cafe wall illusion", "", "", R.drawable.thumb_cafe_wall, R.drawable.cafewall, "");
-    Illusion colordiff1         = new Illusion(2, "Color difference 1", "", "", R.drawable.thumbcolordifference01, R.drawable.colordifference01, "");
-    Illusion colordiff2         = new Illusion(3, "Color difference 2", "", "", R.drawable.thumbcolordifference02, R.drawable.colordifference02, "");
+    Illusion colordiff1         = new Illusion(2, "Color difference 1", "Color Illusions", "", R.drawable.thumbcolordifference01, R.drawable.colordifference01, "");
+    Illusion colordiff2         = new Illusion(3, "Color difference 2", "Color Illusions", "", R.drawable.thumbcolordifference02, R.drawable.colordifference02, "");
     Illusion ebbinghaus         = new Illusion(4, "Ebbinghaus illusion", "", "", R.drawable.thumbebbinghaus, R.drawable.ebbinghaus, "");
-    Illusion hering             = new Illusion(5, "Hering illusion", "", "", R.drawable.thumbhering, R.drawable.hering, "");
+    Illusion hering             = new Illusion(5, "Hering illusion", "Geometric Illusions", "", R.drawable.thumbhering, R.drawable.hering, "");
     Illusion hermanngrid        = new Illusion(6, "Hermann grid illusion", "", "", R.drawable.thumbhermanngrid, R.drawable.hermanngrid, "");
     Illusion illusorycontours   = new Illusion(7, "Illusory contours", "", "", R.drawable.thumb_illusory_contours, R.drawable.illusory_contours01, "");
     Illusion impossiblestairs   = new Illusion(8, "Impossible stairs", "", "", R.drawable.thumb_impossible_stairs, R.drawable.impossible_stairs, "");
     Illusion impossibletriangle = new Illusion(9, "Impossible triangle", "", "", R.drawable.thumb_impossible_triangle, R.drawable.impossible_triangle, "");
-    Illusion jastrow            = new Illusion(10, "Jastrow illusion", "", "", R.drawable.thumb_jastrow, R.drawable.jastrow01, "");
+    Illusion jastrow            = new Illusion(10, "Jastrow illusion", "Geometric Illusions", "", R.drawable.thumb_jastrow, R.drawable.jastrow01, "");
     Illusion motion1            = new Illusion(11, "Motion illusion 1", "", "", R.drawable.thumb_motion1, R.drawable.motion1, "");
     Illusion motion2            = new Illusion(12, "Motion illusion 2", "", "", R.drawable.thumb_motion2, R.drawable.motion2, "");
-    Illusion mullerlyer         = new Illusion(13, "Muller-Lyer illusion", "", "", R.drawable.thumb_muller_lyer, R.drawable.muller_lyer, "");
-    Illusion neckercube         = new Illusion(14, "Necker cube", "", "", R.drawable.thumb_necker_cube, R.drawable.necker_cube, "");
-    Illusion oppelkundt         = new Illusion(15, "Oppel-Kundt illusion", "", "", R.drawable.thumb_oppel_kundt, R.drawable.oppel_kundt, "");
+    Illusion mullerlyer         = new Illusion(13, "Muller-Lyer illusion", "Geometric Illusions", "", R.drawable.thumb_muller_lyer, R.drawable.muller_lyer, "");
+    Illusion neckercube         = new Illusion(14, "Necker cube", "Geometric Illusions", "", R.drawable.thumb_necker_cube, R.drawable.necker_cube, "");
+    Illusion oppelkundt         = new Illusion(15, "Oppel-Kundt illusion", "Geometric Illusions", "", R.drawable.thumb_oppel_kundt, R.drawable.oppel_kundt, "");
     Illusion poggendorf         = new Illusion(16, "Poggendorf illusion", "", "", R.drawable.thumb_poggendorf, R.drawable.poggendorf, "");
-    Illusion ponzo              = new Illusion(17, "Ponzo illusion", "", "", R.drawable.thumb_ponzo, R.drawable.ponzo, "");
+    Illusion ponzo              = new Illusion(17, "Ponzo illusion", "Geometric Illusions", "", R.drawable.thumb_ponzo, R.drawable.ponzo, "");
     Illusion rubinvase          = new Illusion(18, "Rubin vase", "", "", R.drawable.thumb_rubin_vase, R.drawable.rubin_vase, "");
-    Illusion verticalhorizontal = new Illusion(19, "Vertical-horizontal illusion", "", "", R.drawable.thumb_vertical_horizontal, R.drawable.vertical_horizontal, "");
-    Illusion zollner            = new Illusion(20, "Zollner illusion", "", "", R.drawable.thumb_zollner, R.drawable.zollner, "");
+    Illusion verticalhorizontal = new Illusion(19, "Vertical-horizontal illusion", "Geometric Illusions", "", R.drawable.thumb_vertical_horizontal, R.drawable.vertical_horizontal, "");
+    Illusion zollner            = new Illusion(20, "Zollner illusion", "Geometric Illusions", "", R.drawable.thumb_zollner, R.drawable.zollner, "");
 }
