@@ -2,12 +2,11 @@ package com.example.sona.opticalillusions;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,6 +44,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
 
         final Illusion item = (Illusion) getIntent().getExtras().get("item");
         list = helper.dbToList(realm.where(Illusion.class).findAll());
+
         Log.v("HOHO", String.valueOf(list.size()));
         Log.v("HOHO", list.toString());
 
@@ -84,17 +84,22 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
-        ImageAdapter adapter = new ImageAdapter(this, list);
-        GridView gridView = (GridView) findViewById(R.id.gv_small_preview);
-        gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Illusion i = (Illusion) parent.getItemAtPosition(position);
-                Intent intent = new Intent(ViewIllusionActivity.this, ViewIllusionActivity.class);
-                intent.putExtra("item", i);
-                startActivity(intent);
-            }
-        });
+        HorizontalGridView horizontalGridView = (HorizontalGridView) findViewById(R.id.gv_small_preview);
+        GridElementAdapter adapter = new GridElementAdapter(this, realm.where(Illusion.class).findAll());
+        horizontalGridView.setAdapter(adapter);
+
+
+//        ImageAdapter adapter = new ImageAdapter(this, list);
+//        GridView gridView = (GridView) findViewById(R.id.gv_small_preview);
+//        gridView.setAdapter(adapter);
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Illusion i = (Illusion) parent.getItemAtPosition(position);
+//                Intent intent = new Intent(ViewIllusionActivity.this, ViewIllusionActivity.class);
+//                intent.putExtra("item", i);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

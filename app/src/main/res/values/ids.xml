@@ -17,4 +17,5 @@
     <item name="rv_illusion_list" type="id">rv_illusion_list</item>
     <item name="rv_illusion_grid" type="id">rv_illusion_grird</item>
     <item name="tv_view_holder_instance" type="id">view_holder_instance</item>
+    <item name="item_click_support" type="id" />
 </resources>
