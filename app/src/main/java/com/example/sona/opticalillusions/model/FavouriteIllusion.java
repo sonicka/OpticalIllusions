@@ -1,5 +1,8 @@
 package com.example.sona.opticalillusions.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -7,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by Soňa on 08-Apr-17.
  */
 
-public class FavouriteIllusion extends RealmObject{
+public class FavouriteIllusion extends RealmObject implements Parcelable{
     @PrimaryKey
     private int id;
     private String name;
@@ -35,6 +38,28 @@ public class FavouriteIllusion extends RealmObject{
         this.picture = picture;
         this.animation = animation;
     }
+
+    protected FavouriteIllusion(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        category = in.readString();
+        description = in.readString();
+        thumbnail = in.readInt();
+        picture = in.readInt();
+        animation = in.readString();
+    }
+
+    public static final Creator<FavouriteIllusion> CREATOR = new Creator<FavouriteIllusion>() {
+        @Override
+        public FavouriteIllusion createFromParcel(Parcel in) {
+            return new FavouriteIllusion(in);
+        }
+
+        @Override
+        public FavouriteIllusion[] newArray(int size) {
+            return new FavouriteIllusion[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -103,5 +128,21 @@ public class FavouriteIllusion extends RealmObject{
                 ", picture=" + picture +
                 ", animation='" + animation + '\'' +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeString(category);
+        dest.writeString(description);
+        dest.writeInt(thumbnail);
+        dest.writeInt(picture);
+        dest.writeString(animation);
     }
 }

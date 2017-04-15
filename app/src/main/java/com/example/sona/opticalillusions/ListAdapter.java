@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.sona.opticalillusions.model.Illusion;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -25,17 +25,14 @@ public class ListAdapter extends BaseExpandableListAdapter implements Filterable
 
     private Context context;
     private List<String> headerList;
-    private HashMap<String, List<Illusion>> listHashMap;
-    //private ArrayList<Item> listItems = new ArrayList<>();
-    private ArrayList<Illusion> allIllusions = new ArrayList<>();
+    private LinkedHashMap<String, List<Illusion>> listLinkedMap;
     private ArrayList<Illusion> filteredIllusions = new ArrayList<>();
     private IllusionFilter filter = new IllusionFilter();
 
-    public ListAdapter(Context context, List<String> headerList, HashMap<String, List<Illusion>> listHashMap, ArrayList<Illusion> allIllusions) {
+    public ListAdapter(Context context, LinkedHashMap<String, List<Illusion>> listLinkedMap) {
         this.context = context;
-        this.headerList = headerList;
-        this.listHashMap = listHashMap;
-        this.allIllusions = allIllusions;
+        this.headerList = new ArrayList<>(listLinkedMap.keySet());
+        this.listLinkedMap = listLinkedMap;
     }
 
 //    public ListAdapter(Context c, ArrayList<Illusion> list) {
@@ -93,17 +90,30 @@ public class ListAdapter extends BaseExpandableListAdapter implements Filterable
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return listHashMap.get(headerList.get(groupPosition)).size();
+        return listLinkedMap.get(headerList.get(groupPosition)).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return headerList.get(groupPosition);
+        String key = "";
+        switch (groupPosition) {
+            case 0: key = "All Illusions";
+                    break;
+            case 1: key = "3D illusions";
+                    break;
+            case 2: key = "Color Illusions";
+                    break;
+            case 3: key = "Geometric Illusions";
+                    break;
+            case 4: key = "Motion Illusions";
+                    break;
+        }
+        return key;
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return listHashMap.get(headerList.get(groupPosition)).get(childPosition);
+        return listLinkedMap.get(headerList.get(groupPosition)).get(childPosition);
     }
 
     @Override
@@ -141,7 +151,7 @@ public class ListAdapter extends BaseExpandableListAdapter implements Filterable
             convertView = inflater.inflate(R.layout.illusion_list_item, null);
         }
 
-        Illusion illusion = allIllusions.get(childPosition);
+        Illusion illusion = (Illusion) getChild(groupPosition, childPosition);
 
         ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_list_item);
         TextView textViewItem = (TextView) convertView.findViewById(R.id.tv_list_item);
@@ -149,10 +159,6 @@ public class ListAdapter extends BaseExpandableListAdapter implements Filterable
         textViewItem.setText(illusion.getName());
 
         return convertView;
-
-
-
-
     }
 
     @Override

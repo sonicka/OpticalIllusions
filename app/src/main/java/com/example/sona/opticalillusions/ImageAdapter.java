@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 
 final class ImageAdapter extends BaseAdapter {
-    private final ArrayList<Item> listItems = new ArrayList<>();
+    //private final ArrayList<Item> listItems = new ArrayList<>();
     private ArrayList<Illusion> illusions = new ArrayList<>();
     private Context context;
 
@@ -52,7 +52,7 @@ final class ImageAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView==null){
+        if(convertView == null){
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.illusion_grid_item, parent, false);
         }

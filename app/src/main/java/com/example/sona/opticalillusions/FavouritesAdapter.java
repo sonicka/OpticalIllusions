@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 
 import com.example.sona.opticalillusions.model.FavouriteIllusion;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 /**
@@ -19,26 +19,22 @@ import java.util.List;
  */
 
 final class FavouritesAdapter extends BaseAdapter {
-    private final ArrayList<Item> listItems = new ArrayList<>();
+    private ArrayList<FavouriteIllusion> illusions = new ArrayList<>();
     private Context context;
 
-    public FavouritesAdapter(Context c, List<FavouriteIllusion> list) {
+    public FavouritesAdapter(Context c, ArrayList<FavouriteIllusion> illusions) {
         context = c;
-
-        for (FavouriteIllusion i : list) {
-            listItems.add(new Item(i.getId(), i.getName(), i.getCategory(), i.getDescription(),
-                    i.getThumbnail(), i.getPicture(), i.getAnimation()));
-        }
+        this.illusions = illusions;
     }
 
     @Override
     public int getCount () {
-        return listItems.size();
+        return illusions.size();
     }
 
     @Override
-    public Item getItem ( int i){
-        return listItems.get(i);
+    public FavouriteIllusion getItem (int i){
+        return illusions.get(i);
     }
 
     @Override
@@ -54,10 +50,10 @@ final class FavouritesAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.illusion_grid_item, parent, false);
         }
 
-        Item item = listItems.get(position);
+        FavouriteIllusion illusion = illusions.get(position);
 
-        ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_grid_item);
-        imageViewItem.setImageResource(item.thumbnail);
+        CircleImageView imageViewItem = (CircleImageView) convertView.findViewById(R.id.iv_grid_item);
+        imageViewItem.setImageResource(illusion.getThumbnail());
 
         return convertView;
     }

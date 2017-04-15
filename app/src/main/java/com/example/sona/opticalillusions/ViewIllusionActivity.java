@@ -43,6 +43,12 @@ public class ViewIllusionActivity extends AppCompatActivity {
         });
 
         final Illusion item = (Illusion) getIntent().getExtras().get("item");
+
+        //int illusionId = Integer.parseInt((String) getIntent().getExtras().get("id"));
+
+        //FavouriteIllusion obj = realm.where(FavouriteIllusion.class).equalTo("id", illusionId).findFirst();
+
+
         list = helper.dbToList(realm.where(Illusion.class).findAll());
 
         Log.v("HOHO", String.valueOf(list.size()));

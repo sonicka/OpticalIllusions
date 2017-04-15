@@ -49,7 +49,8 @@
         </activity>
         <activity
             android:name=".FavouritesActivity"
-            android:label="Favourite Illusions">
+            android:label="Favourite Illusions"
+            android:theme="@style/Theme.AppCompat">
         </activity>
         <activity
             android:name=".ViewIllusionActivity"
