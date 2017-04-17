@@ -2,6 +2,7 @@ package com.example.sona.opticalillusions;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ final class FavouritesAdapter extends BaseAdapter {
 
         CircleImageView imageViewItem = (CircleImageView) convertView.findViewById(R.id.iv_grid_item);
         imageViewItem.setImageResource(illusion.getThumbnail());
+        Log.v("BZ", illusion.toString());
 
         return convertView;
     }

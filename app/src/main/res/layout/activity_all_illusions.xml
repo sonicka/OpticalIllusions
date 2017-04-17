@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <fragment
+        android:id="@+id/fr_illusions_view"
+        android:name="com.example.sona.opticalillusions.IllusionsViewFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <!--<GridView-->
+        <!--android:id="@+id/gv_illusion_grid"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:numColumns="3"/>-->
+
+    <!--<ExpandableListView-->
+        <!--android:id="@+id/id_list_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:descendantFocusability="blocksDescendants"-->
+        <!--android:visibility="gone"/>&lt;!&ndash;todo&ndash;&gt;-->
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--&gt;-->
+
+        <!--<Button-->
+            <!--android:id="@+id/b_favourites"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="@string/favourites" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/b_switch_to_list"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="@string/menu_change_to_list" />-->
+
+        <!--<SearchView-->
+            <!--android:id="@+id/sv_search"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="15" />-->
+
+    <!--</LinearLayout>-->
+
+</LinearLayout>

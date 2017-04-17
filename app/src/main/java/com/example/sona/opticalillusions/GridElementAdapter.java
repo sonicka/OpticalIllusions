@@ -55,6 +55,7 @@ public class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, Recyc
             public void onClick(View v) {
                 Intent intent = new Intent(context, ViewIllusionActivity.class);
                 intent.putExtra("item", illusion);
+                intent.putExtra("class","Illusion");
                 context.startActivity(intent);
             }
         });

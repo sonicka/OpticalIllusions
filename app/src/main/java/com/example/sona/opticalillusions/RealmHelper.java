@@ -74,4 +74,14 @@ public class RealmHelper {
         }
         return illusionNames;
     }
+
+    public void removeFromFavourites (final FavouriteIllusion illusion) {
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<FavouriteIllusion> result = realm.where(FavouriteIllusion.class).equalTo("name", illusion.getName()).findAll();
+                result.deleteAllFromRealm();
+            }
+        });
+    }
 }

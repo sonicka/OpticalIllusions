@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sona.opticalillusions.model.FavouriteIllusion;
 import com.example.sona.opticalillusions.model.Illusion;
 
 import java.util.ArrayList;
@@ -18,7 +18,9 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class ViewIllusionActivity extends AppCompatActivity {
-    private ArrayList<Illusion> list = new ArrayList<>();
+    private ArrayList<Object> list;
+    final Object item = getIntent().getExtras().get("item");
+    final String getClass = getIntent().getStringExtra("class");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +44,44 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
-        final Illusion item = (Illusion) getIntent().getExtras().get("item");
-
-        //int illusionId = Integer.parseInt((String) getIntent().getExtras().get("id"));
-
-        //FavouriteIllusion obj = realm.where(FavouriteIllusion.class).equalTo("id", illusionId).findFirst();
+//        final Object item = getIntent().getExtras().get("item");
+//        final String getClass = getIntent().getStringExtra("class");
 
 
-        list = helper.dbToList(realm.where(Illusion.class).findAll());
+        if (getClass.equals("Illusion")) {
+            Illusion illusion = (Illusion) item;
+            //ArrayList<Illusion> list;
+            //list = helper.dbToList(realm.where(Illusion.class).findAll());
 
-        Log.v("HOHO", String.valueOf(list.size()));
-        Log.v("HOHO", list.toString());
+            //Log.v("HOHO", String.valueOf(list.size()));
+            //Log.v("HOHO", list.toString());
 
-        try {
             TextView title = (TextView) findViewById(R.id.tv_title);
-            title.setText(item.getName());
+            title.setText(illusion.getName());
 
             TextView category = (TextView) findViewById(R.id.tv_category);
-            category.setText(item.getCategory());
+            category.setText(illusion.getCategory());
 
             ImageView imageView = (ImageView) findViewById(R.id.iv_view_illusion);
-            imageView.setImageResource(item.getPicture());
-        } catch (NullPointerException e) {
-            //TODO
+            imageView.setImageResource(illusion.getPicture());
+        } else if (getClass.equals("FavouriteIllusion")) {
+            FavouriteIllusion illusion = (FavouriteIllusion) item;
+            //ArrayList<FavouriteIllusion> list;
+            //list = helper.dbFavouritesToList(realm.where(FavouriteIllusion.class).findAll());
+
+//            Log.v("HOHO", String.valueOf(list.size()));
+//            Log.v("HOHO", list.toString());
+
+            TextView title = (TextView) findViewById(R.id.tv_title);
+            title.setText(illusion.getName());
+
+            TextView category = (TextView) findViewById(R.id.tv_category);
+            category.setText(illusion.getCategory());
+
+            ImageView imageView = (ImageView) findViewById(R.id.iv_view_illusion);
+            imageView.setImageResource(illusion.getPicture());
         }
+
         Button back = (Button) findViewById(R.id.b_last_viewed);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +94,8 @@ public class ViewIllusionActivity extends AppCompatActivity {
         toAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO
+                //TODO or illusionlistactivity or favouritesactivity
+                startActivity(new Intent(ViewIllusionActivity.this, AllIllusionsActivity.class));
             }
         });
 
@@ -86,26 +103,25 @@ public class ViewIllusionActivity extends AppCompatActivity {
         addToFavourites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                helper.save(item);
+                if (getClass.equals("Illusion")) {
+                    helper.save((Illusion) item);
+                } else if (getClass.equals("FavouriteIllusion")) {
+                    helper.removeFromFavourites((FavouriteIllusion) item);
+                }
             }
         });
 
         HorizontalGridView horizontalGridView = (HorizontalGridView) findViewById(R.id.gv_small_preview);
         GridElementAdapter adapter = new GridElementAdapter(this, realm.where(Illusion.class).findAll());
         horizontalGridView.setAdapter(adapter);
-
-
-//        ImageAdapter adapter = new ImageAdapter(this, list);
-//        GridView gridView = (GridView) findViewById(R.id.gv_small_preview);
-//        gridView.setAdapter(adapter);
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Illusion i = (Illusion) parent.getItemAtPosition(position);
-//                Intent intent = new Intent(ViewIllusionActivity.this, ViewIllusionActivity.class);
-//                intent.putExtra("item", i);
-//                startActivity(intent);
-//            }
-//        });
     }
+
+    public Object getIllusionObject() {
+        return item;
+    }
+
+    public String getIllusionClass() {
+        return getClass;
+    }
+
 }

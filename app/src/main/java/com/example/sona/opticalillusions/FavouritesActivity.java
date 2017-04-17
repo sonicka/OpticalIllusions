@@ -48,6 +48,7 @@ public class FavouritesActivity extends AppCompatActivity {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
                 Intent intent = new Intent(FavouritesActivity.this, ViewIllusionActivity.class);
                 intent.putExtra("item", i); //TODO ClassCastException
+                intent.putExtra("class","FavouriteIllusion");
                 startActivity(intent);
             }
         });
@@ -64,7 +65,7 @@ public class FavouritesActivity extends AppCompatActivity {
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(FavouritesActivity.this, IllusionsGridActivity.class));
+                startActivity(new Intent(FavouritesActivity.this, AllIllusionsActivity.class));
             }
         });
 
@@ -72,7 +73,7 @@ public class FavouritesActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IllusionsGridActivity.this, .class));
+                startActivity(new Intent(AllIllusionsActivity.this, .class));
             }
         });*/
     }
