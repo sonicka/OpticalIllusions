@@ -1,7 +1,6 @@
 package com.example.sona.opticalillusions;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,10 +52,9 @@ public class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, Recyc
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ViewIllusionActivity.class);
-                intent.putExtra("item", illusion);
-                intent.putExtra("class","Illusion");
-                context.startActivity(intent);
+                ((ViewIllusionActivity) context).getStack().push(illusion);
+                ((ViewIllusionActivity) context).setTopIllusion(illusion);
+                ((ViewIllusionActivity) context).updateActivity(illusion);
             }
         });
     }

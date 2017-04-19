@@ -20,6 +20,12 @@ public class Illusion extends RealmObject implements Parcelable{
     private int thumbnail;
     private int picture;
     private String animation;
+    private boolean isFavourite;
+
+    private static final String GEO = "Geometric Illusions";
+    private static final String COL = "Color Illusions";
+    private static final String THD = "3D Illusions";
+    private static final String MOT = "Motion Illusions";
 
     public Illusion () {
     }
@@ -40,7 +46,9 @@ public class Illusion extends RealmObject implements Parcelable{
         this.thumbnail = thumbnail;
         this.picture = picture;
         this.animation = animation;
+        this.isFavourite = false;
     }
+
 
     protected Illusion(Parcel in) {
         id = in.readInt();
@@ -50,6 +58,7 @@ public class Illusion extends RealmObject implements Parcelable{
         thumbnail = in.readInt();
         picture = in.readInt();
         animation = in.readString();
+        isFavourite = in.readByte() != 0;
     }
 
     public static final Creator<Illusion> CREATOR = new Creator<Illusion>() {
@@ -120,7 +129,13 @@ public class Illusion extends RealmObject implements Parcelable{
         this.animation = animation;
     }
 
+    public boolean isFavourite() {
+        return isFavourite;
+    }
 
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+    }
 
     @Override
     public String toString() {
@@ -132,8 +147,10 @@ public class Illusion extends RealmObject implements Parcelable{
                 ", thumbnail='" + thumbnail + '\'' +
                 ", picture=" + picture +
                 ", animation='" + animation + '\'' +
+                "is favourite? " + isFavourite + '\'' + 
                 '}';
     }
+
 
     @Override
     public int describeContents() {
@@ -149,5 +166,6 @@ public class Illusion extends RealmObject implements Parcelable{
         dest.writeInt(thumbnail);
         dest.writeInt(picture);
         dest.writeString(animation);
+        dest.writeByte((byte) (isFavourite ? 1 : 0));
     }
 }

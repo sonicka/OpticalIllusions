@@ -36,14 +36,14 @@
         <activity
             android:name=".AllIllusionsActivity"
             android:label="@string/title_activity_illusions_grid"
-            android:theme="@style/Theme.AppCompat"></activity>
+            android:theme="@style/Theme.AppCompat"/>
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info" />
         <activity
             android:name=".FavouritesActivity"
             android:label="Favourite Illusions"
-            android:theme="@style/Theme.AppCompat"></activity>
+            android:theme="@style/Theme.AppCompat"/>
         <activity
             android:name=".ViewIllusionActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

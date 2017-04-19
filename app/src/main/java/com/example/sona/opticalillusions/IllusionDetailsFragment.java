@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.sona.opticalillusions.model.FavouriteIllusion;
 import com.example.sona.opticalillusions.model.Illusion;
 
 import io.realm.Realm;
@@ -53,39 +52,21 @@ public class IllusionDetailsFragment extends Fragment {
         final Object item = activity.getIntent().getExtras().get("item");
         final String getClass = activity.getIntent().getStringExtra("class");
 
-        if (getClass.equals("Illusion")) {
-            Illusion illusion = (Illusion) item;
-            //ArrayList<Illusion> list;
-            //list = helper.dbToList(realm.where(Illusion.class).findAll());
+        final Illusion illusion = (Illusion) item;
+        //ArrayList<Illusion> list;
+        //list = helper.dbToList(realm.where(Illusion.class).findAll());
 
-            //Log.v("HOHO", String.valueOf(list.size()));
-            //Log.v("HOHO", list.toString());
+        //Log.v("HOHO", String.valueOf(list.size()));
+        //Log.v("HOHO", list.toString());
 
-            TextView title = (TextView) v.findViewById(R.id.tv_title);
-            title.setText(illusion.getName());
+        TextView title = (TextView) v.findViewById(R.id.tv_title);
+        title.setText(illusion.getName());
 
-            TextView category = (TextView) v.findViewById(R.id.tv_category);
-            category.setText(illusion.getCategory());
+        TextView category = (TextView) v.findViewById(R.id.tv_category);
+        category.setText(illusion.getCategory());
 
-            ImageView imageView = (ImageView) v.findViewById(R.id.iv_view_illusion);
-            imageView.setImageResource(illusion.getPicture());
-        } else if (getClass.equals("FavouriteIllusion")) {
-            FavouriteIllusion illusion = (FavouriteIllusion) item;
-            //ArrayList<FavouriteIllusion> list;
-            //list = helper.dbFavouritesToList(realm.where(FavouriteIllusion.class).findAll());
-
-//            Log.v("HOHO", String.valueOf(list.size()));
-//            Log.v("HOHO", list.toString());
-
-            TextView title = (TextView) v.findViewById(R.id.tv_title);
-            title.setText(illusion.getName());
-
-            TextView category = (TextView) v.findViewById(R.id.tv_category);
-            category.setText(illusion.getCategory());
-
-            ImageView imageView = (ImageView) v.findViewById(R.id.iv_view_illusion);
-            imageView.setImageResource(illusion.getPicture());
-        }
+        ImageView imageView = (ImageView) v.findViewById(R.id.iv_view_illusion);
+        imageView.setImageResource(illusion.getPicture());
 
         Button back = (Button) v.findViewById(R.id.b_last_viewed);
         back.setOnClickListener(new View.OnClickListener() {
@@ -118,10 +99,10 @@ public class IllusionDetailsFragment extends Fragment {
         addToFavourites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getClass.equals("Illusion")) {
-                    helper.save((Illusion) item);
-                } else if (getClass.equals("FavouriteIllusion")) {
-                    helper.removeFromFavourites((FavouriteIllusion) item);
+                if (!illusion.isFavourite()) {
+                    illusion.setFavourite(true);
+                } else {
+                    illusion.setFavourite(false);
                 }
             }
         });

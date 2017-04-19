@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.example.sona.opticalillusions.model.FavouriteIllusion;
+import com.example.sona.opticalillusions.model.Illusion;
 
 import java.util.ArrayList;
 
@@ -20,10 +20,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 final class FavouritesAdapter extends BaseAdapter {
-    private ArrayList<FavouriteIllusion> illusions = new ArrayList<>();
+    private ArrayList<Illusion> illusions = new ArrayList<>();
     private Context context;
 
-    public FavouritesAdapter(Context c, ArrayList<FavouriteIllusion> illusions) {
+    public FavouritesAdapter(Context c, ArrayList<Illusion> illusions) {
         context = c;
         this.illusions = illusions;
     }
@@ -34,7 +34,7 @@ final class FavouritesAdapter extends BaseAdapter {
     }
 
     @Override
-    public FavouriteIllusion getItem (int i){
+    public Illusion getItem (int i){
         return illusions.get(i);
     }
 
@@ -51,7 +51,7 @@ final class FavouritesAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.illusion_grid_item, parent, false);
         }
 
-        FavouriteIllusion illusion = illusions.get(position);
+        Illusion illusion = illusions.get(position);
 
         CircleImageView imageViewItem = (CircleImageView) convertView.findViewById(R.id.iv_grid_item);
         imageViewItem.setImageResource(illusion.getThumbnail());

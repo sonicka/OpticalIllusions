@@ -5,25 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:weightSum="1"
+    android:weightSum="2"
     android:background="@android:color/darker_gray" >
 
-    <ImageView
-        android:id="@+id/imageView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/main_logo" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="fill">
 
-    <Button
-        android:id="@+id/buttonStart"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:text="@string/start"
-       />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            app:srcCompat="@drawable/mainlogo" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/buttonInfo"
-        android:layout_width="110dp"
-        android:layout_height="wrap_content"
-        android:text="@string/info" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/buttonStart"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/icon_start2"
+            android:gravity="center"
+            android:scaleType="center"
+            android:background="@null"
+           />
+
+        <ImageButton
+            android:id="@+id/buttonInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_info"
+            android:scaleType="center"
+            android:background="@null"
+            />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
 </LinearLayout>

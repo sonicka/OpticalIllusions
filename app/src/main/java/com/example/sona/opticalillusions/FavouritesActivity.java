@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 
-import com.example.sona.opticalillusions.model.FavouriteIllusion;
 import com.example.sona.opticalillusions.model.Illusion;
 
 import java.util.ArrayList;
@@ -36,19 +35,18 @@ public class FavouritesActivity extends AppCompatActivity {
         Realm realm = Realm.getInstance(config);
 
         RealmHelper realmHelper = new RealmHelper(realm);
-        ArrayList<FavouriteIllusion> listIllusions = realmHelper.dbFavouritesToList(realm.where(FavouriteIllusion.class).findAll());
+        ArrayList<Illusion> listIllusions = realmHelper.dbToList(realm.where(Illusion.class).equalTo("isFavourite", true).findAll());
         Log.v("PAMPAM", String.valueOf(listIllusions.size()));
         Log.v("PAMPAM", listIllusions.toString());
 
         GridView gridView = (GridView) findViewById(R.id.gv_favourites_grid);
-        gridView.setAdapter(new FavouritesAdapter(this, listIllusions));
+        gridView.setAdapter(new ImageAdapter(this, listIllusions));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
                 Intent intent = new Intent(FavouritesActivity.this, ViewIllusionActivity.class);
                 intent.putExtra("item", i); //TODO ClassCastException
-                intent.putExtra("class","FavouriteIllusion");
                 startActivity(intent);
             }
         });

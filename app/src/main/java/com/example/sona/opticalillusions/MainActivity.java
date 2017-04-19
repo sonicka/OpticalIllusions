@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
@@ -56,17 +56,20 @@ public class MainActivity extends AppCompatActivity {
         realmHelper.save(rubinvase);
         realmHelper.save(verticalhorizontal);
         realmHelper.save(zollner);
+        realmHelper.save(new Illusion(21, "zz", "gg", "", R.drawable.sample_icon, R.drawable.sample_icon, ""));
 
         RealmResults<Illusion> list = realm.where(Illusion.class).findAll();
 
-        Button startButton = (Button) findViewById(R.id.buttonStart);
+        Log.v("LIST", list.toString());
+
+        ImageButton startButton = (ImageButton) findViewById(R.id.buttonStart);
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AllIllusionsActivity.class));
             }
         });
-        Button infoButton = (Button) findViewById(R.id.buttonInfo);
+        ImageButton infoButton = (ImageButton) findViewById(R.id.buttonInfo);
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -17,7 +17,6 @@ import java.util.ArrayList;
  */
 
 final class ImageAdapter extends BaseAdapter {
-    //private final ArrayList<Item> listItems = new ArrayList<>();
     private ArrayList<Illusion> illusions = new ArrayList<>();
     private Context context;
 
@@ -27,11 +26,6 @@ final class ImageAdapter extends BaseAdapter {
     public ImageAdapter (Context c, ArrayList<Illusion> illusions) {
         context = c;
         this.illusions = illusions;
-//        for (Illusion i : list) {
-//            listItems.add(new Item(i.getId(), i.getName(), i.getCategory(), i.getDescription(),
-//                    i.getThumbnail(), i.getPicture(), i.getAnimation()));
-//        }
-        //this.filteredList = list;
     }
 
     @Override
@@ -63,6 +57,11 @@ final class ImageAdapter extends BaseAdapter {
         imageViewItem.setImageResource(item.getThumbnail());
 
         return convertView;
+    }
+
+    public void updateResults(ArrayList<Illusion> list) {
+        illusions = list;
+        notifyDataSetChanged();
     }
 
 //    @Override
