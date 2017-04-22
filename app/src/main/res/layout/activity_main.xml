@@ -27,8 +27,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <Space
             android:layout_width="match_parent"
@@ -37,24 +42,45 @@
 
         <ImageButton
             android:id="@+id/buttonStart"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/icon_start2"
+            style="@android:style/Widget.ImageButton"
+            android:layout_width="80dp"
+
+            android:layout_height="80dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/circle_shape_drawable"
             android:gravity="center"
-            android:scaleType="center"
-            android:background="@null"
-           />
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_start2"
+            app:srcCompat="@drawable/icon_start2" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <ImageButton
             android:id="@+id/buttonInfo"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_info" />
+
+        <Space
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.2"
-            android:src="@drawable/ic_info"
-            android:scaleType="center"
-            android:background="@null"
-            />
+            android:layout_weight="1" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
 
         <Space
             android:layout_width="match_parent"

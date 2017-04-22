@@ -1,7 +1,10 @@
 package com.example.sona.opticalillusions;
 
 import android.app.Activity;
+import android.content.ClipData;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +60,57 @@ final class FavouritesAdapter extends BaseAdapter {
         imageViewItem.setImageResource(illusion.getThumbnail());
         Log.v("BZ", illusion.toString());
 
+        convertView.setOnLongClickListener(onLongClickListener);
+
+
+        if(illusions.get(position).isChecked()){
+            //show the overlay view that suggests the item is selected
+        }
+        else{
+            //hide the overlay view
+        }
+
         return convertView;
     }
+
+    private View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
+        @RequiresApi(api = Build.VERSION_CODES.N)
+        @Override
+        public boolean onLongClick(View v) {    //TODO drag item
+            ClipData data = ClipData.newPlainText("","");
+            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
+            v.startDragAndDrop(data,shadowBuilder,v,0);
+
+            return true;
+        }
+    };
+
+    public void refresh(ArrayList<Illusion> items)
+    {
+        this.illusions = items;
+        notifyDataSetChanged();
+    }
+
+//    public static View.OnDragListener dragListener = new View.OnDragListener() {
+//        @Override
+//        public boolean onDrag(View v, DragEvent event) {
+//            int dragEvent = event.getAction();
+//
+//            switch (dragEvent) {
+//                case DragEvent.ACTION_DRAG_ENTERED:
+//                    final View view = (View) event.getLocalState();
+//                    int id = view.getId();
+//                    Illusion illusion = getItem(id);
+//                    illusion.setFavourite();
+//                    break;
+//                case DragEvent.ACTION_DRAG_EXITED:
+//                    break;
+//                case DragEvent.ACTION_DRAG_ENDED:
+//                    break;
+//            }
+//            return true;
+//        }
+//    };
+
+
 }

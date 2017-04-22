@@ -3,14 +3,13 @@ package com.example.sona.opticalillusions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
+import android.widget.SearchView;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
@@ -29,7 +28,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
     private Realm realm;
     private SearchView searchView;
-    private MenuItem searchItem;
     private ArrayList<Illusion> filteredIllusions;
 
     @Override
@@ -52,7 +50,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         final ImageAdapter imageAdapter = new ImageAdapter(this, listIllusions);
         final GridView gridView = (GridView) findViewById(R.id.gv_illusion_grid);
         gridView.setAdapter(imageAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
@@ -60,7 +58,8 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 intent.putExtra("item", i);
                 startActivity(intent);
             }
-        });
+        };
+        gridView.setOnItemClickListener(onItemClickListener);
 
         // LISTVIEW
 
@@ -113,13 +112,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* if (imageAdapter.getCount() == listIllusions.size()) {
-                    ArrayList<Illusion> list = realmHelper.dbToList(realm.where(Illusion.class).equalTo("isFavourite", true).findAll());
-                    Log.v("FAV", list.toString());
-                    imageAdapter.updateResults(list);
-                } else {
-                    imageAdapter.updateResults(listIllusions);
-                }*/
                 startActivity(new Intent(AllIllusionsActivity.this, FavouritesActivity.class));
             }
         });
@@ -131,14 +123,17 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 if (gridView.getVisibility() == View.VISIBLE) {
                     gridView.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
+                    setTitle("Optical Illusions Categories");
                 } else {
                     listView.setVisibility(View.GONE);
                     gridView.setVisibility(View.VISIBLE);
+                    setTitle("Optical Illusions Preview");
                 }
             }
         });
 
-     /*   SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        //TODO filter
+    /*    SearchView searchView = (SearchView) findViewById(R.id.sv_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -147,35 +142,27 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                getCurrentSearchIllusions();
+                getCurrentSearchIllusions((BaseAdapter) imageAdapter);
                 return true;
             }
         });
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
     }
 
-    private void getCurrentSearchIllusions() {
+    private void getCurrentSearchIllusions(BaseAdapter adapter) {
         String search = searchView.getQuery().toString().toUpperCase();
+        RealmHelper helper = new RealmHelper(realm);
 
         if (search.isEmpty()) {
             filteredIllusions.clear();
-            filteredIllusions.addAll(mUpdateSQLiteDatabase.getAllTeams());
-            teamAdapter.notifyDataSetChanged();
+            filteredIllusions.addAll(helper.getAll());
+            adapter.notifyDataSetChanged();
         } else {
 
             filteredIllusions.clear();
-            filteredIllusions.addAll(mUpdateSQLiteDatabase.searchTeams(search));
-            teamAdapter.notifyDataSetChanged();
-        }
-    }
-
-    private List<Illusion> searchIllusions (String search) {
-        realm.beginTransaction();
-        List<Illusion> illusions = realm.where(Illusion.class).contains("name", search, Case.INSENSITIVE)
-                .findAllSortedAsync("name", Sort.ASCENDING);
-        realm.commitTransaction();
-        return illusions;
-    }*/
+            filteredIllusions.addAll(helper.searchIllusions(search));
+            adapter.notifyDataSetChanged();
+        }*/
     }
 }

@@ -17,22 +17,22 @@ import io.realm.RealmRecyclerViewAdapter;
  * Created by Soňa on 13-Apr-17.
  */
 
-public class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView.ViewHolder> {
+class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView.ViewHolder> {
 
     private Context context;
     private OrderedRealmCollection<Illusion> list;
 
 
-    public GridElementAdapter(Context context, OrderedRealmCollection<Illusion> list){
+    GridElementAdapter(Context context, OrderedRealmCollection<Illusion> list){
         super(context, list, true);
         this.context = context;
         this.list = list;
     }
 
-    public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        public final CircleImageView image;
+    private static class SimpleViewHolder extends RecyclerView.ViewHolder {
+        final CircleImageView image;
 
-        public SimpleViewHolder(View view) {
+        SimpleViewHolder(View view) {
             super(view);
             image = (CircleImageView) view.findViewById(R.id.iv_small_preview);
         }
@@ -52,9 +52,11 @@ public class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, Recyc
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((ViewIllusionActivity) context).setOnlyOneItemInStack(false);
                 ((ViewIllusionActivity) context).getStack().push(illusion);
                 ((ViewIllusionActivity) context).setTopIllusion(illusion);
                 ((ViewIllusionActivity) context).updateActivity(illusion);
+                ((ViewIllusionActivity) context).setCurrentIllusion(illusion);
             }
         });
     }

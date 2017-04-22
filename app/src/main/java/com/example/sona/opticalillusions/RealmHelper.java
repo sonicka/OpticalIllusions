@@ -3,9 +3,12 @@ package com.example.sona.opticalillusions;
 import com.example.sona.opticalillusions.model.Illusion;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import io.realm.Case;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by Soňa on 09-Apr-17.
@@ -37,12 +40,29 @@ public class RealmHelper {
     }
 
     //READ
-    public ArrayList<String> retrieve() {
-        ArrayList<String> illusionNames = new ArrayList<>();
+    public ArrayList<Illusion> getAll() {
+        ArrayList<Illusion> all = new ArrayList<>();
         RealmResults<Illusion> illusions = realm.where(Illusion.class).findAll();
         for(Illusion i : illusions) {
-            illusionNames.add(i.getName());
+            all.add(i);
         }
-        return illusionNames;
+        return all;
+    }
+
+    public ArrayList<Illusion> getFavourites() {
+        ArrayList<Illusion> favourite = new ArrayList<>();
+        RealmResults<Illusion> illusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
+        for(Illusion i : illusions) {
+            favourite.add(i);
+        }
+        return favourite;
+    }
+
+    public List<Illusion> searchIllusions (String search) {
+        realm.beginTransaction();
+        List<Illusion> illusions = realm.where(Illusion.class).contains("name", search, Case.INSENSITIVE)
+                .findAllSortedAsync("name", Sort.ASCENDING);
+        realm.commitTransaction();
+        return illusions;
     }
 }

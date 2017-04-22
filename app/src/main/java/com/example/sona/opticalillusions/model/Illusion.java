@@ -21,6 +21,7 @@ public class Illusion extends RealmObject implements Parcelable{
     private int picture;
     private String animation;
     private boolean isFavourite;
+    private boolean isChecked;
 
     private static final String GEO = "Geometric Illusions";
     private static final String COL = "Color Illusions";
@@ -38,7 +39,7 @@ public class Illusion extends RealmObject implements Parcelable{
         this.name = name;
     }
 
-    public Illusion(int id, String name, String category, String description, int thumbnail, int picture, String animation) {
+    public Illusion(int id, String name, String category, String description, int thumbnail, int picture, String animation, boolean isFavourite) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -46,9 +47,8 @@ public class Illusion extends RealmObject implements Parcelable{
         this.thumbnail = thumbnail;
         this.picture = picture;
         this.animation = animation;
-        this.isFavourite = false;
+        this.isFavourite = isFavourite;
     }
-
 
     protected Illusion(Parcel in) {
         id = in.readInt();
@@ -133,8 +133,8 @@ public class Illusion extends RealmObject implements Parcelable{
         return isFavourite;
     }
 
-    public void setFavourite(boolean favourite) {
-        isFavourite = favourite;
+    public void setFavourite(boolean isFavourite) {
+        this.isFavourite = isFavourite;
     }
 
     @Override
@@ -167,5 +167,12 @@ public class Illusion extends RealmObject implements Parcelable{
         dest.writeInt(picture);
         dest.writeString(animation);
         dest.writeByte((byte) (isFavourite ? 1 : 0));
+    }
+
+    public boolean isChecked(){
+        return isChecked;
+    }
+    public void toggleChecked(){
+        isChecked = !isChecked;
     }
 }
