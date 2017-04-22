@@ -58,23 +58,33 @@
         android:orientation="horizontal"
         android:paddingTop="10dp">
 
-        <Button
+        <ImageButton
             android:id="@+id/b_last_viewed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_previous"
+            />
 
-        <Button
+        <ImageButton
             android:id="@+id/b_all_illusions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_grid"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/b_to_favourites"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_favourite"/>
 
     </LinearLayout>
 

@@ -1,7 +1,9 @@
 package com.example.sona.opticalillusions;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -12,8 +14,8 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
@@ -30,7 +32,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
     private static GridView gridView;
     private static ImageAdapter adapter;
-    private Button removeButton;
+    private ImageButton removeButton;
     private ArrayList<Illusion> checkedIllusions;
     private boolean isButtonLongPressed = false;
 
@@ -79,11 +81,9 @@ public class FavouritesActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
 
-                ClipData data = ClipData.newPlainText("","");
+                ClipData data = ClipData.newPlainText("", i.getName());
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                 view.startDragAndDrop(data,shadowBuilder,view,0);
-                removeButton.setText(R.string.remove);
-                isButtonLongPressed = true;
 
                 realm.beginTransaction();
                // listIllusions.get(position).toggleChecked();
@@ -146,11 +146,7 @@ public class FavouritesActivity extends AppCompatActivity {
         gridView.setDrawSelectorOnTop(true);*/
         //gridView.setSelector(getResources().getDrawable(R.drawable.gridview_selector));
 
-
-
-
-        removeButton = (Button) findViewById(R.id.buttonRemove);
-        //removeButton.setOnTouchListener(touchListener);
+        removeButton = (ImageButton) findViewById(R.id.buttonRemove);
         removeButton.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
@@ -158,9 +154,6 @@ public class FavouritesActivity extends AppCompatActivity {
 
                 switch (dragEvent) {
                     case DragEvent.ACTION_DRAG_ENTERED:
-//                    final View view = (View) event.getLocalState();
-//                    int id = view.getId();
-                        removeButton.setText("Remove this");
                         break;
                     case DragEvent.ACTION_DRAG_EXITED:
                         break;
@@ -187,36 +180,25 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
 
-        Button switchViewButton = (Button) findViewById(R.id.b_switch_to_grid);
-        switchViewButton.setText("Switch view");
+        ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_to_grid);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                //startActivity(new Intent(FavouritesActivity.this, AllIllusionsActivity.class));
             }
         });
+
+        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+        //SearchView search = (SearchView) menu.findItem(R.id.sv_search).getActionView();
 
         /*searchButton = (Button)findViewById(R.id.buttonSearch);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AllIllusionsActivity.this, .class));
             }
         });*/
     }
-
-//
-//    public View.OnLongClickListener onLongClickListener = new View.OnLongClickListener() {
-//        @RequiresApi(api = Build.VERSION_CODES.N)
-//        @Override
-//        public boolean onLongClick(View v) {
-//            ClipData data = ClipData.newPlainText("","");
-//            View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
-//            v.startDragAndDrop(data,shadowBuilder,v,0);
-//            return true;
-//        }
-//    };
 
 //    @Override
 //    public void onResume() {  // After a pause OR at startup
@@ -238,24 +220,8 @@ public class FavouritesActivity extends AppCompatActivity {
         return adapter;
     }
 
-
-
-//    private View.OnTouchListener touchListener = new View.OnTouchListener() {
-//
-//        @Override
-//        public boolean onTouch(View pView, MotionEvent pEvent) {
-//            if(pEvent.getAction() == MotionEvent.ACTION_DOWN) {
-//                removeButton.setText(R.string.remove_this);
-//            } else if (pEvent.getAction() == MotionEvent.ACTION_UP) {
-//                removeButton.setText(R.string.remove);
-//            }
-//            return true;
-//        }
-//    };
-
-    private AlertDialog AskOption()
-    {
-        AlertDialog myQuittingDialogBox =new AlertDialog.Builder(this)
+    private AlertDialog AskOption() {
+        AlertDialog deleteDialogBox =new AlertDialog.Builder(this)
                 //set message, title, and icon
                 .setTitle("Delete")
                 .setMessage("Do you want to delete all favourite illusions?")
@@ -271,8 +237,6 @@ public class FavouritesActivity extends AppCompatActivity {
 
                 })
 
-
-
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -281,11 +245,6 @@ public class FavouritesActivity extends AppCompatActivity {
                     }
                 })
                 .create();
-        return myQuittingDialogBox;
-
+        return deleteDialogBox;
     }
-
-
-
-
 }

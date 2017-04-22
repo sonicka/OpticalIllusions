@@ -13,7 +13,6 @@ import io.realm.annotations.PrimaryKey;
 public class Illusion extends RealmObject implements Parcelable{
 
     @PrimaryKey
-    private int id;
     private String name;
     private String category;
     private String description;
@@ -39,8 +38,7 @@ public class Illusion extends RealmObject implements Parcelable{
         this.name = name;
     }
 
-    public Illusion(int id, String name, String category, String description, int thumbnail, int picture, String animation, boolean isFavourite) {
-        this.id = id;
+    public Illusion(String name, String category, String description, int thumbnail, int picture, String animation, boolean isFavourite) {
         this.name = name;
         this.category = category;
         this.description = description;
@@ -51,7 +49,6 @@ public class Illusion extends RealmObject implements Parcelable{
     }
 
     protected Illusion(Parcel in) {
-        id = in.readInt();
         name = in.readString();
         category = in.readString();
         description = in.readString();
@@ -72,14 +69,6 @@ public class Illusion extends RealmObject implements Parcelable{
             return new Illusion[size];
         }
     };
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -140,7 +129,6 @@ public class Illusion extends RealmObject implements Parcelable{
     @Override
     public String toString() {
         return "Illusion{" +
-                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", description='" + description + '\'' +
@@ -159,7 +147,6 @@ public class Illusion extends RealmObject implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
         dest.writeString(name);
         dest.writeString(category);
         dest.writeString(description);

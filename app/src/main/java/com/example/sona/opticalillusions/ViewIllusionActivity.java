@@ -6,8 +6,8 @@ import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +26,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
     private ImageView imageView;
     private TextView category;
     private TextView title;
+    private ImageButton addToFavourites;
     private Stack stack;
     private boolean onlyOneItemInStack = true;
 
@@ -66,8 +67,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.iv_view_illusion);
         imageView.setImageResource(illusion.getPicture());
 
-        Button back = (Button) findViewById(R.id.b_last_viewed);
-        back.setText("back");
+        ImageButton back = (ImageButton) findViewById(R.id.b_last_viewed);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +90,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
-        Button toAll = (Button) findViewById(R.id.b_all_illusions);
+        ImageButton toAll = (ImageButton) findViewById(R.id.b_all_illusions);
         toAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,11 +101,11 @@ public class ViewIllusionActivity extends AppCompatActivity {
 
         Log.v("FAV1", String.valueOf(illusion.isFavourite()));
 
-        Button addToFavourites = (Button) findViewById(R.id.b_to_favourites);
-        addToFavourites.setText("Favourite");
+        addToFavourites = (ImageButton) findViewById(R.id.b_to_favourites);
         addToFavourites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //TODO
+
 
 
                 if (FavouritesActivity.getGridView() != null && FavouritesActivity.getAdapter() != null) {
@@ -117,10 +117,12 @@ public class ViewIllusionActivity extends AppCompatActivity {
                 Log.v("cau", currentIllusion.toString());
                 realm.beginTransaction();
 
-                if (!currentIllusion.isFavourite()) {
-                    currentIllusion.setFavourite(true);
-                } else {
+                if (currentIllusion.isFavourite()) {
+                    ((ImageButton) v).setImageResource(R.drawable.ic_favourite);
                     currentIllusion.setFavourite(false);
+                } else {
+                    ((ImageButton) v).setImageResource(R.drawable.ic_unfavourite);
+                    currentIllusion.setFavourite(true);
                 }
 
                 Log.v("cau", currentIllusion.toString());
@@ -142,6 +144,11 @@ public class ViewIllusionActivity extends AppCompatActivity {
         title.setText(illusion.getName());
         category.setText(illusion.getCategory());
         imageView.setImageResource(illusion.getPicture());
+        if (illusion.isFavourite()) {
+            addToFavourites.setImageResource(R.drawable.ic_unfavourite);
+        } else {
+            addToFavourites.setImageResource(R.drawable.ic_favourite);
+        }
     }
 
     public Stack getStack() {

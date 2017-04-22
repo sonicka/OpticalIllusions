@@ -3,12 +3,13 @@ package com.example.sona.opticalillusions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 
 import com.example.sona.opticalillusions.model.Illusion;
@@ -34,6 +35,32 @@ public class AllIllusionsActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_illusions);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+//
+//        ActionBar mActionBar = getActionBar();
+//        //mActionBar.setDisplayShowHomeEnabled(false);
+////        mActionBar.setDisplayShowTitleEnabled(false);
+//        LayoutInflater mInflater = LayoutInflater.from(this);
+//
+//        View mCustomView = mInflater.inflate(R.layout.action_bar, null);
+//        TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
+//        mTitleTextView.setText("My Own Title");
+//
+//        ImageButton imageButton = (ImageButton) mCustomView.findViewById(R.id.ib_back_logo);
+//        imageButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getApplicationContext(), "Refresh Clicked!",
+//                        Toast.LENGTH_LONG).show();
+//            }
+//        });
+//
+//        mActionBar.setCustomView(mCustomView);
+//        mActionBar.setDisplayShowCustomEnabled(true);
+
+
 
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration
@@ -108,7 +135,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
-        Button favouritesButton = (Button) findViewById(R.id.b_favourites);
+        ImageButton favouritesButton = (ImageButton) findViewById(R.id.b_favourites);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +143,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
-        Button switchViewButton = (Button) findViewById(R.id.b_switch_to_list);
+        ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_to_list);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
