@@ -1,42 +1,107 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:weightSum="10"
     android:id="@+id/fr_illusions_view">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_height="wrap_content"
-        android:layout_weight="9"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize">
 
-        <Toolbar
-            android:id="@+id/toolbar"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:layout_weight="2.5"
+        android:orientation="horizontal"
+        android:id="@+id/relativeLayout">
+        <!--android:layout_above="@+id/ll_view"-->
+        <!--android:layout_alignParentTop="true"-->
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Toolbar>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:id="@+id/linearLayout">
+
+            <ImageButton
+                android:id="@+id/ib_logo"
+                android:background="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:adjustViewBounds="true"
+                android:src="@drawable/logo_unfilled2"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toEndOf="@+id/linearLayout"
+                android:orientation="vertical"
+                android:paddingEnd="10dp">
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:adjustViewBounds="true"
+                    android:paddingTop="5dp"
+                    android:textAlignment="viewEnd"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/tv_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:paddingBottom="5dp"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/green" />
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+
+    <LinearLayout
+        android:id="@+id/ll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="18">
 
         <GridView
             android:id="@+id/gv_illusion_grid"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:numColumns="3"/>
+            android:numColumns="3" />
 
         <ExpandableListView
             android:id="@+id/id_list_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants"
-            android:visibility="gone"/><!--todo-->
+            android:visibility="gone" /><!--todo-->
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2.8"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:gravity="center_horizontal">
 
         <ImageButton
             android:id="@+id/b_favourites"
@@ -44,21 +109,43 @@
             android:layout_height="wrap_content"
             android:background="@drawable/circle_shape_drawable"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_favourite"/>
+            android:src="@drawable/ic_favourite"
+            android:layout_alignParentLeft="true"
+            android:paddingStart="50dp"/>
 
         <ImageButton
             android:id="@+id/b_switch_to_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:background="@drawable/circle_shape_drawable"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_grid" />
 
+        <ImageButton
+            android:id="@+id/ib_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_search"
+            android:layout_alignParentLeft="true"
+            android:paddingEnd="50dp"/>
+
         <SearchView
             android:id="@+id/sv_search"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
+            android:layout_height="match_parent"
+            android:icon="@drawable/ic_search"
+            android:title=""
+            android:showAsAction="always|never"
+            android:actionViewClass="android.widget.SearchView"
+            android:iconifiedByDefault="false"
+            android:searchIcon="@null"
+            android:searchHintIcon="@null"
+            android:visibility="gone"
+            />
     </LinearLayout>
 
 </LinearLayout>

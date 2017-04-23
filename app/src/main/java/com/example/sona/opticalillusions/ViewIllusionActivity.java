@@ -1,6 +1,7 @@
 package com.example.sona.opticalillusions;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.app.AppCompatActivity;
@@ -63,6 +64,10 @@ public class ViewIllusionActivity extends AppCompatActivity {
 
         category = (TextView) findViewById(R.id.tv_category);
         category.setText(illusion.getCategory());
+
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Giorgio.ttf");
+        title.setTypeface(type);
+        category.setTypeface(type);
 
         imageView = (ImageView) findViewById(R.id.iv_view_illusion);
         imageView.setImageResource(illusion.getPicture());

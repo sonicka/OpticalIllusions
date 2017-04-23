@@ -1,11 +1,14 @@
 package com.example.sona.opticalillusions;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
@@ -36,32 +39,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_illusions);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-//
-//        ActionBar mActionBar = getActionBar();
-//        //mActionBar.setDisplayShowHomeEnabled(false);
-////        mActionBar.setDisplayShowTitleEnabled(false);
-//        LayoutInflater mInflater = LayoutInflater.from(this);
-//
-//        View mCustomView = mInflater.inflate(R.layout.action_bar, null);
-//        TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
-//        mTitleTextView.setText("My Own Title");
-//
-//        ImageButton imageButton = (ImageButton) mCustomView.findViewById(R.id.ib_back_logo);
-//        imageButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(), "Refresh Clicked!",
-//                        Toast.LENGTH_LONG).show();
-//            }
-//        });
-//
-//        mActionBar.setCustomView(mCustomView);
-//        mActionBar.setDisplayShowCustomEnabled(true);
-
-
-
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration
                 .Builder()
@@ -71,6 +48,20 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
         final RealmHelper realmHelper = new RealmHelper(realm);
         final ArrayList<Illusion> listIllusions = realmHelper.dbToList(realm.where(Illusion.class).findAll());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Log.v("lolol", toolbar.toString());
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
+
+
+//        TextView title = (TextView) findViewById(R.id.tv_title);
+//        title.setText(R.string.title_activity_illusions_grid);
+//        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Giorgio.ttf");
+//        title.setTypeface(type);
 
         // GRIDVIEW
 
@@ -158,6 +149,40 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        final SearchView searchView = (SearchView) findViewById(R.id.sv_search);
+//        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+//        ImageView v = (ImageView) searchView.findViewById(searchImgId);
+//        v.setImageResource(R.drawable.ic_search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_plate", null, null);
+        View searchPlate = searchView.findViewById(searchPlateId);
+        if (searchPlate != null) {
+            searchPlate.setBackgroundColor(Color.TRANSPARENT);
+        }
+
+        final ImageButton searchButton = (ImageButton) findViewById(R.id.ib_search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchButton.setVisibility(View.GONE);
+                searchView.setVisibility(View.VISIBLE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+            }
+        });
+
 
         //TODO filter
     /*    SearchView searchView = (SearchView) findViewById(R.id.sv_search);
