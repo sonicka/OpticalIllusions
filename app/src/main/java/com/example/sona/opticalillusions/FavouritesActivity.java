@@ -30,9 +30,10 @@ import io.realm.RealmConfiguration;
 
 public class FavouritesActivity extends AppCompatActivity {
 
+    private Realm realm;
+    private Illusion draggedIllusion;
     private static GridView gridView;
     private static ImageAdapter adapter;
-    private ImageButton removeButton;
     private ArrayList<Illusion> checkedIllusions;
     private boolean isButtonLongPressed = false;
 
@@ -46,17 +47,17 @@ public class FavouritesActivity extends AppCompatActivity {
                 .Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build();
-        final Realm realm = Realm.getInstance(config);
+        realm = Realm.getInstance(config);
 
-        RealmHelper realmHelper = new RealmHelper(realm);
-        final ArrayList<Illusion> listIllusions = realmHelper.dbToList(realm.where(Illusion.class).equalTo("isFavourite", true).findAll());
-        Log.v("PAMPAM", String.valueOf(listIllusions.size()));
-        Log.v("PAMPAM", listIllusions.toString());
+        //RealmHelper realmHelper = new RealmHelper(realm);
+        //final ArrayList<Illusion> listIllusions = realmHelper.dbToList(realm.where(Illusion.class).equalTo("isFavourite", true).findAll());
+//        Log.v("PAMPAM", String.valueOf(listIllusions.size()));
+//        Log.v("PAMPAM", listIllusions.toString());
 
         checkedIllusions = new ArrayList<>();
 
         gridView = (GridView) findViewById(R.id.gv_favourites_grid);
-        adapter = new ImageAdapter(this, listIllusions);
+        adapter = new ImageAdapter(this, realm.where(Illusion.class).equalTo("isFavourite", true).findAll());
         gridView.setAdapter(adapter);
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -74,12 +75,12 @@ public class FavouritesActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(onItemClickListener);
         //gridView.setOnTouchListener(touchListener);
 
-
         AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
+                draggedIllusion = i;
 
                 ClipData data = ClipData.newPlainText("", i.getName());
                 View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
@@ -146,18 +147,25 @@ public class FavouritesActivity extends AppCompatActivity {
         gridView.setDrawSelectorOnTop(true);*/
         //gridView.setSelector(getResources().getDrawable(R.drawable.gridview_selector));
 
-        removeButton = (ImageButton) findViewById(R.id.buttonRemove);
+        ImageButton removeButton = (ImageButton) findViewById(R.id.buttonRemove);
         removeButton.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
                 int dragEvent = event.getAction();
 
                 switch (dragEvent) {
-                    case DragEvent.ACTION_DRAG_ENTERED:
+                    case DragEvent.ACTION_DRAG_STARTED:
+                        //TODO open trash
                         break;
-                    case DragEvent.ACTION_DRAG_EXITED:
+                    case DragEvent.ACTION_DROP:
+                        realm.beginTransaction();
+                        draggedIllusion.setFavourite(false);
+                        realm.copyToRealmOrUpdate(draggedIllusion);
+                        realm.commitTransaction();
+                        draggedIllusion = null;
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
+                        //TODO close trash
                         break;
                 }
                 return true;
@@ -168,15 +176,6 @@ public class FavouritesActivity extends AppCompatActivity {
             public void onClick(View v) {
                 AlertDialog diaBox = AskOption();
                 diaBox.show();
-                realm.beginTransaction();
-                for (Illusion i : listIllusions) {
-                    i.setFavourite(false);
-                }
-                v.refreshDrawableState();
-                realm.commitTransaction();
-                adapter.notifyDataSetChanged(); //ain't do shit
-                gridView.invalidateViews();
-                Log.v("juju", listIllusions.toString());
             }
         });
 
@@ -221,27 +220,25 @@ public class FavouritesActivity extends AppCompatActivity {
     }
 
     private AlertDialog AskOption() {
+
         AlertDialog deleteDialogBox =new AlertDialog.Builder(this)
-                //set message, title, and icon
                 .setTitle("Delete")
                 .setMessage("Do you want to delete all favourite illusions?")
-                //.setIcon(R.drawable.delete)
-
                 .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        //your deleting code
-
+                        realm.beginTransaction();
+                        for (Illusion i : realm.where(Illusion.class).equalTo("isFavourite", true).findAll()) {
+                            i.setFavourite(false);
+                        }
+                        realm.commitTransaction();
                         dialog.dismiss();
                     }
 
                 })
-
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-
                         dialog.dismiss();
-
                     }
                 })
                 .create();

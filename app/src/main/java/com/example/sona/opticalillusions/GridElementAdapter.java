@@ -24,7 +24,7 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
 
 
     GridElementAdapter(Context context, OrderedRealmCollection<Illusion> list){
-        super(context, list, true);
+        super(list, true);
         this.context = context;
         this.list = list;
     }
@@ -52,11 +52,8 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ViewIllusionActivity) context).setOnlyOneItemInStack(false);
-                ((ViewIllusionActivity) context).getStack().push(illusion);
-                ((ViewIllusionActivity) context).setTopIllusion(illusion);
+                ((ViewIllusionActivity) context).addIllusionToStack();
                 ((ViewIllusionActivity) context).updateActivity(illusion);
-                ((ViewIllusionActivity) context).setCurrentIllusion(illusion);
             }
         });
     }

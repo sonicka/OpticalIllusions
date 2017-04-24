@@ -5,31 +5,31 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
-import java.util.List;
 import java.util.Stack;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class ViewIllusionActivity extends AppCompatActivity {
-    private Illusion illusion;
     private Illusion currentIllusion;
-    private Illusion topIllusion;
     private ImageView imageView;
     private TextView category;
     private TextView title;
     private ImageButton addToFavourites;
     private Stack stack;
-    private boolean onlyOneItemInStack = true;
+    private GridElementAdapter adapter;
+    private HorizontalGridView horizontalGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +37,8 @@ public class ViewIllusionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_illusion);
 
         stack = new Stack();
-        illusion = getIntent().getExtras().getParcelable("item");
+        final Illusion illusion = getIntent().getExtras().getParcelable("item");
         currentIllusion = illusion;
-        stack.push(illusion);
 
         final Realm realm;
         Realm.init(this);
@@ -48,6 +47,16 @@ public class ViewIllusionActivity extends AppCompatActivity {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         realm = Realm.getInstance(config);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Log.v("lolol", toolbar.toString());
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
+
+
 
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
         logo.setOnClickListener(new View.OnClickListener() {
@@ -60,17 +69,43 @@ public class ViewIllusionActivity extends AppCompatActivity {
         });
 
         title = (TextView) findViewById(R.id.tv_title);
-        title.setText(illusion.getName());
-
         category = (TextView) findViewById(R.id.tv_category);
-        category.setText(illusion.getCategory());
-
         Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Giorgio.ttf");
         title.setTypeface(type);
         category.setTypeface(type);
 
+        final VideoView videoView = (VideoView) findViewById(R.id.vv_video);
+
         imageView = (ImageView) findViewById(R.id.iv_view_illusion);
-        imageView.setImageResource(illusion.getPicture());
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageView.getVisibility() == View.VISIBLE) {
+                    imageView.setVisibility(View.GONE);
+                    videoView.setVisibility(View.VISIBLE);
+                } else {
+                    imageView.setVisibility(View.VISIBLE);
+                    videoView.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        final TextView description = (TextView) findViewById(R.id.tv_description);
+
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (imageView.getVisibility() == View.VISIBLE || videoView.getVisibility() == View.VISIBLE) {
+                    imageView.setVisibility(View.GONE);
+                    videoView.setVisibility(View.GONE);
+                    description.setVisibility(View.VISIBLE);
+                } else {
+                    imageView.setVisibility(View.VISIBLE);
+                    videoView.setVisibility(View.GONE);
+                }
+                return true;
+            }
+        });
 
         ImageButton back = (ImageButton) findViewById(R.id.b_last_viewed);
         back.setOnClickListener(new View.OnClickListener() {
@@ -82,15 +117,10 @@ public class ViewIllusionActivity extends AppCompatActivity {
                     gv.invalidateViews();
                 }
 
-                if (stack.isEmpty() || onlyOneItemInStack) {
+                if (stack.isEmpty()) {
                     finish();
                 } else {
-                    if (stack.peek() == topIllusion) {
-                        stack.pop();
-                        updateActivity((Illusion) stack.pop());
-                    } else {
-                        updateActivity((Illusion) stack.pop());
-                    }
+                    updateActivity((Illusion) stack.pop());
                 }
             }
         });
@@ -111,17 +141,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) { //TODO
 
-
-
-                if (FavouritesActivity.getGridView() != null && FavouritesActivity.getAdapter() != null) {
-                    FavouritesActivity.getAdapter().notifyDataSetChanged();
-                    FavouritesActivity.getGridView().invalidateViews();
-                    FavouritesActivity.getGridView().setAdapter(FavouritesActivity.getAdapter());
-                }
-
-                Log.v("cau", currentIllusion.toString());
                 realm.beginTransaction();
-
                 if (currentIllusion.isFavourite()) {
                     ((ImageButton) v).setImageResource(R.drawable.ic_favourite);
                     currentIllusion.setFavourite(false);
@@ -129,23 +149,21 @@ public class ViewIllusionActivity extends AppCompatActivity {
                     ((ImageButton) v).setImageResource(R.drawable.ic_unfavourite);
                     currentIllusion.setFavourite(true);
                 }
-
-                Log.v("cau", currentIllusion.toString());
                 realm.copyToRealmOrUpdate(currentIllusion);
                 realm.commitTransaction();
-                Log.v("FAV3", String.valueOf(currentIllusion.isFavourite()));
-                List<Illusion> fav = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
-                Log.v("FAVALL", String.valueOf(fav.size()));
-                Log.v("FAVALL", fav.toString());
             }
         });
 
-        HorizontalGridView horizontalGridView = (HorizontalGridView) findViewById(R.id.gv_small_preview);
-        GridElementAdapter adapter = new GridElementAdapter(this, realm.where(Illusion.class).findAll());
+        horizontalGridView = (HorizontalGridView) findViewById(R.id.gv_small_preview);
+        adapter = new GridElementAdapter(this, realm.where(Illusion.class).findAll());
         horizontalGridView.setAdapter(adapter);
+
+        updateActivity(currentIllusion);
+
     }
 
     public void updateActivity(Illusion illusion) {
+        currentIllusion = illusion;
         title.setText(illusion.getName());
         category.setText(illusion.getCategory());
         imageView.setImageResource(illusion.getPicture());
@@ -154,21 +172,15 @@ public class ViewIllusionActivity extends AppCompatActivity {
         } else {
             addToFavourites.setImageResource(R.drawable.ic_favourite);
         }
+        for (int i = 0; i < adapter.getItemCount(); i++) {
+            if (adapter.getItem(i).getName().equals(illusion.getName())) {
+                horizontalGridView.smoothScrollToPosition(i);
+                break;
+            }
+        }
     }
 
-    public Stack getStack() {
-        return stack;
-    }
-
-    public void setOnlyOneItemInStack(boolean onlyOneItemInStack) {
-        this.onlyOneItemInStack = onlyOneItemInStack;
-    }
-
-    public Illusion setTopIllusion(Illusion illusion) {
-        return topIllusion = illusion;
-    }
-
-    public void setCurrentIllusion(Illusion currentIllusion) {
-        this.currentIllusion = currentIllusion;
+    public void addIllusionToStack() {
+        stack.push(currentIllusion);
     }
 }

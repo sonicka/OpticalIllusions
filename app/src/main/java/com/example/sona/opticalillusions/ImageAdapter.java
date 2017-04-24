@@ -5,44 +5,28 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
-import java.util.ArrayList;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmBaseAdapter;
 
 /**
  * Created by Soňa on 04-Apr-17.
  */
 
-final class ImageAdapter extends BaseAdapter {
-    private ArrayList<Illusion> illusions = new ArrayList<>();
+final class ImageAdapter extends RealmBaseAdapter<Illusion> {
     private Context context;
 
     //private IllusionFilter illusionFilter;
     //private ArrayList<Illusion> filteredList;
 
-    public ImageAdapter (Context c, ArrayList<Illusion> illusions) {
+    public ImageAdapter (Context c, OrderedRealmCollection<Illusion> illusions) {
+        super(illusions);
         context = c;
-        this.illusions = illusions;
-    }
 
-    @Override
-    public int getCount() {
-        return illusions.size();
     }
-
-    @Override
-    public Illusion getItem(int i) {
-        return illusions.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
-    }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -51,17 +35,12 @@ final class ImageAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.illusion_grid_item, parent, false);
         }
 
-        Illusion item = illusions.get(position);
+        Illusion item = getItem(position);
 
         ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_grid_item);
         imageViewItem.setImageResource(item.getThumbnail());
 
         return convertView;
-    }
-
-    public void updateResults(ArrayList<Illusion> list) {
-        illusions = list;
-        notifyDataSetChanged();
     }
 
 //    @Override

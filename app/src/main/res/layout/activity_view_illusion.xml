@@ -3,67 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:weightSum="9"
     tools:context="com.example.sona.opticalillusions.ViewIllusionActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingTop="0dp"
-        android:paddingBottom="0dp"
-        android:layout_weight="2.5"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:id="@+id/linearLayout">
-
-        <ImageButton
-            android:id="@+id/ib_logo"
-            android:background="@null"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/logo_unfilled2"/>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingEnd="10dp"
-            android:layout_toEndOf="@+id/linearLayout">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:paddingTop="5dp"
-                android:textSize="25sp"
-                android:layout_alignParentEnd="true"
-                android:textAlignment="viewEnd" />
-
-            <TextView
-                android:id="@+id/tv_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:layout_alignParentBottom="true"
-                android:textAlignment="viewEnd"
-                android:textColor="@color/green"/>
-        </RelativeLayout>
-
-    </LinearLayout>
+    <include layout="@layout/toolbar"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -76,9 +19,23 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:keepScreenOn="true"
+            android:clickable="true"
             android:longClickable="true"
             android:scaleType="centerInside"
             android:src="@drawable/motion1" />
+
+        <VideoView
+            android:id="@+id/vv_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black_overlay"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
@@ -129,7 +86,7 @@
             android:id="@+id/gv_small_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp"/>
+            android:paddingBottom="20dp" />
     </LinearLayout>
 
 </LinearLayout>

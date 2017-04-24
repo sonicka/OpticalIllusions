@@ -3,6 +3,7 @@ package com.example.sona.opticalillusions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,7 @@ import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -30,6 +33,7 @@ import io.realm.RealmConfiguration;
 
 public class AllIllusionsActivity extends AppCompatActivity {
 
+    private Illusion currentIllusion;
     private Realm realm;
     private SearchView searchView;
     private ArrayList<Illusion> filteredIllusions;
@@ -46,8 +50,8 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 .build();
         realm = Realm.getInstance(config);
 
-        final RealmHelper realmHelper = new RealmHelper(realm);
-        final ArrayList<Illusion> listIllusions = realmHelper.dbToList(realm.where(Illusion.class).findAll());
+//        final RealmHelper realmHelper = new RealmHelper(realm);
+        final OrderedRealmCollection<Illusion> listIllusions = realm.where(Illusion.class).findAll();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         Log.v("lolol", toolbar.toString());
@@ -57,11 +61,12 @@ public class AllIllusionsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
+        TextView title = (TextView) findViewById(R.id.tv_title);
+        title.setText(R.string.title_activity_illusions_grid);
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Giorgio.ttf");
+        title.setTypeface(type);
+        title.setPadding(0,55,0,0);
 
-//        TextView title = (TextView) findViewById(R.id.tv_title);
-//        title.setText(R.string.title_activity_illusions_grid);
-//        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Giorgio.ttf");
-//        title.setTypeface(type);
 
         // GRIDVIEW
 
@@ -72,6 +77,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
+                currentIllusion = i;
                 Intent intent = new Intent(AllIllusionsActivity.this, ViewIllusionActivity.class);
                 intent.putExtra("item", i);
                 startActivity(intent);
@@ -134,7 +140,8 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_to_list);
+        final ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_to_list);
+        switchViewButton.setImageResource(R.drawable.ic_list);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,10 +149,13 @@ public class AllIllusionsActivity extends AppCompatActivity {
                     gridView.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
                     setTitle("Optical Illusions Categories");
+                    switchViewButton.setImageResource(R.drawable.ic_grid);
                 } else {
                     listView.setVisibility(View.GONE);
                     gridView.setVisibility(View.VISIBLE);
                     setTitle("Optical Illusions Preview");
+                    switchViewButton.setImageResource(R.drawable.ic_list);
+
                 }
             }
         });
@@ -183,9 +193,9 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
-
+/*
         //TODO filter
-    /*    SearchView searchView = (SearchView) findViewById(R.id.sv_search);
+        //searchView = (SearchView) findViewById(R.id.sv_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -202,7 +212,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
     }
 
-    private void getCurrentSearchIllusions(BaseAdapter adapter) {
+    /*private void getCurrentSearchIllusions(BaseAdapter adapter) {
         String search = searchView.getQuery().toString().toUpperCase();
         RealmHelper helper = new RealmHelper(realm);
 
