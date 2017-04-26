@@ -6,16 +6,19 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
@@ -51,8 +54,20 @@ public class FavouritesActivity extends AppCompatActivity {
 
         //RealmHelper realmHelper = new RealmHelper(realm);
         //final ArrayList<Illusion> listIllusions = realmHelper.dbToList(realm.where(Illusion.class).equalTo("isFavourite", true).findAll());
-//        Log.v("PAMPAM", String.valueOf(listIllusions.size()));
-//        Log.v("PAMPAM", listIllusions.toString());
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Log.v("lolol", toolbar.toString());
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
+
+        TextView title = (TextView) findViewById(R.id.tv_title);
+        title.setText(R.string.favourites);
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Giorgio.ttf");
+        title.setTypeface(type);
+        title.setPadding(0,55,0,0);
 
         checkedIllusions = new ArrayList<>();
 

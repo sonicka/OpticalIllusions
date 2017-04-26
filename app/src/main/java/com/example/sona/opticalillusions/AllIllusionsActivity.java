@@ -53,7 +53,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
 //        final RealmHelper realmHelper = new RealmHelper(realm);
         final OrderedRealmCollection<Illusion> listIllusions = realm.where(Illusion.class).findAll();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar);
         Log.v("lolol", toolbar.toString());
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -131,6 +131,15 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
+        Log.v("jujuju", bottomToolbar.toString());
+        if (bottomToolbar != null) {
+            setSupportActionBar(bottomToolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
 
         ImageButton favouritesButton = (ImageButton) findViewById(R.id.b_favourites);
         favouritesButton.setOnClickListener(new View.OnClickListener() {

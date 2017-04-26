@@ -44,7 +44,7 @@
             android:label="Favourite Illusions"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".ViewIllusionActivity"
             android:screenOrientation="portrait"

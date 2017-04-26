@@ -1,17 +1,18 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/fr_illusions_view">
+    android:id="@+id/illusions_view">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar"
+        android:id="@+id/top_toolbar"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/ll_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="18"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_alignTop="@+id/top_toolbar">
 
         <GridView
             android:id="@+id/gv_illusion_grid"
@@ -25,60 +26,63 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
-            android:visibility="gone" /><!--todo-->
+            android:visibility="gone"/><!--todo-->
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.8"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+    <include layout="@layout/bottom_toolbar"/>
 
-        <ImageButton
-            android:id="@+id/b_favourites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circle_shape_drawable"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_favourite"
-            android:layout_alignParentLeft="true"
-            android:paddingStart="50dp"/>
 
-        <ImageButton
-            android:id="@+id/b_switch_to_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/circle_shape_drawable"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_grid" />
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="2.8"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:gravity="center_horizontal">-->
 
-        <ImageButton
-            android:id="@+id/ib_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circle_shape_drawable"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_search"
-            android:layout_alignParentLeft="true"
-            android:paddingEnd="50dp"/>
+        <!--<ImageButton-->
+            <!--android:id="@+id/b_favourites"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/circle_shape_drawable"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:src="@drawable/ic_favourite"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:paddingStart="50dp"/>-->
 
-        <SearchView
-            android:id="@+id/sv_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:icon="@drawable/ic_search"
-            android:title=""
-            android:showAsAction="always|never"
-            android:actionViewClass="android.widget.SearchView"
-            android:iconifiedByDefault="false"
-            android:searchIcon="@null"
-            android:searchHintIcon="@null"
-            android:visibility="gone"
-            />
-    </LinearLayout>
+        <!--<ImageButton-->
+            <!--android:id="@+id/b_switch_to_list"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:background="@drawable/circle_shape_drawable"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:src="@drawable/ic_grid" />-->
 
-</LinearLayout>
+        <!--<ImageButton-->
+            <!--android:id="@+id/ib_search"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/circle_shape_drawable"-->
+            <!--android:scaleType="fitCenter"-->
+            <!--android:src="@drawable/ic_search"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:paddingEnd="50dp"/>-->
+
+        <!--<SearchView-->
+            <!--android:id="@+id/sv_search"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:icon="@drawable/ic_search"-->
+            <!--android:title=""-->
+            <!--android:showAsAction="always|never"-->
+            <!--android:actionViewClass="android.widget.SearchView"-->
+            <!--android:iconifiedByDefault="false"-->
+            <!--android:searchIcon="@null"-->
+            <!--android:searchHintIcon="@null"-->
+            <!--android:visibility="gone"-->
+            <!--/>-->
+    <!--</LinearLayout>-->
+
+</RelativeLayout>

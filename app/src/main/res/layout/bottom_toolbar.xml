@@ -1,0 +1,53 @@
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottom_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:gravity="center_horizontal"
+    android:layout_gravity="bottom"
+    android:layout_alignParentBottom="true">
+
+     <ImageButton
+        android:id="@+id/b_favourites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle_shape_drawable"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_favourite"
+        android:layout_alignParentLeft="true"
+        android:paddingStart="50dp"/>
+
+    <ImageButton
+        android:id="@+id/b_switch_to_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_shape_drawable"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_grid" />
+
+    <ImageButton
+        android:id="@+id/ib_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circle_shape_drawable"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_search"
+        android:layout_alignParentLeft="true"
+        android:paddingEnd="50dp"/>
+
+    <SearchView
+        android:id="@+id/sv_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:icon="@drawable/ic_search"
+        android:title=""
+        android:showAsAction="always|never"
+        android:actionViewClass="android.widget.SearchView"
+        android:iconifiedByDefault="false"
+        android:searchIcon="@null"
+        android:searchHintIcon="@null"
+        android:visibility="gone"
+        />
+
+</android.support.v7.widget.Toolbar>

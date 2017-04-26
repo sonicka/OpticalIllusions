@@ -4,6 +4,8 @@
     android:orientation="vertical"
     android:id="@+id/favourite_layout">
 
+    <include layout="@layout/toolbar"/>
+
     <GridView
         android:id="@+id/gv_favourites_grid"
         android:layout_width="match_parent"
