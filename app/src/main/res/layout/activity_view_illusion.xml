@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.sona.opticalillusions.ViewIllusionActivity">
+    tools:context="com.example.sona.opticalillusions.ViewIllusionActivity"
+    android:fillViewport="true"
+    android:background="@drawable/bg1">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar"
+        android:id="@+id/top_toolbar_details"/>
 
     <LinearLayout
+        android:id="@+id/ll_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_below="@id/top_toolbar_details"
+        >
 
         <ImageView
             android:id="@+id/iv_view_illusion"
@@ -24,11 +30,17 @@
             android:scaleType="centerInside"
             android:src="@drawable/motion1" />
 
+        <LinearLayout
+            android:id="@+id/ll_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
         <VideoView
             android:id="@+id/vv_video"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"/>
+            </LinearLayout>
 
         <TextView
             android:id="@+id/tv_description"
@@ -40,17 +52,17 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_buttons"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.8"
-        android:paddingTop="6dp"
+        android:layout_height="80dp"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/ll_details">
 
         <ImageButton
             android:id="@+id/b_last_viewed"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/circle_shape_drawable"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_previous"
@@ -59,7 +71,7 @@
         <ImageButton
             android:id="@+id/b_all_illusions"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/circle_shape_drawable"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_grid"/>
@@ -67,7 +79,7 @@
         <ImageButton
             android:id="@+id/b_to_favourites"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/circle_shape_drawable"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_favourite"
@@ -76,17 +88,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="0dp"
-        android:paddingTop="0dp">
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/ll_buttons">
 
         <android.support.v17.leanback.widget.HorizontalGridView
             android:id="@+id/gv_small_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="20dp" />
+            android:layout_gravity="bottom"
+            />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

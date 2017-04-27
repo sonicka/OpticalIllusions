@@ -1,17 +1,28 @@
 package com.example.sona.opticalillusions;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.sona.opticalillusions.model.Illusion;
@@ -27,9 +38,14 @@ public class ViewIllusionActivity extends AppCompatActivity {
     private TextView category;
     private TextView title;
     private ImageButton addToFavourites;
+    private TextView description;
     private Stack stack;
     private GridElementAdapter adapter;
     private HorizontalGridView horizontalGridView;
+    private VideoView videoView;
+    private IllusionManager illusionManager;
+    private boolean bVideoIsBeingTouched = false;
+    private Handler mHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,15 +64,12 @@ public class ViewIllusionActivity extends AppCompatActivity {
                 .build();
         realm = Realm.getInstance(config);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Log.v("lolol", toolbar.toString());
+        Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar_details);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
-
-
 
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
         logo.setOnClickListener(new View.OnClickListener() {
@@ -70,27 +83,65 @@ public class ViewIllusionActivity extends AppCompatActivity {
 
         title = (TextView) findViewById(R.id.tv_title);
         category = (TextView) findViewById(R.id.tv_category);
-        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Giorgio.ttf");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
         title.setTypeface(type);
         category.setTypeface(type);
 
-        final VideoView videoView = (VideoView) findViewById(R.id.vv_video);
-
         imageView = (ImageView) findViewById(R.id.iv_view_illusion);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        videoView = (VideoView) findViewById(R.id.vv_video);
+        description = (TextView) findViewById(R.id.tv_description);
+
+        videoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                if (imageView.getVisibility() == View.VISIBLE) {
-                    imageView.setVisibility(View.GONE);
-                    videoView.setVisibility(View.VISIBLE);
-                } else {
-                    imageView.setVisibility(View.VISIBLE);
-                    videoView.setVisibility(View.GONE);
+            public boolean onTouch(View v, MotionEvent event) {
+                if (!bVideoIsBeingTouched) {
+                    bVideoIsBeingTouched = true;
+                    if (videoView.isPlaying()) {
+                        videoView.pause();
+                    } else {
+                        videoView.start();
+                    }
+                    mHandler.postDelayed(new Runnable() {
+                        public void run() {
+                            bVideoIsBeingTouched = false;
+                        }
+                    }, 100);
                 }
+                return true;
             }
         });
 
-        final TextView description = (TextView) findViewById(R.id.tv_description);
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                videoView.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+            }
+        });
+
+        DisplayMetrics display = this.getResources().getDisplayMetrics();
+        int width = display.widthPixels;
+
+        LinearLayout videoLayout = (LinearLayout) findViewById(R.id.ll_video);
+        videoLayout.setLayoutParams(new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (haveNetworkConnection()) {
+                    imageView.setVisibility(View.GONE);
+                    videoView.setVisibility(View.VISIBLE);
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "Animation is loading...", Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    videoView.setVideoPath("http://marekscholtz.esy.es/cafe_wall.mp4");
+                    videoView.start();
+                } else {    //todo http://stackoverflow.com/a/33193463/7813295
+                    Toast.makeText(getApplicationContext(), "Internet access not available.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         imageView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -111,12 +162,10 @@ public class ViewIllusionActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (findViewById(R.id.gv_favourites_grid) != null) {
                     GridView gv = (GridView) findViewById(R.id.gv_favourites_grid);
                     gv.invalidateViews();
                 }
-
                 if (stack.isEmpty()) {
                     finish();
                 } else {
@@ -134,13 +183,10 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
-        Log.v("FAV1", String.valueOf(illusion.isFavourite()));
-
         addToFavourites = (ImageButton) findViewById(R.id.b_to_favourites);
         addToFavourites.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //TODO
-
+            public void onClick(View v) {
                 realm.beginTransaction();
                 if (currentIllusion.isFavourite()) {
                     ((ImageButton) v).setImageResource(R.drawable.ic_favourite);
@@ -159,7 +205,6 @@ public class ViewIllusionActivity extends AppCompatActivity {
         horizontalGridView.setAdapter(adapter);
 
         updateActivity(currentIllusion);
-
     }
 
     public void updateActivity(Illusion illusion) {
@@ -178,9 +223,42 @@ public class ViewIllusionActivity extends AppCompatActivity {
                 break;
             }
         }
+        imageView.setVisibility(View.VISIBLE);
+        description.setVisibility(View.GONE);
+        videoView.setVisibility(View.GONE);
     }
 
     public void addIllusionToStack() {
         stack.push(currentIllusion);
+    }
+
+    private boolean haveNetworkConnection() {
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Network[] networks = cm.getAllNetworks();
+            NetworkInfo networkInfo;
+            for (Network ni : networks) {
+                networkInfo = cm.getNetworkInfo(ni);
+                if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
+                    return true;
+                }
+            }
+        } else {
+            if (cm != null) {
+                //noinspection deprecation
+                NetworkInfo[] info = cm.getAllNetworkInfo();
+                if (info != null) {
+                    for (NetworkInfo anInfo : info) {
+                        if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
+                            Log.d("Network", "NETWORKNAME: " + anInfo.getTypeName());
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

@@ -9,9 +9,11 @@ import java.util.ArrayList;
  */
 
 public interface IllusionManager {
-    Boolean addToFavourites (Illusion illusion);
-    Boolean removeFromFavourites (Illusion illusion);
-    ArrayList<Illusion> searchInName (String string);
-    ArrayList<Illusion> searchInDescription (String string);
-    ArrayList<Illusion> findAll ();
+    Boolean addToFavourites(Illusion illusion);
+
+    Boolean removeFromFavourites(Illusion illusion);
+
+    ArrayList<Illusion> searchInName(String string);
+
+    ArrayList<Illusion> searchInDescription(String string);
 }

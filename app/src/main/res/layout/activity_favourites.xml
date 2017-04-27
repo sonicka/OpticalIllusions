@@ -2,7 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/favourite_layout">
+    android:id="@+id/favourite_layout"
+    android:background="@drawable/bg1">
 
     <include layout="@layout/toolbar"/>
 
@@ -15,69 +16,71 @@
         android:numColumns="auto_fit"
         />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+    <include layout="@layout/bottom_toolbar"/>
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
+        <!--<Space-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1" />-->
 
-            <ImageButton
-                android:id="@+id/buttonRemove"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:adjustViewBounds="false"
-                android:background="@drawable/circle_shape_drawable"
-                android:cropToPadding="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_delete" />
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal">-->
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <ImageButton
-                android:id="@+id/b_switch_to_grid"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/circle_shape_drawable"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_grid" />
-        </LinearLayout>
+            <!--<ImageButton-->
+                <!--android:id="@+id/buttonRemove"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center"-->
+                <!--android:adjustViewBounds="false"-->
+                <!--android:background="@drawable/circle_shape_drawable"-->
+                <!--android:cropToPadding="true"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/ic_delete" />-->
+        <!--</LinearLayout>-->
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <ImageButton
-                android:id="@+id/b_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/circle_shape_drawable"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_search" />
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1.5"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal">-->
+            <!--<ImageButton-->
+                <!--android:id="@+id/b_switch_to_grid"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/circle_shape_drawable"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/ic_grid" />-->
+        <!--</LinearLayout>-->
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
-    </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:orientation="horizontal">-->
+            <!--<ImageButton-->
+                <!--android:id="@+id/b_search"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/circle_shape_drawable"-->
+                <!--android:scaleType="fitCenter"-->
+                <!--android:src="@drawable/ic_search" />-->
+        <!--</LinearLayout>-->
+
+        <!--<Space-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1" />-->
+    <!--</LinearLayout>-->
 </LinearLayout>

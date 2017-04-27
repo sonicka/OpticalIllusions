@@ -1,7 +1,8 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="72dp">
+    android:layout_height="72dp"
+    android:layout_gravity="top">
 
 
         <ImageButton
@@ -29,7 +30,8 @@
                 android:adjustViewBounds="true"
                 android:paddingTop="10dp"
                 android:textAlignment="viewEnd"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/tv_category"

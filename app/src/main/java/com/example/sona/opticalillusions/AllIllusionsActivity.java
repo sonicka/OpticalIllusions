@@ -132,6 +132,18 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
+        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            int previousGroup = -1;
+
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                if(groupPosition != previousGroup) {
+                    listView.collapseGroup(previousGroup);
+                }
+                previousGroup = groupPosition;
+            }
+        });
+
 
         Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
         Log.v("jujuju", bottomToolbar.toString());
@@ -141,7 +153,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
-        ImageButton favouritesButton = (ImageButton) findViewById(R.id.b_favourites);
+        ImageButton favouritesButton = (ImageButton) findViewById(R.id.b_left_button);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +161,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_to_list);
+        final ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_view);
         switchViewButton.setImageResource(R.drawable.ic_list);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,13 +206,27 @@ public class AllIllusionsActivity extends AppCompatActivity {
         final ImageButton searchButton = (ImageButton) findViewById(R.id.ib_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //TODO =(
                 searchButton.setVisibility(View.GONE);
                 searchView.setVisibility(View.VISIBLE);
+                searchView.requestFocus();
+                searchView.setFocusableInTouchMode(true);
+
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+                imm.showSoftInput(searchView, InputMethodManager.SHOW_FORCED);
             }
         });
+//        searchButton.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.equals(ACTION_BUTTON_PRESS)) {
+//
+//                }
+//                return false;
+//            }
+//        });
+
+
 
 /*
         //TODO filter

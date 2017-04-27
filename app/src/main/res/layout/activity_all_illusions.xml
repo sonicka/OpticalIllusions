@@ -1,8 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:id="@+id/illusions_view">
+    android:id="@+id/illusions_view"
+    android:background="@drawable/bg1">
 
     <include layout="@layout/toolbar"
         android:id="@+id/top_toolbar"/>
@@ -10,7 +11,8 @@
     <RelativeLayout
         android:id="@+id/ll_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:layout_alignTop="@+id/top_toolbar">
 
@@ -26,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
-            android:visibility="gone"/><!--todo-->
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -85,4 +87,4 @@
             <!--/>-->
     <!--</LinearLayout>-->
 
-</RelativeLayout>
+</LinearLayout>

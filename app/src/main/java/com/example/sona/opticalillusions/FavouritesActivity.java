@@ -38,7 +38,6 @@ public class FavouritesActivity extends AppCompatActivity {
     private static GridView gridView;
     private static ImageAdapter adapter;
     private ArrayList<Illusion> checkedIllusions;
-    private boolean isButtonLongPressed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +51,7 @@ public class FavouritesActivity extends AppCompatActivity {
                 .build();
         realm = Realm.getInstance(config);
 
-        //RealmHelper realmHelper = new RealmHelper(realm);
-        //final ArrayList<Illusion> listIllusions = realmHelper.dbToList(realm.where(Illusion.class).equalTo("isFavourite", true).findAll());
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Log.v("lolol", toolbar.toString());
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -77,10 +72,6 @@ public class FavouritesActivity extends AppCompatActivity {
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.v("huhu", "item clicked");
-                Log.v("huhu", parent.toString());
-                Log.v("huhu", String.valueOf(position));
-                Log.v("huhu", String.valueOf(id));
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
                 Intent intent = new Intent(FavouritesActivity.this, ViewIllusionActivity.class);
                 intent.putExtra("item", i);
@@ -88,7 +79,6 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         };
         gridView.setOnItemClickListener(onItemClickListener);
-        //gridView.setOnTouchListener(touchListener);
 
         AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -162,7 +152,15 @@ public class FavouritesActivity extends AppCompatActivity {
         gridView.setDrawSelectorOnTop(true);*/
         //gridView.setSelector(getResources().getDrawable(R.drawable.gridview_selector));
 
-        ImageButton removeButton = (ImageButton) findViewById(R.id.buttonRemove);
+        Toolbar bottonToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
+        if (bottonToolbar != null) {
+            setSupportActionBar(bottonToolbar);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayShowHomeEnabled(false);
+        }
+
+        final ImageButton removeButton = (ImageButton) findViewById(R.id.b_left_button);
+        removeButton.setImageResource(R.drawable.ic_delete);
         removeButton.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View v, DragEvent event) {
@@ -170,7 +168,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
                 switch (dragEvent) {
                     case DragEvent.ACTION_DRAG_STARTED:
-                        //TODO open trash
+                        removeButton.setImageResource(R.drawable.ic_delete_open);
                         break;
                     case DragEvent.ACTION_DROP:
                         realm.beginTransaction();
@@ -180,7 +178,7 @@ public class FavouritesActivity extends AppCompatActivity {
                         draggedIllusion = null;
                         break;
                     case DragEvent.ACTION_DRAG_ENDED:
-                        //TODO close trash
+                        removeButton.setImageResource(R.drawable.ic_delete);
                         break;
                 }
                 return true;
@@ -194,7 +192,7 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_to_grid);
+        ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_view);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
