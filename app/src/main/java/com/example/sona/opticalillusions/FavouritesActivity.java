@@ -1,9 +1,7 @@
 package com.example.sona.opticalillusions;
 
 import android.app.AlertDialog;
-import android.app.SearchManager;
 import android.content.ClipData;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -16,6 +14,7 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -200,7 +199,9 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
 
-        SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        EditText et = (EditText) findViewById(R.id.et_search);
+
+       // SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
         //SearchView search = (SearchView) menu.findItem(R.id.sv_search).getActionView();
 

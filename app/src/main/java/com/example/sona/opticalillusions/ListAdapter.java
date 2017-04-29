@@ -2,6 +2,7 @@ package com.example.sona.opticalillusions;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -139,7 +140,9 @@ public class ListAdapter extends BaseExpandableListAdapter implements Filterable
             convertView = inflater.inflate(R.layout.list_group, null);
         }
         TextView textView = (TextView) convertView.findViewById(R.id.tw_list_header);
-        textView.setTypeface(null, Typeface.BOLD);
+        Typeface type = Typeface.createFromAsset(context.getAssets(), "fonts/MyriadPro-Cond.otf");
+        textView.setTypeface(type); //todo font
+        textView.setTextColor(ContextCompat.getColor(context, R.color.green));
         textView.setText(headerTitle);
         return convertView;
     }

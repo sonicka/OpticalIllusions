@@ -2,19 +2,22 @@
     android:id="@+id/bottom_toolbar"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:gravity="center"
+    android:layout_alignParentBottom="true"
     android:layout_gravity="center"
-    android:layout_alignParentBottom="true">
+    android:gravity="center"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
-     <ImageButton
+    <ImageButton
         android:id="@+id/b_left_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/circle_shape_drawable"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_favourite"
         android:layout_alignParentStart="true"
-        android:paddingStart="50dp"/>
+        android:background="@drawable/circle_shape_drawable"
+        android:paddingStart="50dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_favourite" />
 
     <ImageButton
         android:id="@+id/b_switch_view"
@@ -24,29 +27,44 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/circle_shape_drawable"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_grid"/>
+        android:src="@drawable/ic_grid" />
 
-    <ImageButton
-        android:id="@+id/ib_search"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/circle_shape_drawable"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_search"
-        android:layout_alignParentStart="true"
-        android:paddingEnd="50dp"/>
+        android:layout_height="wrap_content">
 
-    <SearchView
-        android:id="@+id/sv_search"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:icon="@drawable/ic_search"
-        android:title=""
-        android:showAsAction="always|never"
-        android:actionViewClass="android.widget.SearchView"
-        android:iconifiedByDefault="false"
-        android:searchIcon="@null"
-        android:searchHintIcon="@null"
-        android:visibility="gone"/>
+        <ImageButton
+            android:id="@+id/ib_search"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/circle_shape_drawable"
+
+
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_search" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/ib_search"
+            android:enabled="false"/>
+
+        <!--<SearchView-->
+            <!--android:id="@+id/sv_search"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:actionViewClass="android.widget.SearchView"-->
+            <!--android:icon="@drawable/ic_search"-->
+            <!--android:iconifiedByDefault="false"-->
+            <!--android:searchHintIcon="@null"-->
+            <!--android:searchIcon="@null"-->
+            <!--android:showAsAction="always|never"-->
+            <!--android:title=""-->
+            <!--android:visibility="visible" />-->
+
+    </RelativeLayout>
 
 </android.support.v7.widget.Toolbar>

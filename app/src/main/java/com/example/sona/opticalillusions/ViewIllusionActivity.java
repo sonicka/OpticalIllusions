@@ -33,17 +33,19 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 public class ViewIllusionActivity extends AppCompatActivity {
+
+    private Realm realm;
+    private RealmHelper realmHelper;
     private Illusion currentIllusion;
     private ImageView imageView;
     private TextView category;
     private TextView title;
-    private ImageButton addToFavourites;
+    private ImageButton setFavourite;
     private TextView description;
     private Stack stack;
     private GridElementAdapter adapter;
     private HorizontalGridView horizontalGridView;
     private VideoView videoView;
-    private IllusionManager illusionManager;
     private boolean bVideoIsBeingTouched = false;
     private Handler mHandler = new Handler();
 
@@ -56,13 +58,13 @@ public class ViewIllusionActivity extends AppCompatActivity {
         final Illusion illusion = getIntent().getExtras().getParcelable("item");
         currentIllusion = illusion;
 
-        final Realm realm;
         Realm.init(this);
         final RealmConfiguration config = new RealmConfiguration
                 .Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build();
         realm = Realm.getInstance(config);
+        realmHelper = new RealmHelper(realm);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar_details);
         if (toolbar != null) {
@@ -183,20 +185,11 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
-        addToFavourites = (ImageButton) findViewById(R.id.b_to_favourites);
-        addToFavourites.setOnClickListener(new View.OnClickListener() {
+        setFavourite = (ImageButton) findViewById(R.id.b_to_favourites);
+        setFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                realm.beginTransaction();
-                if (currentIllusion.isFavourite()) {
-                    ((ImageButton) v).setImageResource(R.drawable.ic_favourite);
-                    currentIllusion.setFavourite(false);
-                } else {
-                    ((ImageButton) v).setImageResource(R.drawable.ic_unfavourite);
-                    currentIllusion.setFavourite(true);
-                }
-                realm.copyToRealmOrUpdate(currentIllusion);
-                realm.commitTransaction();
+                realmHelper.setFavourite(realm, v, currentIllusion);
             }
         });
 
@@ -213,9 +206,9 @@ public class ViewIllusionActivity extends AppCompatActivity {
         category.setText(illusion.getCategory());
         imageView.setImageResource(illusion.getPicture());
         if (illusion.isFavourite()) {
-            addToFavourites.setImageResource(R.drawable.ic_unfavourite);
+            setFavourite.setImageResource(R.drawable.ic_unfavourite);
         } else {
-            addToFavourites.setImageResource(R.drawable.ic_favourite);
+            setFavourite.setImageResource(R.drawable.ic_favourite);
         }
         for (int i = 0; i < adapter.getItemCount(); i++) {
             if (adapter.getItem(i).getName().equals(illusion.getName())) {

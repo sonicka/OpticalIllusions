@@ -1,5 +1,8 @@
 package com.example.sona.opticalillusions;
 
+import android.view.View;
+import android.widget.ImageButton;
+
 import com.example.sona.opticalillusions.model.Illusion;
 
 import java.util.ArrayList;
@@ -18,7 +21,7 @@ public class RealmHelper {
 
     private Realm realm;
 
-    RealmHelper(Realm realm) {
+    public RealmHelper(Realm realm) {
         this.realm = realm;
     }
 
@@ -31,7 +34,7 @@ public class RealmHelper {
         });
     }
 
-    ArrayList<Illusion> dbToList (RealmResults<Illusion> results) {
+    ArrayList<Illusion> dbToList(RealmResults<Illusion> results) {
         ArrayList<Illusion> list = new ArrayList<>();
         for (Illusion i : results) {
             list.add(i);
@@ -43,7 +46,7 @@ public class RealmHelper {
     public ArrayList<Illusion> getAll() {
         ArrayList<Illusion> all = new ArrayList<>();
         RealmResults<Illusion> illusions = realm.where(Illusion.class).findAll();
-        for(Illusion i : illusions) {
+        for (Illusion i : illusions) {
             all.add(i);
         }
         return all;
@@ -52,17 +55,30 @@ public class RealmHelper {
     public ArrayList<Illusion> getFavourites() {
         ArrayList<Illusion> favourite = new ArrayList<>();
         RealmResults<Illusion> illusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
-        for(Illusion i : illusions) {
+        for (Illusion i : illusions) {
             favourite.add(i);
         }
         return favourite;
     }
 
-    public List<Illusion> searchIllusions (String search) {
+    public List<Illusion> searchIllusions(String search) {
         realm.beginTransaction();
         List<Illusion> illusions = realm.where(Illusion.class).contains("name", search, Case.INSENSITIVE)
                 .findAllSortedAsync("name", Sort.ASCENDING);
         realm.commitTransaction();
         return illusions;
+    }
+
+    public void setFavourite(Realm realm, View v, Illusion illusion) {
+        realm.beginTransaction();
+        if (illusion.isFavourite()) {
+            ((ImageButton) v).setImageResource(R.drawable.ic_favourite);
+            illusion.setFavourite(false);
+        } else {
+            ((ImageButton) v).setImageResource(R.drawable.ic_unfavourite);
+            illusion.setFavourite(true);
+        }
+        realm.copyToRealmOrUpdate(illusion);
+        realm.commitTransaction();
     }
 }

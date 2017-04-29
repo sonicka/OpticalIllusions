@@ -1,16 +1,16 @@
 package com.example.sona.opticalillusions;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -50,11 +50,9 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 .build();
         realm = Realm.getInstance(config);
 
-//        final RealmHelper realmHelper = new RealmHelper(realm);
         final OrderedRealmCollection<Illusion> listIllusions = realm.where(Illusion.class).findAll();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar);
-        Log.v("lolol", toolbar.toString());
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -63,10 +61,9 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
         TextView title = (TextView) findViewById(R.id.tv_title);
         title.setText(R.string.title_activity_illusions_grid);
-        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Giorgio.ttf");
+        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
         title.setTypeface(type);
-        title.setPadding(0,55,0,0);
-
+        title.setPadding(0, 55, 0, 0);
 
         // GRIDVIEW
 
@@ -137,7 +134,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                if(groupPosition != previousGroup) {
+                if (groupPosition != previousGroup) {
                     listView.collapseGroup(previousGroup);
                 }
                 previousGroup = groupPosition;
@@ -146,7 +143,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
 
         Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
-        Log.v("jujuju", bottomToolbar.toString());
         if (bottomToolbar != null) {
             setSupportActionBar(bottomToolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -181,7 +177,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
-        final SearchView searchView = (SearchView) findViewById(R.id.sv_search);
+ /*       final SearchView searchView = (SearchView) findViewById(R.id.sv_search);
 //        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
 //        ImageView v = (ImageView) searchView.findViewById(searchImgId);
 //        v.setImageResource(R.drawable.ic_search);
@@ -202,20 +198,41 @@ public class AllIllusionsActivity extends AppCompatActivity {
         if (searchPlate != null) {
             searchPlate.setBackgroundColor(Color.TRANSPARENT);
         }
-
-        final ImageButton searchButton = (ImageButton) findViewById(R.id.ib_search);
-        searchButton.setOnClickListener(new View.OnClickListener() {
+*/
+        final EditText et = (EditText) findViewById(R.id.et_search);
+        et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onClick(View v) { //TODO =(
-                searchButton.setVisibility(View.GONE);
-                searchView.setVisibility(View.VISIBLE);
-                searchView.requestFocus();
-                searchView.setFocusableInTouchMode(true);
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(searchView, InputMethodManager.SHOW_FORCED);
+            public void onFocusChange(View v, boolean hasFocus) {
+                //todo?
+                et.setEnabled(false);
             }
         });
+
+        final ImageButton searchButton = (ImageButton) findViewById(R.id.ib_search);
+        searchButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) { //TODO
+                if (et.isEnabled()) {
+                    et.setEnabled(false);
+                } else {
+                    et.setEnabled(true);
+                    et.requestFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                }
+                    return true;
+            }
+        });
+
+
+                //searchButton.setVisibility(View.GONE);
+                //searchView.setVisibility(View.VISIBLE);
+                //searchView.requestFocus();
+                //searchView.setFocusableInTouchMode(true);
+
+                //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                //imm.showSoftInput(searchView, InputMethodManager.SHOW_FORCED);
+
 //        searchButton.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
