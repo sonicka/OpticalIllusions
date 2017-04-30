@@ -3,8 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/bg1"
-    android:orientation="vertical"
-    android:clickable="true">
+    android:clickable="true"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/top_toolbar"
@@ -14,7 +14,6 @@
         android:id="@+id/ll_view"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-
         android:layout_above="@+id/all_bottom_toolbar"
         android:layout_below="@+id/top_toolbar"
         android:orientation="vertical">
@@ -31,7 +30,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:descendantFocusability="blocksDescendants"
-
             android:groupIndicator="@null"
             android:visibility="gone" />
 

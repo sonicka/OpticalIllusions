@@ -11,4 +11,5 @@
     <color name="black">#000000</color>
     <drawable name="green">#66009900</drawable>
     <drawable name="blue">#1703F4</drawable>
+    <color name="whitegrey">#FFF2F2F2</color>
 </resources>

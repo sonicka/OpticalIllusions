@@ -123,6 +123,9 @@ public class ViewIllusionActivity extends AppCompatActivity {
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                mp.setDisplay(null);
+                mp.reset();
+                mp.setDisplay(videoView.getHolder());
                 videoLayout.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
             }
@@ -141,13 +144,13 @@ public class ViewIllusionActivity extends AppCompatActivity {
                     imageView.setVisibility(View.GONE);
                     videoLayout.setVisibility(View.VISIBLE);
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "Animation is loading...", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(ViewIllusionActivity.this, "Animation is loading...", Toast.LENGTH_SHORT);
                     toast.show();
 
                     videoView.setVideoPath(currentIllusion.getAnimation());
                     videoView.start();
                 } else {    //todo http://stackoverflow.com/a/33193463/7813295
-                    Toast.makeText(getApplicationContext(), "Internet access not available.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewIllusionActivity.this, "Internet access not available.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

@@ -69,8 +69,8 @@ public class AllIllusionsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
-        TextView title = (TextView) findViewById(R.id.tv_title);
-        title.setText(R.string.title_activity_illusions_grid);
+        final TextView title = (TextView) findViewById(R.id.tv_title);
+        title.setText(R.string.preview);
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
         title.setTypeface(type);
         title.setPadding(0, 55, 0, 0);
@@ -91,17 +91,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         };
         gridView.setOnItemClickListener(onItemClickListener);
 
-
         // LISTVIEW
-//
-//        Log.v("hi", String.valueOf(linkedMap.size()));
-//        Log.v("hi", String.valueOf(linkedMap.keySet()));
-//        Log.v("hi", String.valueOf(linkedMap.get("3D illusions")));
-//        Log.v("hi", String.valueOf(linkedMap.get("3D illusions").size()));
-//        Log.v("hi", String.valueOf(linkedMap.get("Geometric Illusions").size()));
-//        Log.v("hi", String.valueOf(linkedMap.get("Color Illusions").size()));
-//        Log.v("hi", String.valueOf(linkedMap.get("Motion illusion").size()));
-//        Log.v("hi", String.valueOf(linkedMap.get("All Illusions").size()));
 
         adapter = new ListAdapter(this, fillMap(listIllusions));
         final ExpandableListView listView = (ExpandableListView) findViewById(R.id.id_list_view);
@@ -134,18 +124,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-//        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-//            int previousGroup = -1;
-//
-//            @Override
-//            public void onGroupExpand(int groupPosition) {
-//                if (groupPosition != previousGroup) {
-//                    listView.collapseGroup(previousGroup);
-//                }
-//                previousGroup = groupPosition;
-//            }
-//        });
 
         Toolbar bottomToolbar = (Toolbar) findViewById(R.id.all_bottom_toolbar);
         if (bottomToolbar != null) {
@@ -180,12 +158,12 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 if (gridView.getVisibility() == View.VISIBLE) {
                     gridView.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
-                    setTitle("Optical Illusions Categories");
+                    title.setText(R.string.categories);
                     switchViewButton.setImageResource(R.drawable.ic_grid);
                 } else {
                     listView.setVisibility(View.GONE);
                     gridView.setVisibility(View.VISIBLE);
-                    setTitle("Optical Illusions Preview");
+                    title.setText(R.string.preview);
                     switchViewButton.setImageResource(R.drawable.ic_list);
                 }
                 et.setText("");

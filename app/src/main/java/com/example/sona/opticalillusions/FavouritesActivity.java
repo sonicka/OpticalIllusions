@@ -4,17 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,10 +22,9 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sona.opticalillusions.model.Illusion;
-
-import java.util.ArrayList;
 
 import io.realm.Case;
 import io.realm.OrderedRealmCollection;
@@ -42,10 +39,11 @@ public class FavouritesActivity extends AppCompatActivity {
 
     private Realm realm;
     private Illusion draggedIllusion;
+    private OrderedRealmCollection<Illusion> favouriteIllusions;
     private static GridView gridView;
     private static ImageAdapter adapter;
-    private ArrayList<Illusion> checkedIllusions;
-    private OrderedRealmCollection<Illusion> favouriteIllusions;
+    private Typeface type;
+    private ImageButton removeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +66,9 @@ public class FavouritesActivity extends AppCompatActivity {
 
         TextView title = (TextView) findViewById(R.id.tv_title);
         title.setText(R.string.favourites);
-        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Giorgio.ttf");
+        type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
         title.setTypeface(type);
-        title.setPadding(0,55,0,0);
-
-        checkedIllusions = new ArrayList<>();
+        title.setPadding(0, 55, 0, 0);
 
         gridView = (GridView) findViewById(R.id.gv_favourites_grid);
         favouriteIllusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
@@ -90,76 +86,23 @@ public class FavouritesActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(onItemClickListener);
 
         AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
                 draggedIllusion = i;
 
-                ClipData data = ClipData.newPlainText("", i.getName());
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-                view.startDragAndDrop(data,shadowBuilder,view,0);
-
-                realm.beginTransaction();
-               // listIllusions.get(position).toggleChecked();
-                i.toggleChecked();
-                checkedIllusions.add(i);
-                realm.commitTransaction();
-                //listIllusions.clear();
-                //adapter.refresh(listIllusions);
-
-//                if (!arrayList.contains(view)) {
-//                    arrayList.add(view);
-//                    view.setSelected(true);
-//                } else {
-//                    arrayList.remove(view);
-//                    view.setSelected(false);
-//                }
-                Log.v("lul", checkedIllusions.toString());
-
+                if (Build.VERSION.SDK_INT >= 24) {
+                    ClipData data = ClipData.newPlainText("", i.getName());
+                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                    view.startDragAndDrop(data, shadowBuilder, view, 0);
+                } else {
+                    showDeleteDialog();
+                }
                 return false;
             }
         };
 
         gridView.setOnItemLongClickListener(onItemLongClickListener);
-       /* gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
-        gridView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-            @Override
-            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                mode.setTitle("Select Items");
-                mode.setSubtitle("One item selected");
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return true;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                return true;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode mode) {
-            }
-
-            @Override
-            public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-                int selectCount = gridView.getCheckedItemCount();
-                switch (selectCount) {
-                    case 1:
-                        mode.setSubtitle("One item selected");
-                        break;
-                    default:
-                        mode.setSubtitle("" + selectCount + " items selected");
-                        break;
-                }
-            }
-        });
-        gridView.setDrawSelectorOnTop(true);*/
-        //gridView.setSelector(getResources().getDrawable(R.drawable.gridview_selector));
 
         Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
         if (bottomToolbar != null) {
@@ -168,7 +111,7 @@ public class FavouritesActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
-        final ImageButton removeButton = (ImageButton) findViewById(R.id.b_left_button);
+        removeButton = (ImageButton) findViewById(R.id.b_left_button);
         removeButton.setImageResource(R.drawable.ic_delete);
         removeButton.setOnDragListener(new View.OnDragListener() {
             @Override
@@ -196,8 +139,11 @@ public class FavouritesActivity extends AppCompatActivity {
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog diaBox = AskOption();
-                diaBox.show();
+                if (!favouriteIllusions.isEmpty()) {
+                    showDeleteDialog();
+                } else {
+                    Toast.makeText(FavouritesActivity.this, "No favourite illusions to delete", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -247,7 +193,6 @@ public class FavouritesActivity extends AppCompatActivity {
         et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -268,32 +213,45 @@ public class FavouritesActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
-
-       // SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        //SearchView search = (SearchView) menu.findItem(R.id.sv_search).getActionView();
-
-        /*searchButton = (Button)findViewById(R.id.buttonSearch);
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });*/
     }
 
-//    @Override
-//    public void onResume() {  // After a pause OR at startup
-//        super.onResume();
-//        adapter.notifyDataSetChanged();
-//        gridView.invalidateViews();
-//        gridView.setAdapter(adapter);
-
-//        ViewGroup vg = (ViewGroup) findViewById (R.id.favourite_layout);
-//        vg.invalidate();
-//    }
+    private void showDeleteDialog() {
+        removeButton.setImageResource(R.drawable.ic_delete_open);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(FavouritesActivity.this, R.style.DialogLight);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_box, null);
+        final TextView title = (TextView) mView.findViewById(R.id.tv_delete_title);
+        title.setTypeface(type);
+        title.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.black));
+        final TextView text = (TextView) mView.findViewById(R.id.tv_delete_text);
+        text.setText(R.string.delete_text2);
+        text.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.black));
+        ImageButton del = (ImageButton) mView.findViewById(R.id.b_delete_yes);
+        ImageButton cancel = (ImageButton) mView.findViewById(R.id.b_delete_cancel);
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                realm.beginTransaction();
+                for (Illusion i : realm.where(Illusion.class).equalTo("isFavourite", true).findAll()) {
+                    i.setFavourite(false);
+                }
+                realm.commitTransaction();
+                dialog.dismiss();
+                removeButton.setImageResource(R.drawable.ic_delete);
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                removeButton.setImageResource(R.drawable.ic_delete);
+            }
+        });
+    }
 
     public void openKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -303,39 +261,5 @@ public class FavouritesActivity extends AppCompatActivity {
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    public static GridView getGridView() {
-        return gridView;
-    }
-
-    public static ImageAdapter getAdapter() {
-        return adapter;
-    }
-
-    private AlertDialog AskOption() {
-
-        AlertDialog deleteDialogBox =new AlertDialog.Builder(this)
-                .setTitle("Delete")
-                .setMessage("Do you want to delete all favourite illusions?")
-                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        realm.beginTransaction();
-                        for (Illusion i : realm.where(Illusion.class).equalTo("isFavourite", true).findAll()) {
-                            i.setFavourite(false);
-                        }
-                        realm.commitTransaction();
-                        dialog.dismiss();
-                    }
-
-                })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create();
-        return deleteDialogBox;
     }
 }

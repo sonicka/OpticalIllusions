@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     Illusion hermanngrid = new Illusion("Hermann grid illusion", "Geometric Illusions", "", R.drawable.thumbhermanngrid, R.drawable.hermanngrid, "", false);
     Illusion illusorycontours = new Illusion("Illusory contours", "Geometric Illusions", "", R.drawable.thumb_illusory_contours, R.drawable.illusory_contours01, "", false);
     Illusion impossiblestairs = new Illusion("Impossible stairs", "3D illusions", "", R.drawable.thumb_impossible_stairs, R.drawable.impossible_stairs, "", false);
-    Illusion impossibletriangle = new Illusion("Impossible triangle", "3D illusions", "", R.drawable.thumb_impossible_triangle, R.drawable.impossible_triangle, "https://drive.google.com/open?id=0BxwduOqqcuAMa0kxYnZuQUphdkE", false);
+    Illusion impossibletriangle = new Illusion("Impossible triangle", "3D illusions", "", R.drawable.thumb_impossible_triangle, R.drawable.impossible_triangle, "", false);
     Illusion jastrow = new Illusion("Jastrow illusion", "Geometric Illusions", "", R.drawable.thumb_jastrow, R.drawable.jastrow01, "", false);
     Illusion motion1 = new Illusion("Motion illusion 1", "Motion illusion", "", R.drawable.thumb_motion1, R.drawable.motion1, "", false);
     Illusion motion2 = new Illusion("Motion illusion 2", "Motion illusion", "", R.drawable.thumb_motion2, R.drawable.motion2, "", false);

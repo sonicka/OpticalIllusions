@@ -1,15 +1,19 @@
 <resources>
     <string name="app_name">Undeceived</string>
-    <string name="categories">Categories</string>
+    <string name="categories">Categories of Illusions</string>
+    <string name="preview">Preview of Illusions</string>
     <string name="illusions">Illusions</string>
     <string name="start">Start</string>
     <string name="info">Info</string>
 
-    <string name="title_activity_illusions_grid">Optical Illusions Preview</string>
     <string name="title_activity_info">About</string>
     <string name="remove">Remove All</string>
     <string name="favourites">Favourites</string>
     <string name="menu_change_to_list">Categories</string>
     <string name="menu_change_to_grid">Switch view</string>
     <string name="click_back_again_to_exit">Click back again to exit</string>
+    <string name="delete">Delete</string>
+    <string name="delete_text">Do you want to delete all favourite illusions?</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete_text2">Do you want to remove this illusion from favourites?</string>
 </resources>
