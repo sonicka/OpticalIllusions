@@ -1,7 +1,9 @@
 package com.example.sona.opticalillusions;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ClipData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -10,19 +12,25 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
 import java.util.ArrayList;
 
+import io.realm.Case;
+import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -37,6 +45,7 @@ public class FavouritesActivity extends AppCompatActivity {
     private static GridView gridView;
     private static ImageAdapter adapter;
     private ArrayList<Illusion> checkedIllusions;
+    private OrderedRealmCollection<Illusion> favouriteIllusions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +75,8 @@ public class FavouritesActivity extends AppCompatActivity {
         checkedIllusions = new ArrayList<>();
 
         gridView = (GridView) findViewById(R.id.gv_favourites_grid);
-        adapter = new ImageAdapter(this, realm.where(Illusion.class).equalTo("isFavourite", true).findAll());
+        favouriteIllusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
+        adapter = new ImageAdapter(this, favouriteIllusions);
         gridView.setAdapter(adapter);
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -151,9 +161,9 @@ public class FavouritesActivity extends AppCompatActivity {
         gridView.setDrawSelectorOnTop(true);*/
         //gridView.setSelector(getResources().getDrawable(R.drawable.gridview_selector));
 
-        Toolbar bottonToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
-        if (bottonToolbar != null) {
-            setSupportActionBar(bottonToolbar);
+        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
+        if (bottomToolbar != null) {
+            setSupportActionBar(bottomToolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
@@ -191,6 +201,16 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
 
+        ImageView logo = (ImageView) findViewById(R.id.ib_logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FavouritesActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
         ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_view);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,7 +219,58 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
 
-        EditText et = (EditText) findViewById(R.id.et_search);
+        final EditText et = (EditText) findViewById(R.id.et_search);
+        final ImageButton searchButton = (ImageButton) findViewById(R.id.ib_search);
+        searchButton.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View v) {
+                et.setEnabled(true);
+                et.requestFocus();
+            }
+        });
+
+        et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    openKeyboard(v);
+                }
+                if (v.getId() == R.id.et_search && !hasFocus) {
+                    et.setEnabled(false);
+                    hideKeyboard(v);
+                }
+            }
+        });
+
+        et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s != null && s.length() > 0) {
+                    favouriteIllusions = realm.where(Illusion.class).equalTo("isFavourite", true)
+                            .contains("name", s.toString(), Case.INSENSITIVE)
+                            .or()
+                            .contains("category", s.toString(), Case.INSENSITIVE)
+                            .or()
+                            .contains("description", s.toString(), Case.INSENSITIVE).findAll();
+                } else {
+                    favouriteIllusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
+                }
+                adapter = new ImageAdapter(FavouritesActivity.this, favouriteIllusions);
+                gridView.setAdapter(adapter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
        // SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
@@ -224,6 +295,15 @@ public class FavouritesActivity extends AppCompatActivity {
 //        vg.invalidate();
 //    }
 
+    public void openKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     public static GridView getGridView() {
         return gridView;

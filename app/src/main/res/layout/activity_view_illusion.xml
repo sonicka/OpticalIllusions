@@ -33,72 +33,78 @@
         <LinearLayout
             android:id="@+id/ll_video"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/bg1"
+            android:visibility="gone">
 
         <VideoView
             android:id="@+id/vv_video"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:layout_height="match_parent" />
             </LinearLayout>
 
         <TextView
             android:id="@+id/tv_description"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/black_overlay"
             android:visibility="gone"/>
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_buttons"
+        android:id="@+id/horizontal_grid_view"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_below="@+id/ll_details">
-
-        <ImageButton
-            android:id="@+id/b_last_viewed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circle_shape_drawable"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_previous"
-            android:paddingStart="50dp"/>
-
-        <ImageButton
-            android:id="@+id/b_all_illusions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circle_shape_drawable"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_grid"/>
-
-        <ImageButton
-            android:id="@+id/b_to_favourites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circle_shape_drawable"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_favourite"
-            android:paddingEnd="50dp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/ll_buttons">
+        android:layout_alignParentBottom="true">
 
         <android.support.v17.leanback.widget.HorizontalGridView
             android:id="@+id/gv_small_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             />
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/ll_buttons"
+        android:layout_above="@id/horizontal_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/b_all_illusions"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/circle_shape_drawable"
+            android:src="@drawable/ic_grid"
+            android:layout_alignParentTop="true" />
+
+        <ImageButton
+            android:id="@+id/b_last_viewed"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:layout_toLeftOf="@id/b_all_illusions"
+            android:background="@drawable/circle_shape_drawable"
+            android:src="@drawable/ic_previous" />
+
+        <ImageButton
+            android:id="@+id/b_to_favourites"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:layout_toRightOf="@id/b_all_illusions"
+            android:background="@drawable/circle_shape_drawable"
+            android:src="@drawable/ic_favourite" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

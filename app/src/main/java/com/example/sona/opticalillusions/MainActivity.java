@@ -2,10 +2,12 @@ package com.example.sona.opticalillusions;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
@@ -22,6 +24,7 @@ import io.realm.RealmResults;
 public class MainActivity extends AppCompatActivity {
 
     private Realm realm;
+    private boolean mBackClickOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,24 +98,40 @@ public class MainActivity extends AppCompatActivity {
         realm.close();
     }
 
-    Illusion cafewall           = new Illusion("Cafe wall illusion", "Geometric Illusions", "", R.drawable.thumb_cafe_wall, R.drawable.cafewall, "http://marekscholtz.esy.es/cafe_wall.mp4", false);
-    Illusion colordiff1         = new Illusion("Color difference 1", "Color Illusions", "", R.drawable.thumbcolordifference01, R.drawable.colordifference01, "", false);
-    Illusion colordiff2         = new Illusion("Color difference 2", "Color Illusions", "", R.drawable.thumbcolordifference02, R.drawable.colordifference02, "", false);
-    Illusion ebbinghaus         = new Illusion("Ebbinghaus illusion", "Geometric Illusions", "", R.drawable.thumbebbinghaus, R.drawable.ebbinghaus, "", false);
-    Illusion hering             = new Illusion("Hering illusion", "Geometric Illusions", "", R.drawable.thumbhering, R.drawable.hering, "", false);
-    Illusion hermanngrid        = new Illusion("Hermann grid illusion", "Geometric Illusions", "", R.drawable.thumbhermanngrid, R.drawable.hermanngrid, "", false);
-    Illusion illusorycontours   = new Illusion("Illusory contours", "Geometric Illusions", "", R.drawable.thumb_illusory_contours, R.drawable.illusory_contours01, "", false);
-    Illusion impossiblestairs   = new Illusion("Impossible stairs", "3D illusions", "", R.drawable.thumb_impossible_stairs, R.drawable.impossible_stairs, "", false);
+    @Override
+    public void onBackPressed() {
+        if (mBackClickOnce) {
+            finishAffinity();
+        } else {
+            mBackClickOnce = true;
+            Toast.makeText(this, R.string.click_back_again_to_exit, Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mBackClickOnce = false;
+                }
+            }, 2000);
+        }
+    }
+
+    Illusion cafewall = new Illusion("Cafe wall illusion", "Geometric Illusions", "ahoj", R.drawable.thumb_cafe_wall, R.drawable.cafewall, "http://marekscholtz.esy.es/cafe_wall.mp4", false);
+    Illusion colordiff1 = new Illusion("Color difference 1", "Color Illusions", "", R.drawable.thumbcolordifference01, R.drawable.colordifference01, "", false);
+    Illusion colordiff2 = new Illusion("Color difference 2", "Color Illusions", "", R.drawable.thumbcolordifference02, R.drawable.colordifference02, "", false);
+    Illusion ebbinghaus = new Illusion("Ebbinghaus illusion", "Geometric Illusions", "", R.drawable.thumbebbinghaus, R.drawable.ebbinghaus, "", false);
+    Illusion hering = new Illusion("Hering illusion", "Geometric Illusions", "", R.drawable.thumbhering, R.drawable.hering, "", false);
+    Illusion hermanngrid = new Illusion("Hermann grid illusion", "Geometric Illusions", "", R.drawable.thumbhermanngrid, R.drawable.hermanngrid, "", false);
+    Illusion illusorycontours = new Illusion("Illusory contours", "Geometric Illusions", "", R.drawable.thumb_illusory_contours, R.drawable.illusory_contours01, "", false);
+    Illusion impossiblestairs = new Illusion("Impossible stairs", "3D illusions", "", R.drawable.thumb_impossible_stairs, R.drawable.impossible_stairs, "", false);
     Illusion impossibletriangle = new Illusion("Impossible triangle", "3D illusions", "", R.drawable.thumb_impossible_triangle, R.drawable.impossible_triangle, "https://drive.google.com/open?id=0BxwduOqqcuAMa0kxYnZuQUphdkE", false);
-    Illusion jastrow            = new Illusion("Jastrow illusion", "Geometric Illusions", "", R.drawable.thumb_jastrow, R.drawable.jastrow01, "", false);
-    Illusion motion1            = new Illusion("Motion illusion 1", "Motion illusion", "", R.drawable.thumb_motion1, R.drawable.motion1, "", false);
-    Illusion motion2            = new Illusion("Motion illusion 2", "Motion illusion", "", R.drawable.thumb_motion2, R.drawable.motion2, "", false);
-    Illusion mullerlyer         = new Illusion("Müller-Lyer illusion", "Geometric Illusions", "", R.drawable.thumb_muller_lyer, R.drawable.muller_lyer, "", false);
-    Illusion neckercube         = new Illusion("Necker cube", "Geometric Illusions", "", R.drawable.thumb_necker_cube, R.drawable.necker_cube, "", false);
-    Illusion oppelkundt         = new Illusion("Oppel-Kundt illusion", "Geometric Illusions", "", R.drawable.thumb_oppel_kundt, R.drawable.oppel_kundt, "", false);
-    Illusion poggendorf         = new Illusion("Poggendorf illusion", "Geometric Illusions", "", R.drawable.thumb_poggendorf, R.drawable.poggendorf, "", false);
-    Illusion ponzo              = new Illusion("Ponzo illusion", "Geometric Illusions", "", R.drawable.thumb_ponzo, R.drawable.ponzo, "", false);
-    Illusion rubinvase          = new Illusion("Rubin vase", "3D illusions", "", R.drawable.thumb_rubin_vase, R.drawable.rubin_vase, "", false);
+    Illusion jastrow = new Illusion("Jastrow illusion", "Geometric Illusions", "", R.drawable.thumb_jastrow, R.drawable.jastrow01, "", false);
+    Illusion motion1 = new Illusion("Motion illusion 1", "Motion illusion", "", R.drawable.thumb_motion1, R.drawable.motion1, "", false);
+    Illusion motion2 = new Illusion("Motion illusion 2", "Motion illusion", "", R.drawable.thumb_motion2, R.drawable.motion2, "", false);
+    Illusion mullerlyer = new Illusion("Müller-Lyer illusion", "Geometric Illusions", "", R.drawable.thumb_muller_lyer, R.drawable.muller_lyer, "", false);
+    Illusion neckercube = new Illusion("Necker cube", "Geometric Illusions", "", R.drawable.thumb_necker_cube, R.drawable.necker_cube, "", false);
+    Illusion oppelkundt = new Illusion("Oppel-Kundt illusion", "Geometric Illusions", "", R.drawable.thumb_oppel_kundt, R.drawable.oppel_kundt, "", false);
+    Illusion poggendorf = new Illusion("Poggendorf illusion", "Geometric Illusions", "", R.drawable.thumb_poggendorf, R.drawable.poggendorf, "", false);
+    Illusion ponzo = new Illusion("Ponzo illusion", "Geometric Illusions", "", R.drawable.thumb_ponzo, R.drawable.ponzo, "", false);
+    Illusion rubinvase = new Illusion("Rubin vase", "3D illusions", "", R.drawable.thumb_rubin_vase, R.drawable.rubin_vase, "", false);
     Illusion verticalhorizontal = new Illusion("Vertical-horizontal illusion", "Geometric Illusions", "", R.drawable.thumb_vertical_horizontal, R.drawable.vertical_horizontal, "", false);
-    Illusion zollner            = new Illusion("Zöllner illusion", "Geometric Illusions", "", R.drawable.thumb_zollner, R.drawable.zollner, "", false);
+    Illusion zollner = new Illusion("Zöllner illusion", "Geometric Illusions", "", R.drawable.thumb_zollner, R.drawable.zollner, "", false);
 }

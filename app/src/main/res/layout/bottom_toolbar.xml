@@ -1,69 +1,59 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_toolbar"
     android:layout_width="match_parent"
-    android:layout_height="72dp"
     android:layout_alignParentBottom="true"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:clickable="true"
-    android:focusable="true"
-    android:focusableInTouchMode="true">
-
-    <ImageButton
-        android:id="@+id/b_left_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/circle_shape_drawable"
-        android:paddingStart="50dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_favourite" />
-
-    <ImageButton
-        android:id="@+id/b_switch_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/circle_shape_drawable"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_grid" />
+    android:layout_height="72dp"
+    app:contentInsetStart="0dp">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageButton
+            android:id="@+id/b_switch_view"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
+            android:background="@drawable/circle_shape_drawable"
+            android:src="@drawable/ic_grid" />
+
+        <ImageButton
+            android:id="@+id/b_left_button"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/b_switch_view"
+            android:scaleType="fitCenter"
+            android:background="@drawable/circle_shape_drawable"
+            android:src="@drawable/ic_favourite" />
 
         <ImageButton
             android:id="@+id/ib_search"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_toRightOf="@id/b_switch_view"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_centerVertical="true"
+            android:scaleType="fitCenter"
             android:background="@drawable/circle_shape_drawable"
-
-
-            android:scaleType="fitStart"
             android:src="@drawable/ic_search" />
 
         <EditText
             android:id="@+id/et_search"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/ib_search"
-            android:enabled="false"/>
-
-        <!--<SearchView-->
-            <!--android:id="@+id/sv_search"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:actionViewClass="android.widget.SearchView"-->
-            <!--android:icon="@drawable/ic_search"-->
-            <!--android:iconifiedByDefault="false"-->
-            <!--android:searchHintIcon="@null"-->
-            <!--android:searchIcon="@null"-->
-            <!--android:showAsAction="always|never"-->
-            <!--android:title=""-->
-            <!--android:visibility="visible" />-->
+            android:layout_width="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ib_search"
+            android:enabled="false"
+            android:inputType="textNoSuggestions|textMultiLine"
+            android:textColor="@color/green"
+            android:maxLength="12"
+            android:background="@android:color/transparent"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

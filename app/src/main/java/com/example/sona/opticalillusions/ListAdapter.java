@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,13 +20,11 @@ import java.util.List;
  * Created by Soňa on 05-Apr-17.
  */
 
-public class ListAdapter extends BaseExpandableListAdapter implements Filterable {
+public class ListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> headerList;
     private LinkedHashMap<String, List<Illusion>> listLinkedMap;
-    private ArrayList<Illusion> filteredIllusions = new ArrayList<>();
-    private IllusionFilter filter = new IllusionFilter();
 
     public ListAdapter(Context context, LinkedHashMap<String, List<Illusion>> listLinkedMap) {
         this.context = context;
@@ -76,13 +72,6 @@ public class ListAdapter extends BaseExpandableListAdapter implements Filterable
 //        return convertView;
 //    }
 
-    @Override
-    public Filter getFilter() {
-        if (filter == null) {
-            filter = new IllusionFilter();
-        }
-        return filter;
-    }
 
     @Override
     public int getGroupCount() {
@@ -96,20 +85,7 @@ public class ListAdapter extends BaseExpandableListAdapter implements Filterable
 
     @Override
     public Object getGroup(int groupPosition) {
-        String key = "";
-        switch (groupPosition) {
-            case 0: key = "All Illusions";
-                    break;
-            case 1: key = "3D illusions";
-                    break;
-            case 2: key = "Color Illusions";
-                    break;
-            case 3: key = "Geometric Illusions";
-                    break;
-            case 4: key = "Motion Illusions";
-                    break;
-        }
-        return key;
+        return new ArrayList<>(listLinkedMap.keySet()).get(groupPosition);
     }
 
     @Override
@@ -167,44 +143,5 @@ public class ListAdapter extends BaseExpandableListAdapter implements Filterable
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
-    }
-
-    private class IllusionFilter extends Filter {
-
-        /**
-         * Custom filter for illusion list
-         * Filter content in illusion list according to the search text
-         */
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults filterResults = new FilterResults();
-            if (constraint != null && constraint.length() > 0) {
-                ArrayList<Illusion> tempList = new ArrayList<>();
-                for (Illusion i : filteredIllusions) {
-                    if (i.getName().toLowerCase().contains(constraint.toString().toLowerCase())
-                            || i.getDescription().toLowerCase().contains(constraint.toString().toLowerCase())
-                            || i.getCategory().toLowerCase().contains(constraint.toString().toLowerCase())) {
-                        tempList.add(i);
-                    }
-                }
-                filterResults.count = tempList.size();
-                filterResults.values = tempList;
-            } else {
-                filterResults.count = filteredIllusions.size();
-                filterResults.values = filteredIllusions;
-            }
-            return filterResults;
-        }
-
-        /**
-         * Notify about filtered list to ui
-         * @param constraint text
-         * @param results filtered result
-         */
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            filteredIllusions = (ArrayList<Illusion>) results.values;
-            notifyDataSetChanged();
-        }
     }
 }

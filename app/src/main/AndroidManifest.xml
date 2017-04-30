@@ -17,7 +17,7 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/MyAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,6 +38,7 @@
         <activity
             android:name=".InfoActivity"
             android:label="@string/title_activity_info"
+            android:theme="@style/MyAppTheme"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"/>
         <activity
@@ -45,12 +46,12 @@
             android:label="Favourite Illusions"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/MyAppTheme"/>
         <activity
             android:name=".ViewIllusionActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/MyAppTheme" />
     </application>
 
 </manifest>

@@ -45,7 +45,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
     private Stack stack;
     private GridElementAdapter adapter;
     private HorizontalGridView horizontalGridView;
-    private VideoView videoView;
+    private LinearLayout videoLayout;
     private boolean bVideoIsBeingTouched = false;
     private Handler mHandler = new Handler();
 
@@ -76,9 +76,9 @@ public class ViewIllusionActivity extends AppCompatActivity {
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { //todo
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            public void onClick(View v) {
+                Intent intent = new Intent(ViewIllusionActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -90,8 +90,9 @@ public class ViewIllusionActivity extends AppCompatActivity {
         category.setTypeface(type);
 
         imageView = (ImageView) findViewById(R.id.iv_view_illusion);
-        videoView = (VideoView) findViewById(R.id.vv_video);
+        final VideoView videoView = (VideoView) findViewById(R.id.vv_video);
         description = (TextView) findViewById(R.id.tv_description);
+
 
         videoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -113,31 +114,37 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
+        DisplayMetrics display = this.getResources().getDisplayMetrics();
+        int width = display.widthPixels;
+
+        videoLayout = (LinearLayout) findViewById(R.id.ll_video);
+        videoLayout.setLayoutParams(new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT));
+
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                videoView.setVisibility(View.GONE);
+                videoLayout.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
             }
         });
 
-        DisplayMetrics display = this.getResources().getDisplayMetrics();
-        int width = display.widthPixels;
-
-        LinearLayout videoLayout = (LinearLayout) findViewById(R.id.ll_video);
-        videoLayout.setLayoutParams(new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-        imageView.setOnClickListener(new View.OnClickListener() {
+        imageView.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
-            public void onClick(View v) {
+            public void onSwipeLeft() {
+                imageView.setVisibility(View.GONE);
+                description.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onClick() {
                 if (haveNetworkConnection()) {
                     imageView.setVisibility(View.GONE);
-                    videoView.setVisibility(View.VISIBLE);
+                    videoLayout.setVisibility(View.VISIBLE);
 
                     Toast toast = Toast.makeText(getApplicationContext(), "Animation is loading...", Toast.LENGTH_SHORT);
                     toast.show();
 
-                    videoView.setVideoPath("http://marekscholtz.esy.es/cafe_wall.mp4");
+                    videoView.setVideoPath(currentIllusion.getAnimation());
                     videoView.start();
                 } else {    //todo http://stackoverflow.com/a/33193463/7813295
                     Toast.makeText(getApplicationContext(), "Internet access not available.", Toast.LENGTH_SHORT).show();
@@ -145,20 +152,28 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
-        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+        description.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
-            public boolean onLongClick(View v) {
-                if (imageView.getVisibility() == View.VISIBLE || videoView.getVisibility() == View.VISIBLE) {
-                    imageView.setVisibility(View.GONE);
-                    videoView.setVisibility(View.GONE);
-                    description.setVisibility(View.VISIBLE);
-                } else {
-                    imageView.setVisibility(View.VISIBLE);
-                    videoView.setVisibility(View.GONE);
-                }
-                return true;
+            public void onSwipeRight() {
+                imageView.setVisibility(View.VISIBLE);
+                description.setVisibility(View.GONE);
             }
         });
+
+//        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                if (imageView.getVisibility() == View.VISIBLE || videoView.getVisibility() == View.VISIBLE) {
+//                    imageView.setVisibility(View.GONE);
+//                    videoLayout.setVisibility(View.GONE);
+//                    description.setVisibility(View.VISIBLE);
+//                } else {
+//                    imageView.setVisibility(View.VISIBLE);
+//                    videoLayout.setVisibility(View.GONE);
+//                }
+//                return true;
+//            }
+//        });
 
         ImageButton back = (ImageButton) findViewById(R.id.b_last_viewed);
         back.setOnClickListener(new View.OnClickListener() {
@@ -216,9 +231,10 @@ public class ViewIllusionActivity extends AppCompatActivity {
                 break;
             }
         }
+        description.setText(currentIllusion.getDescription());
         imageView.setVisibility(View.VISIBLE);
         description.setVisibility(View.GONE);
-        videoView.setVisibility(View.GONE);
+        videoLayout.setVisibility(View.GONE);
     }
 
     public void addIllusionToStack() {

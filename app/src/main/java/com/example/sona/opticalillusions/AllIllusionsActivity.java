@@ -1,11 +1,15 @@
 package com.example.sona.opticalillusions;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,7 +18,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.SearchView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sona.opticalillusions.model.Illusion;
@@ -22,7 +26,9 @@ import com.example.sona.opticalillusions.model.Illusion;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import io.realm.Case;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -33,10 +39,14 @@ import io.realm.RealmConfiguration;
 
 public class AllIllusionsActivity extends AppCompatActivity {
 
-    private Illusion currentIllusion;
+    private OrderedRealmCollection<Illusion> listIllusions;
+    private LinkedHashMap<String, List<Illusion>> linkedMap;
+    private GridView gridView;
     private Realm realm;
-    private SearchView searchView;
-    private ArrayList<Illusion> filteredIllusions;
+    private ImageAdapter imageAdapter;
+    private ListAdapter adapter;
+    private EditText et;
+    private int previousGroup = -1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -50,7 +60,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 .build();
         realm = Realm.getInstance(config);
 
-        final OrderedRealmCollection<Illusion> listIllusions = realm.where(Illusion.class).findAll();
+        listIllusions = realm.where(Illusion.class).findAll();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar);
         if (toolbar != null) {
@@ -67,14 +77,13 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
         // GRIDVIEW
 
-        final ImageAdapter imageAdapter = new ImageAdapter(this, listIllusions);
-        final GridView gridView = (GridView) findViewById(R.id.gv_illusion_grid);
+        imageAdapter = new ImageAdapter(this, listIllusions);
+        gridView = (GridView) findViewById(R.id.gv_illusion_grid);
         gridView.setAdapter(imageAdapter);
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
-                currentIllusion = i;
                 Intent intent = new Intent(AllIllusionsActivity.this, ViewIllusionActivity.class);
                 intent.putExtra("item", i);
                 startActivity(intent);
@@ -82,38 +91,19 @@ public class AllIllusionsActivity extends AppCompatActivity {
         };
         gridView.setOnItemClickListener(onItemClickListener);
 
+
         // LISTVIEW
+//
+//        Log.v("hi", String.valueOf(linkedMap.size()));
+//        Log.v("hi", String.valueOf(linkedMap.keySet()));
+//        Log.v("hi", String.valueOf(linkedMap.get("3D illusions")));
+//        Log.v("hi", String.valueOf(linkedMap.get("3D illusions").size()));
+//        Log.v("hi", String.valueOf(linkedMap.get("Geometric Illusions").size()));
+//        Log.v("hi", String.valueOf(linkedMap.get("Color Illusions").size()));
+//        Log.v("hi", String.valueOf(linkedMap.get("Motion illusion").size()));
+//        Log.v("hi", String.valueOf(linkedMap.get("All Illusions").size()));
 
-        LinkedHashMap<String, List<Illusion>> linkedMap = new LinkedHashMap<>();
-        List<String> headers = new ArrayList<>();
-        headers.add("All Illusions");
-        linkedMap.put("All Illusions", listIllusions);
-        linkedMap.put("3D illusions", null);
-        linkedMap.put("Color Illusions", null);
-        linkedMap.put("Geometric Illusions", null);
-        linkedMap.put("Motion illusion", null);
-
-        for (Illusion i : listIllusions) {
-            if (!headers.contains(i.getCategory())) {
-                headers.add(i.getCategory());
-                ArrayList<Illusion> list = new ArrayList<>();
-                list.add(i);
-                linkedMap.put(i.getCategory(), list);
-            } else {
-                linkedMap.get(i.getCategory()).add(i);
-            }
-        }
-
-        Log.v("hi", String.valueOf(linkedMap.size()));
-        Log.v("hi", String.valueOf(linkedMap.keySet()));
-        Log.v("hi", String.valueOf(linkedMap.get("3D illusions")));
-        Log.v("hi", String.valueOf(linkedMap.get("3D illusions").size()));
-        Log.v("hi", String.valueOf(linkedMap.get("Geometric Illusions").size()));
-        Log.v("hi", String.valueOf(linkedMap.get("Color Illusions").size()));
-        Log.v("hi", String.valueOf(linkedMap.get("Motion illusion").size()));
-        Log.v("hi", String.valueOf(linkedMap.get("All Illusions").size()));
-
-        final ListAdapter adapter = new ListAdapter(this, linkedMap);
+        adapter = new ListAdapter(this, fillMap(listIllusions));
         final ExpandableListView listView = (ExpandableListView) findViewById(R.id.id_list_view);
         listView.setAdapter(adapter);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -129,25 +119,50 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
-        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-            int previousGroup = -1;
+        listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
 
             @Override
-            public void onGroupExpand(int groupPosition) {
-                if (groupPosition != previousGroup) {
-                    listView.collapseGroup(previousGroup);
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                Boolean shouldExpand = (!listView.isGroupExpanded(groupPosition));
+                listView.collapseGroup(previousGroup);
+
+                if (shouldExpand) {
+                    listView.expandGroup(groupPosition);
+                    listView.setSelectionFromTop(groupPosition, 0);
                 }
                 previousGroup = groupPosition;
+                return true;
             }
         });
 
+//        listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+//            int previousGroup = -1;
+//
+//            @Override
+//            public void onGroupExpand(int groupPosition) {
+//                if (groupPosition != previousGroup) {
+//                    listView.collapseGroup(previousGroup);
+//                }
+//                previousGroup = groupPosition;
+//            }
+//        });
 
-        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
+        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.all_bottom_toolbar);
         if (bottomToolbar != null) {
             setSupportActionBar(bottomToolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
+
+        ImageView logo = (ImageView) findViewById(R.id.ib_logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AllIllusionsActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         ImageButton favouritesButton = (ImageButton) findViewById(R.id.b_left_button);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
@@ -172,111 +187,133 @@ public class AllIllusionsActivity extends AppCompatActivity {
                     gridView.setVisibility(View.VISIBLE);
                     setTitle("Optical Illusions Preview");
                     switchViewButton.setImageResource(R.drawable.ic_list);
+                }
+                et.setText("");
+            }
+        });
 
+        et = (EditText) findViewById(R.id.et_search);
+        et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    openKeyboard(v);
+                }
+                if (v.getId() == R.id.et_search && !hasFocus) {
+                    et.setEnabled(false);
+                    hideKeyboard(v);
                 }
             }
         });
 
- /*       final SearchView searchView = (SearchView) findViewById(R.id.sv_search);
-//        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
-//        ImageView v = (ImageView) searchView.findViewById(searchImgId);
-//        v.setImageResource(R.drawable.ic_search);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        et.addTextChangedListener(new TextWatcher() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_plate", null, null);
-        View searchPlate = searchView.findViewById(searchPlateId);
-        if (searchPlate != null) {
-            searchPlate.setBackgroundColor(Color.TRANSPARENT);
-        }
-*/
-        final EditText et = (EditText) findViewById(R.id.et_search);
-        et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                if (s != null && s.length() > 0) {
+                    listIllusions = realm.where(Illusion.class).contains("name", s.toString(), Case.INSENSITIVE)
+                            .or()
+                            .contains("category", s.toString(), Case.INSENSITIVE)
+                            .or()
+                            .contains("description", s.toString(), Case.INSENSITIVE)
+                            .findAll();
+                } else {
+                    listIllusions = realm.where(Illusion.class).findAll();
+                }
+
+                if (gridView.getVisibility() == View.VISIBLE) {
+                    imageAdapter = new ImageAdapter(AllIllusionsActivity.this, listIllusions);
+                    gridView.setAdapter(imageAdapter);
+                } else {
+                    adapter = new ListAdapter(AllIllusionsActivity.this, fillMap(listIllusions));
+                    listView.setAdapter(adapter);
+                    if (!listIllusions.isEmpty()) {
+                        listView.expandGroup(0, true);
+                        previousGroup = 0;
+                    }
+                }
+            }
+
             @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                //todo?
-                et.setEnabled(false);
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
         final ImageButton searchButton = (ImageButton) findViewById(R.id.ib_search);
-        searchButton.setOnTouchListener(new View.OnTouchListener() {
+        searchButton.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
-            public boolean onTouch(View v, MotionEvent event) { //TODO
-                if (et.isEnabled()) {
-                    et.setEnabled(false);
-                } else {
-                    et.setEnabled(true);
-                    et.requestFocus();
-                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                }
-                    return true;
+            public void onClick(View v) {
+                et.setEnabled(true);
+                et.requestFocus();
             }
         });
-
-
-                //searchButton.setVisibility(View.GONE);
-                //searchView.setVisibility(View.VISIBLE);
-                //searchView.requestFocus();
-                //searchView.setFocusableInTouchMode(true);
-
-                //InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                //imm.showSoftInput(searchView, InputMethodManager.SHOW_FORCED);
-
-//        searchButton.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (event.equals(ACTION_BUTTON_PRESS)) {
-//
-//                }
-//                return false;
-//            }
-//        });
-
-
-
-/*
-        //TODO filter
-        //searchView = (SearchView) findViewById(R.id.sv_search);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                getCurrentSearchIllusions((BaseAdapter) imageAdapter);
-                return true;
-            }
-        });
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
     }
 
-    /*private void getCurrentSearchIllusions(BaseAdapter adapter) {
-        String search = searchView.getQuery().toString().toUpperCase();
-        RealmHelper helper = new RealmHelper(realm);
+    public LinkedHashMap<String, List<Illusion>> fillMap(OrderedRealmCollection<Illusion> listIllusion) {
+        linkedMap = new LinkedHashMap<>();
+        List<String> headers = new ArrayList<>();
+        headers.add("All Illusions");
+        linkedMap.put("All Illusions", listIllusions);
+        linkedMap.put("3D illusions", new ArrayList<Illusion>());
+        linkedMap.put("Color Illusions", new ArrayList<Illusion>());
+        linkedMap.put("Geometric Illusions", new ArrayList<Illusion>());
+        linkedMap.put("Motion illusion", new ArrayList<Illusion>());
 
-        if (search.isEmpty()) {
-            filteredIllusions.clear();
-            filteredIllusions.addAll(helper.getAll());
-            adapter.notifyDataSetChanged();
-        } else {
+        for (Illusion i : listIllusions) {
+            if (!headers.contains(i.getCategory())) {
+                headers.add(i.getCategory());
+                ArrayList<Illusion> list = new ArrayList<>();
+                list.add(i);
+                linkedMap.put(i.getCategory(), list);
+            } else {
+                linkedMap.get(i.getCategory()).add(i);
+            }
+        }
+        List<String> toBeRemoved = new ArrayList<>();
+        for (Map.Entry<String, List<Illusion>> entry : linkedMap.entrySet()) {
+            if (entry.getValue().isEmpty()) {
+                toBeRemoved.add(entry.getKey());
+            }
+        }
+        for (String key : toBeRemoved) {
+            linkedMap.remove(key);
+        }
 
-            filteredIllusions.clear();
-            filteredIllusions.addAll(helper.searchIllusions(search));
-            adapter.notifyDataSetChanged();
-        }*/
+        return linkedMap;
+    }
+
+    public void openKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_FORCED);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 }
