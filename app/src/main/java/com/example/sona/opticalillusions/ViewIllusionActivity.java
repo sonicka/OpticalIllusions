@@ -89,7 +89,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
         title.setTypeface(type);
         category.setTypeface(type);
 
-        imageView = (ImageView) findViewById(R.id.iv_view_illusion);
+        //imageView = (ImageView) findViewById(R.id.iv_view_illusion);
         final VideoView videoView = (VideoView) findViewById(R.id.vv_video);
         description = (TextView) findViewById(R.id.tv_description);
 
@@ -117,8 +117,8 @@ public class ViewIllusionActivity extends AppCompatActivity {
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         int width = display.widthPixels;
 
-        videoLayout = (LinearLayout) findViewById(R.id.ll_video);
-        videoLayout.setLayoutParams(new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT));
+//        videoLayout = (LinearLayout) findViewById(R.id.ll_video);
+//        videoLayout.setLayoutParams(new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT));
 
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -144,13 +144,13 @@ public class ViewIllusionActivity extends AppCompatActivity {
                     imageView.setVisibility(View.GONE);
                     videoLayout.setVisibility(View.VISIBLE);
 
-                    Toast toast = Toast.makeText(ViewIllusionActivity.this, "Animation is loading...", Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(ViewIllusionActivity.this, R.string.animation_loading, Toast.LENGTH_SHORT);
                     toast.show();
 
                     videoView.setVideoPath(currentIllusion.getAnimation());
                     videoView.start();
                 } else {    //todo http://stackoverflow.com/a/33193463/7813295
-                    Toast.makeText(ViewIllusionActivity.this, "Internet access not available.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ViewIllusionActivity.this, R.string.connect_to_internet, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -222,7 +222,10 @@ public class ViewIllusionActivity extends AppCompatActivity {
         currentIllusion = illusion;
         title.setText(illusion.getName());
         category.setText(illusion.getCategory());
-        imageView.setImageResource(illusion.getPicture());
+        //imageView.setImageResource(illusion.getPicture());
+        new DownloadImageTask((ImageView) findViewById(R.id.iv_view_illusion))
+                .execute(illusion.getThumbnail());
+
         if (illusion.isFavourite()) {
             setFavourite.setImageResource(R.drawable.ic_unfavourite);
         } else {
@@ -237,7 +240,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
         description.setText(currentIllusion.getDescription());
         imageView.setVisibility(View.VISIBLE);
         description.setVisibility(View.GONE);
-        videoLayout.setVisibility(View.GONE);
+        //videoLayout.setVisibility(View.GONE);
     }
 
     public void addIllusionToStack() {

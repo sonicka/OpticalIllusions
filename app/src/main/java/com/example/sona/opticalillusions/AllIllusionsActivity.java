@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -46,12 +47,15 @@ public class AllIllusionsActivity extends AppCompatActivity {
     private ImageAdapter imageAdapter;
     private ListAdapter adapter;
     private EditText et;
+    private ImageButton searchButton;
     private int previousGroup = -1;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_illusions);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration
@@ -73,7 +77,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         title.setText(R.string.preview);
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
         title.setTypeface(type);
-        title.setPadding(0, 55, 0, 0);
+        title.setPadding(0, 30, 0, 0);
 
         // GRIDVIEW
 
@@ -110,12 +114,10 @@ public class AllIllusionsActivity extends AppCompatActivity {
         });
 
         listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 Boolean shouldExpand = (!listView.isGroupExpanded(groupPosition));
                 listView.collapseGroup(previousGroup);
-
                 if (shouldExpand) {
                     listView.expandGroup(groupPosition);
                     listView.setSelectionFromTop(groupPosition, 0);
@@ -174,10 +176,10 @@ public class AllIllusionsActivity extends AppCompatActivity {
         et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if (hasFocus && searchButton.isPressed()) {
                     openKeyboard(v);
                 }
-                if (v.getId() == R.id.et_search && !hasFocus) {
+                if (v.getId() == R.id.et_search && !hasFocus && !et.isPressed()) {
                     et.setEnabled(false);
                     hideKeyboard(v);
                 }
@@ -223,19 +225,19 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton searchButton = (ImageButton) findViewById(R.id.ib_search);
-        searchButton.setOnClickListener(new View.OnClickListener()
-
-        {
+        searchButton = (ImageButton) findViewById(R.id.ib_search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 et.setEnabled(true);
+                et.setFocusableInTouchMode(true);
+                et.clearFocus();
                 et.requestFocus();
             }
         });
     }
 
-    public LinkedHashMap<String, List<Illusion>> fillMap(OrderedRealmCollection<Illusion> listIllusion) {
+    public LinkedHashMap<String, List<Illusion>> fillMap(OrderedRealmCollection<Illusion> listIllusions) {
         linkedMap = new LinkedHashMap<>();
         List<String> headers = new ArrayList<>();
         headers.add("All Illusions");
@@ -264,7 +266,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
         for (String key : toBeRemoved) {
             linkedMap.remove(key);
         }
-
         return linkedMap;
     }
 

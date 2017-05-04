@@ -19,7 +19,7 @@ import io.realm.RealmBaseAdapter;
 final class ImageAdapter extends RealmBaseAdapter<Illusion> {
     private Context context;
 
-    public ImageAdapter (Context c, OrderedRealmCollection<Illusion> illusions) {
+    public ImageAdapter(Context c, OrderedRealmCollection<Illusion> illusions) {
         super(illusions);
         context = c;
     }
@@ -27,15 +27,17 @@ final class ImageAdapter extends RealmBaseAdapter<Illusion> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        if(convertView == null){
+        if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.illusion_grid_item, parent, false);
         }
 
         Illusion item = getItem(position);
 
-        ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_grid_item);
-        imageViewItem.setImageResource(item.getThumbnail());
+        //ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_grid_item);
+        //imageViewItem.setImageResource(item.getThumbnail());
+        new DownloadImageTask((ImageView) convertView.findViewById(R.id.iv_grid_item))
+                .execute(item.getThumbnail());
 
         return convertView;
     }

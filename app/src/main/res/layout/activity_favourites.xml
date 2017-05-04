@@ -16,7 +16,9 @@
         android:numColumns="auto_fit"
         />
 
-    <include layout="@layout/bottom_toolbar"/>
+    <include
+        android:id="@+id/favourites_bottom_toolbar"
+        layout="@layout/bottom_toolbar"/>
 
     <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->

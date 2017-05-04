@@ -19,4 +19,5 @@
     <item name="tv_view_holder_instance" type="id">view_holder_instance</item>
     <item name="item_click_support" type="id" />
     <item name="fr_illusions_view" type="id">fr_illusions_view</item>
+    <item name="ll1" type="id">ll1</item>
 </resources>

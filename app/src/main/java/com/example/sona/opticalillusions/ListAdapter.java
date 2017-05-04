@@ -132,9 +132,13 @@ public class ListAdapter extends BaseExpandableListAdapter {
 
         Illusion illusion = (Illusion) getChild(groupPosition, childPosition);
 
-        ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_list_item);
+        //ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_list_item);
         TextView textViewItem = (TextView) convertView.findViewById(R.id.tv_list_item);
-        imageViewItem.setImageResource(illusion.getThumbnail());
+        //imageViewItem.setImageResource(illusion.getThumbnail());
+
+        new DownloadImageTask((ImageView) convertView.findViewById(R.id.iv_list_item))
+                .execute(illusion.getThumbnail());
+
         textViewItem.setText(illusion.getName());
 
         return convertView;

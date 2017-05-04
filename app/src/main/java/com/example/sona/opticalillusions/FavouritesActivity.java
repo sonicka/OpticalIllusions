@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.DragEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -50,6 +51,8 @@ public class FavouritesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favourites);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration
                 .Builder()
@@ -68,7 +71,7 @@ public class FavouritesActivity extends AppCompatActivity {
         title.setText(R.string.favourites);
         type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
         title.setTypeface(type);
-        title.setPadding(0, 55, 0, 0);
+        title.setPadding(0, 30, 0, 0);
 
         gridView = (GridView) findViewById(R.id.gv_favourites_grid);
         favouriteIllusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
@@ -96,15 +99,15 @@ public class FavouritesActivity extends AppCompatActivity {
                     View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
                     view.startDragAndDrop(data, shadowBuilder, view, 0);
                 } else {
-                    showDeleteDialog();
+                    showDeleteDialog(R.string.delete_text2);
                 }
-                return false;
+                return true;
             }
         };
 
         gridView.setOnItemLongClickListener(onItemLongClickListener);
 
-        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.bottom_toolbar);
+        Toolbar bottomToolbar = (Toolbar) findViewById(R.id.favourites_bottom_toolbar);
         if (bottomToolbar != null) {
             setSupportActionBar(bottomToolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -140,9 +143,9 @@ public class FavouritesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!favouriteIllusions.isEmpty()) {
-                    showDeleteDialog();
+                    showDeleteDialog(R.string.delete_text);
                 } else {
-                    Toast.makeText(FavouritesActivity.this, "No favourite illusions to delete", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FavouritesActivity.this, R.string.no_illusions_to_delete, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -173,6 +176,8 @@ public class FavouritesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 et.setEnabled(true);
+                et.setFocusableInTouchMode(true);
+                et.clearFocus();
                 et.requestFocus();
             }
         });
@@ -217,7 +222,7 @@ public class FavouritesActivity extends AppCompatActivity {
         });
     }
 
-    private void showDeleteDialog() {
+    private void showDeleteDialog(final int i) {
         removeButton.setImageResource(R.drawable.ic_delete_open);
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(FavouritesActivity.this, R.style.DialogLight);
         View mView = getLayoutInflater().inflate(R.layout.dialog_box, null);
@@ -225,7 +230,7 @@ public class FavouritesActivity extends AppCompatActivity {
         title.setTypeface(type);
         title.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.black));
         final TextView text = (TextView) mView.findViewById(R.id.tv_delete_text);
-        text.setText(R.string.delete_text2);
+        text.setText(i);
         text.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.black));
         ImageButton del = (ImageButton) mView.findViewById(R.id.b_delete_yes);
         ImageButton cancel = (ImageButton) mView.findViewById(R.id.b_delete_cancel);
@@ -236,12 +241,17 @@ public class FavouritesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 realm.beginTransaction();
-                for (Illusion i : realm.where(Illusion.class).equalTo("isFavourite", true).findAll()) {
-                    i.setFavourite(false);
+                if (i == R.string.delete_text) {
+                    for (Illusion i : realm.where(Illusion.class).equalTo("isFavourite", true).findAll()) {
+                        i.setFavourite(false);
+                    }
+                } else {
+                    draggedIllusion.setFavourite(false);
+
                 }
                 realm.commitTransaction();
-                dialog.dismiss();
                 removeButton.setImageResource(R.drawable.ic_delete);
+                dialog.dismiss();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {

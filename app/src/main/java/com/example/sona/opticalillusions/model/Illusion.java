@@ -10,35 +10,27 @@ import io.realm.annotations.PrimaryKey;
  * Created by Soňa on 07-Apr-17.
  */
 
-public class Illusion extends RealmObject implements Parcelable{
+public class Illusion extends RealmObject implements Parcelable {
 
     @PrimaryKey
     private String name;
     private String category;
     private String description;
-    private int thumbnail;
-    private int picture;
+    private String thumbnail;
+    private String picture;
     private String animation;
     private boolean isFavourite;
-    private boolean isChecked;
 
     private static final String GEO = "Geometric Illusions";
     private static final String COL = "Color Illusions";
     private static final String THD = "3D Illusions";
     private static final String MOT = "Motion Illusions";
 
-    public Illusion () {
+    public Illusion() {
     }
 
-    public Illusion(String name, int picture) {
-        this.name = name;
-        this.picture = picture;
 
-    }  public Illusion(String name) {
-        this.name = name;
-    }
-
-    public Illusion(String name, String category, String description, int thumbnail, int picture, String animation, boolean isFavourite) {
+    public Illusion(String name, String category, String description, String thumbnail, String picture, String animation, boolean isFavourite) {
         this.name = name;
         this.category = category;
         this.description = description;
@@ -52,8 +44,8 @@ public class Illusion extends RealmObject implements Parcelable{
         name = in.readString();
         category = in.readString();
         description = in.readString();
-        thumbnail = in.readInt();
-        picture = in.readInt();
+        thumbnail = in.readString();
+        picture = in.readString();
         animation = in.readString();
         isFavourite = in.readByte() != 0;
     }
@@ -94,19 +86,19 @@ public class Illusion extends RealmObject implements Parcelable{
         this.description = description;
     }
 
-    public int getThumbnail() {
+    public String getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
     }
 
-    public int getPicture() {
+    public String getPicture() {
         return picture;
     }
 
-    public void setPicture(int picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 
@@ -122,23 +114,9 @@ public class Illusion extends RealmObject implements Parcelable{
         return isFavourite;
     }
 
-    public void setFavourite(boolean isFavourite) {
-        this.isFavourite = isFavourite;
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
-
-    @Override
-    public String toString() {
-        return "Illusion{" +
-                ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                ", description='" + description + '\'' +
-                ", thumbnail='" + thumbnail + '\'' +
-                ", picture=" + picture +
-                ", animation='" + animation + '\'' +
-                "is favourite? " + isFavourite + '\'' + 
-                '}';
-    }
-
 
     @Override
     public int describeContents() {
@@ -150,16 +128,22 @@ public class Illusion extends RealmObject implements Parcelable{
         dest.writeString(name);
         dest.writeString(category);
         dest.writeString(description);
-        dest.writeInt(thumbnail);
-        dest.writeInt(picture);
+        dest.writeString(thumbnail);
+        dest.writeString(picture);
         dest.writeString(animation);
         dest.writeByte((byte) (isFavourite ? 1 : 0));
     }
 
-    public boolean isChecked(){
-        return isChecked;
-    }
-    public void toggleChecked(){
-        isChecked = !isChecked;
+    @Override
+    public String toString() {
+        return "Illusion{" +
+                "name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", description='" + description + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", picture='" + picture + '\'' +
+                ", animation='" + animation + '\'' +
+                ", isFavourite=" + isFavourite +
+                '}';
     }
 }

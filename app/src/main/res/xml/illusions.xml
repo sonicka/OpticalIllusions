@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<illusions>
+    <illusion
+        name="Cafe Wall Illusion"
+        category="Geometric Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail="http://www.sonaleitmanova.esy.es/thumbs/thumb_cafe%20wall.jpg"
+        picture="http://www.sonaleitmanova.esy.es/pics/cafe%20wall%20(0-00-00-00).jpg"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_cafe_wall_small.mp4"
+        isFavourite="false"/>
+
+    <illusion
+        name="Color Difference Illusion"
+        animation=""
+        category="Color Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        isFavourite="false"
+        picture=""
+        thumbnail="" />
+
+    <illusion
+        name="Ebbinghaus Illusion"
+        category="Size Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Hering Illusion"
+        category="Geometric Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Hermann Grid Illusion"
+        category="Fictional Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Illusory Contours"
+        category="Fictional Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Impossible Stairs"
+        category="3D Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Impossible Triangle"
+        category="3D Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Jastrow Illusion"
+        category="Size Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Motion Illusion"
+        category="Fictional Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Müller-Lyer Illusion"
+        category="Size Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Necker Cube"
+        category="3D Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Oppel-Kundt Illusion"
+        category="Size Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Poggendorf Illusion"
+        category="Geometric Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Ponzo Illusion"
+        category="Geometric Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Rubin Vase Illusion"
+        category="3D Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Vertical-horizontal Illusion"
+        category="Size Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+
+    <illusion
+        name="Zollner Illusion"
+        category="Geometric Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        thumbnail=""
+        picture=""
+        animation=""
+        isFavourite="false"/>
+</illusions>
