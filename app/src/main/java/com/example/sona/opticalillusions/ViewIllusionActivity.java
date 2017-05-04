@@ -2,7 +2,10 @@ package com.example.sona.opticalillusions;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -42,10 +45,11 @@ public class ViewIllusionActivity extends AppCompatActivity {
     private TextView title;
     private ImageButton setFavourite;
     private TextView description;
+    private VideoView videoView;
     private Stack stack;
     private GridElementAdapter adapter;
     private HorizontalGridView horizontalGridView;
-    private LinearLayout videoLayout;
+    private LinearLayout graphicsLayout;
     private boolean bVideoIsBeingTouched = false;
     private Handler mHandler = new Handler();
 
@@ -89,10 +93,9 @@ public class ViewIllusionActivity extends AppCompatActivity {
         title.setTypeface(type);
         category.setTypeface(type);
 
-        //imageView = (ImageView) findViewById(R.id.iv_view_illusion);
-        final VideoView videoView = (VideoView) findViewById(R.id.vv_video);
+        imageView = (ImageView) findViewById(R.id.iv_view_illusion);
+        videoView = (VideoView) findViewById(R.id.vv_video);
         description = (TextView) findViewById(R.id.tv_description);
-
 
         videoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -115,10 +118,16 @@ public class ViewIllusionActivity extends AppCompatActivity {
         });
 
         DisplayMetrics display = this.getResources().getDisplayMetrics();
-        int width = display.widthPixels;
+        final int width = display.widthPixels;
 
-//        videoLayout = (LinearLayout) findViewById(R.id.ll_video);
-//        videoLayout.setLayoutParams(new LinearLayout.LayoutParams(width, LinearLayout.LayoutParams.WRAP_CONTENT));
+//        graphicsLayout = (LinearLayout) findViewById(R.id.ll_graphics);
+//        graphicsLayout.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+
+
+        LinearLayout videoLayout = (LinearLayout) findViewById(R.id.ll_video);
+        videoLayout.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+
+
 
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -126,7 +135,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
                 mp.setDisplay(null);
                 mp.reset();
                 mp.setDisplay(videoView.getHolder());
-                videoLayout.setVisibility(View.GONE);
+                videoView.setVisibility(View.GONE);
                 imageView.setVisibility(View.VISIBLE);
             }
         });
@@ -136,13 +145,24 @@ public class ViewIllusionActivity extends AppCompatActivity {
             public void onSwipeLeft() {
                 imageView.setVisibility(View.GONE);
                 description.setVisibility(View.VISIBLE);
+
+                int myColor = Color.parseColor("#000000");  //todo
+                Drawable backgroundColor = new ColorDrawable(myColor);
+                backgroundColor.setAlpha(100);
+
+                description.setBackground(backgroundColor);
+                //description.setBackgroundResource(currentIllusion.getPicture());
+
+               // description.getBackground().setAlpha(80);
+
+                //description.getBackground().setAlpha(80);
             }
 
             @Override
             public void onClick() {
                 if (haveNetworkConnection()) {
                     imageView.setVisibility(View.GONE);
-                    videoLayout.setVisibility(View.VISIBLE);
+                    videoView.setVisibility(View.VISIBLE);
 
                     Toast toast = Toast.makeText(ViewIllusionActivity.this, R.string.animation_loading, Toast.LENGTH_SHORT);
                     toast.show();
@@ -159,24 +179,13 @@ public class ViewIllusionActivity extends AppCompatActivity {
             @Override
             public void onSwipeRight() {
                 imageView.setVisibility(View.VISIBLE);
+                imageView.setAlpha((float) 1.0);
+
+                imageView.setImageResource(currentIllusion.getPicture());
+                //imageView.setImageAlpha(255);
                 description.setVisibility(View.GONE);
             }
         });
-
-//        imageView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                if (imageView.getVisibility() == View.VISIBLE || videoView.getVisibility() == View.VISIBLE) {
-//                    imageView.setVisibility(View.GONE);
-//                    videoLayout.setVisibility(View.GONE);
-//                    description.setVisibility(View.VISIBLE);
-//                } else {
-//                    imageView.setVisibility(View.VISIBLE);
-//                    videoLayout.setVisibility(View.GONE);
-//                }
-//                return true;
-//            }
-//        });
 
         ImageButton back = (ImageButton) findViewById(R.id.b_last_viewed);
         back.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +203,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton toAll = (ImageButton) findViewById(R.id.b_all_illusions);
+        ImageButton toAll = (ImageButton) findViewById(R.id.b_last_viewed);
         toAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,9 +231,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
         currentIllusion = illusion;
         title.setText(illusion.getName());
         category.setText(illusion.getCategory());
-        //imageView.setImageResource(illusion.getPicture());
-        new DownloadImageTask((ImageView) findViewById(R.id.iv_view_illusion))
-                .execute(illusion.getThumbnail());
+        imageView.setImageResource(illusion.getPicture());
 
         if (illusion.isFavourite()) {
             setFavourite.setImageResource(R.drawable.ic_unfavourite);
@@ -240,7 +247,8 @@ public class ViewIllusionActivity extends AppCompatActivity {
         description.setText(currentIllusion.getDescription());
         imageView.setVisibility(View.VISIBLE);
         description.setVisibility(View.GONE);
-        //videoLayout.setVisibility(View.GONE);
+        videoView.stopPlayback();
+        videoView.setVisibility(View.GONE);
     }
 
     public void addIllusionToStack() {

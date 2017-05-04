@@ -11,7 +11,7 @@
         layout="@layout/toolbar" />
 
     <RelativeLayout
-        android:id="@+id/ll_view"
+        android:id="@+id/rl_view"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_above="@+id/all_bottom_toolbar"
@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:numColumns="auto_fit"
-            android:columnWidth="200dp"/>
+            android:columnWidth="180dp"/>
 
         <ExpandableListView
             android:id="@+id/id_list_view"

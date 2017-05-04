@@ -48,10 +48,9 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Illusion illusion = getData().get(position);
-        //ImageView imageView = (ImageView) holder.itemView.findViewById(R.id.iv_small_preview);
-        //imageView.setImageResource(illusion.getThumbnail());
-        new DownloadImageTask((ImageView) holder.itemView.findViewById(R.id.iv_small_preview))
-                .execute(illusion.getThumbnail());
+        ImageView imageView = (ImageView) holder.itemView.findViewById(R.id.iv_small_preview);
+        imageView.setImageResource(illusion.getThumbnail());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

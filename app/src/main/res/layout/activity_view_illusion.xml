@@ -15,154 +15,151 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
-    <ImageView
-        android:id="@+id/iv_view_illusion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_graphics"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:layout_marginTop="0dp"
-        android:adjustViewBounds="true"
-        android:clickable="true"
-        android:keepScreenOn="true"
-        android:longClickable="true"
-        android:scaleType="centerInside"
-        android:src="@drawable/motion1"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:orientation="vertical"
+        android:weightSum="1"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/top_toolbar_details" />
+        app:layout_constraintTop_toBottomOf="@+id/top_toolbar_details">
 
-    <VideoView
-        android:id="@+id/vv_video"
+        <ImageView
+            android:id="@+id/iv_view_illusion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:adjustViewBounds="true"
+            android:clickable="true"
+            android:keepScreenOn="true"
+            android:longClickable="true"
+            android:scaleType="centerInside"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_toolbar_details" />
+
+        <LinearLayout
+            android:id="@+id/ll_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/top_toolbar_details">
+
+            <VideoView
+                android:id="@+id/vv_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_view_illusion"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0" />
+
+            <TextView
+                android:id="@+id/tv_description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="sdgfdfhgfdsfgdsfgdsfgdsfgdsfg"
+                android:textColor="@color/black"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_toolbar_details" />
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_view_illusion"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/tv_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/black_overlay"
-        android:text="sdgfdfhgfdsfgdsfgdsfgdsfgdsfg"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_view_illusion"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_view_illusion" />
-
-    <ImageButton
-        android:id="@+id/b_last_viewed"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="73dp"
-        android:layout_marginTop="-1dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/circle_shape_drawable"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_previous"
-        app:layout_constraintBottom_toTopOf="@+id/gv_small_preview"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/b_all_illusions"
-        app:layout_constraintTop_toBottomOf="@+id/vv_video"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageButton
-        android:id="@+id/b_all_illusions"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="-1dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/circle_shape_drawable"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_grid"
-        app:layout_constraintHorizontal_bias="0.501"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        app:layout_constraintBottom_toTopOf="@+id/llImg"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vv_video"
-        app:layout_constraintVertical_bias="1.0"
-        app:layout_constraintBottom_toTopOf="@+id/llImg" />
+        app:layout_constraintRight_toRightOf="parent">
 
-    <ImageButton
-        android:id="@+id/b_to_favourites"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="-1dp"
-        android:adjustViewBounds="true"
-        android:background="@drawable/circle_shape_drawable"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_favourite"
-        app:layout_constraintBottom_toTopOf="@+id/gv_small_preview"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toRightOf="@+id/b_all_illusions"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vv_video"
-        app:layout_constraintVertical_bias="1.0" />
+        <ImageButton
+            android:id="@+id/b_last_viewed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_previous"
+            app:layout_constraintBottom_toTopOf="@+id/llImg"
+            app:layout_constraintHorizontal_bias="0.773"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/b_to_all"
+            app:layout_constraintTop_toBottomOf="@+id/vv_video"
+            app:layout_constraintVertical_bias="0.97" />
 
-    <LinearLayout android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@+id/b_to_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_grid"
+            app:layout_constraintBottom_toTopOf="@+id/llImg"
+            app:layout_constraintTop_toBottomOf="@+id/vv_video"
+            app:layout_constraintVertical_bias="0.95"
+            tools:layout_editor_absoluteX="176dp" />
+
+        <ImageButton
+            android:id="@+id/b_to_favourites"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_favourite"
+            app:layout_constraintBottom_toTopOf="@+id/llImg"
+            app:layout_constraintHorizontal_bias="0.164"
+            app:layout_constraintLeft_toRightOf="@+id/b_to_all"
+            app:layout_constraintRight_toRightOf="parent" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/llImg"
-        tools:layout_editor_absoluteX="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="0dp">
-
-    <android.support.v17.leanback.widget.HorizontalGridView
-        android:id="@+id/gv_small_preview"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
-        android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/b_all_illusions"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp">
 
-</LinearLayout>
+        <android.support.v17.leanback.widget.HorizontalGridView
+            android:id="@+id/gv_small_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/b_last_viewed"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="0dp" />
+
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
-
-
-    <!--<?xml version="1.0" encoding="utf-8"?>--><!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:tools="http://schemas.android.com/tools"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@drawable/bg1"--><!--android:fillViewport="true"--><!--android:orientation="vertical"--><!--tools:context="com.example.sona.opticalillusions.ViewIllusionActivity">-->
-
-    <!--<include--><!--android:id="@+id/top_toolbar_details"--><!--layout="@layout/toolbar" />-->
-
-    <!--<LinearLayout--><!--android:id="@+id/ll_details"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_below="@id/top_toolbar_details"--><!--android:orientation="horizontal">-->
-
-    <!--<ImageView--><!--android:id="@+id/iv_view_illusion"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:adjustViewBounds="true"--><!--android:clickable="true"--><!--android:keepScreenOn="true"--><!--android:longClickable="true"--><!--android:scaleType="centerInside"--><!--android:src="@drawable/motion1" />-->
-
-    <!--<LinearLayout--><!--android:id="@+id/ll_video"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@drawable/bg1"--><!--android:visibility="gone">-->
-
-    <!--<VideoView--><!--android:id="@+id/vv_video"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent" />--><!--</LinearLayout>-->
-
-    <!--<TextView--><!--android:id="@+id/tv_description"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:background="@color/black_overlay"--><!--android:visibility="gone" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout--><!--android:id="@+id/ll_bottom"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:orientation="vertical"--><!--android:layout_alignParentBottom="true"--><!--android:layout_below="@+id/ll_details">-->
-
-    <!--<LinearLayout--><!--android:id="@+id/rl_buttons"--><!--android:layout_width="match_parent"--><!--android:layout_height="0dp"--><!--android:layout_weight="1"--><!--android:gravity="center"--><!--android:orientation="horizontal">-->
-
-    <!--<ImageButton--><!--android:id="@+id/b_last_viewed"--><!--android:layout_width="wrap_content"--><!--android:layout_height="match_parent"--><!--android:adjustViewBounds="true"--><!--android:background="@drawable/circle_shape_drawable"--><!--android:scaleType="fitCenter"--><!--android:src="@drawable/ic_previous" />-->
-
-    <!--<ImageButton--><!--android:id="@+id/b_all_illusions"--><!--android:layout_width="wrap_content"--><!--android:layout_height="match_parent"--><!--android:layout_marginLeft="0dp"--><!--android:layout_marginRight="0dp"--><!--android:adjustViewBounds="true"--><!--android:background="@drawable/circle_shape_drawable"--><!--android:cropToPadding="false"--><!--android:scaleType="fitCenter"--><!--android:src="@drawable/ic_grid" />-->
-
-    <!--<ImageButton--><!--android:id="@+id/b_to_favourites"--><!--android:layout_width="wrap_content"--><!--android:layout_height="match_parent"--><!--android:adjustViewBounds="true"--><!--android:background="@drawable/circle_shape_drawable"--><!--android:scaleType="fitCenter"--><!--android:src="@drawable/ic_favourite" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout--><!--android:id="@+id/ll_horizontal_grid_view"--><!--android:layout_width="match_parent"--><!--android:layout_height="0dp"--><!--android:layout_weight="1"--><!--android:orientation="vertical">-->
-
-    <!--<android.support.v17.leanback.widget.HorizontalGridView--><!--android:id="@+id/gv_small_preview"--><!--android:layout_width="wrap_content"--><!--android:layout_height="match_parent" />--><!--</LinearLayout>--><!--</LinearLayout>--><!--</RelativeLayout>-->

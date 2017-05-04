@@ -34,10 +34,8 @@ final class ImageAdapter extends RealmBaseAdapter<Illusion> {
 
         Illusion item = getItem(position);
 
-        //ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_grid_item);
-        //imageViewItem.setImageResource(item.getThumbnail());
-        new DownloadImageTask((ImageView) convertView.findViewById(R.id.iv_grid_item))
-                .execute(item.getThumbnail());
+        ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_grid_item);
+        imageViewItem.setImageResource(item.getThumbnail());
 
         return convertView;
     }

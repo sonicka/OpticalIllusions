@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -35,6 +36,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
+ * This activity shows all illusions in a grid or in a list.
  * Created by Soňa on 04-Apr-17.
  */
 
@@ -65,6 +67,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         realm = Realm.getInstance(config);
 
         listIllusions = realm.where(Illusion.class).findAll();
+        Log.v("trololo", listIllusions.toString());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar);
         if (toolbar != null) {
@@ -79,8 +82,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
         title.setTypeface(type);
         title.setPadding(0, 30, 0, 0);
 
-        // GRIDVIEW
-
         imageAdapter = new ImageAdapter(this, listIllusions);
         gridView = (GridView) findViewById(R.id.gv_illusion_grid);
         gridView.setAdapter(imageAdapter);
@@ -94,8 +95,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         };
         gridView.setOnItemClickListener(onItemClickListener);
-
-        // LISTVIEW
 
         adapter = new ListAdapter(this, fillMap(listIllusions));
         final ExpandableListView listView = (ExpandableListView) findViewById(R.id.id_list_view);
@@ -242,10 +241,11 @@ public class AllIllusionsActivity extends AppCompatActivity {
         List<String> headers = new ArrayList<>();
         headers.add("All Illusions");
         linkedMap.put("All Illusions", listIllusions);
-        linkedMap.put("3D illusions", new ArrayList<Illusion>());
+        linkedMap.put("3D Illusions", new ArrayList<Illusion>());
         linkedMap.put("Color Illusions", new ArrayList<Illusion>());
+        linkedMap.put("Fictional Illusions", new ArrayList<Illusion>());
         linkedMap.put("Geometric Illusions", new ArrayList<Illusion>());
-        linkedMap.put("Motion illusion", new ArrayList<Illusion>());
+        linkedMap.put("Size Illusions", new ArrayList<Illusion>());
 
         for (Illusion i : listIllusions) {
             if (!headers.contains(i.getCategory())) {
@@ -269,16 +269,29 @@ public class AllIllusionsActivity extends AppCompatActivity {
         return linkedMap;
     }
 
+    /**
+     * Opens keyboard when needed.
+     * @param view current view
+     */
     public void openKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_FORCED);
     }
 
+    /**
+     * Closes keyboard when no longer needed.
+     * @param view current view
+     */
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    /**
+     * Overrides default method in order to clear focus of an EditText when tapped outside of it.
+     * @param event current motion event
+     * @return true/false
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {

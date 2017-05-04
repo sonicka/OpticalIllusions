@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
+ * This class is used to parse data about illusions from XML file.
  * Created by Soňa on 02-May-17.
  */
 
@@ -31,25 +32,17 @@ public class XmlParser extends Activity {
                     String name = parser.getAttributeValue(null, "name");
                     String category = parser.getAttributeValue(null, "category");
                     String description = parser.getAttributeValue(null, "description");
-                    String thumbnail = parser.getAttributeValue(null, "thumbnail");
-                    String picture = parser.getAttributeValue(null, "picture");
                     String animation = parser.getAttributeValue(null, "animation");
                     boolean isFavourite = Boolean.parseBoolean(parser.getAttributeValue(null, "isFavourite"));
-                    saveValues(name, category, description, thumbnail, picture, animation, isFavourite);
+                    saveValues(name, category, description, animation, isFavourite);
                 }
             }
             eventType = parser.next();
         }
     }
 
-    private void saveValues(String name, String category, String description, String thumbnail, String picture, String animation, boolean isFavourite) {
-        Illusion illusion = new Illusion(name, category, description, thumbnail, picture, animation, isFavourite);
+    private void saveValues(String name, String category, String description, String animation, boolean isFavourite) {
+        Illusion illusion = new Illusion(name, category, description, animation, isFavourite);
         list.add(illusion);
-//        realm.executeTransaction(new Realm.Transaction() {
-//            @Override
-//            public void execute(Realm realm) {
-//                realm.copyToRealmOrUpdate(illusion);
-//            }
-//        });
     }
 }

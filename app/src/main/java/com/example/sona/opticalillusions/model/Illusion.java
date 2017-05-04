@@ -7,6 +7,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
+ * Objects of this class store information about illusions.
  * Created by Soňa on 07-Apr-17.
  */
 
@@ -16,21 +17,15 @@ public class Illusion extends RealmObject implements Parcelable {
     private String name;
     private String category;
     private String description;
-    private String thumbnail;
-    private String picture;
+    private int thumbnail;
+    private int picture;
     private String animation;
     private boolean isFavourite;
-
-    private static final String GEO = "Geometric Illusions";
-    private static final String COL = "Color Illusions";
-    private static final String THD = "3D Illusions";
-    private static final String MOT = "Motion Illusions";
 
     public Illusion() {
     }
 
-
-    public Illusion(String name, String category, String description, String thumbnail, String picture, String animation, boolean isFavourite) {
+    public Illusion(String name, String category, String description, int thumbnail, int picture, String animation, boolean isFavourite) {
         this.name = name;
         this.category = category;
         this.description = description;
@@ -40,12 +35,20 @@ public class Illusion extends RealmObject implements Parcelable {
         this.isFavourite = isFavourite;
     }
 
+    public Illusion(String name, String category, String description, String animation, boolean isFavourite) {
+        this.name = name;
+        this.category = category;
+        this.description = description;
+        this.animation = animation;
+        this.isFavourite = isFavourite;
+    }
+
     protected Illusion(Parcel in) {
         name = in.readString();
         category = in.readString();
         description = in.readString();
-        thumbnail = in.readString();
-        picture = in.readString();
+        thumbnail = in.readInt();
+        picture = in.readInt();
         animation = in.readString();
         isFavourite = in.readByte() != 0;
     }
@@ -74,48 +77,41 @@ public class Illusion extends RealmObject implements Parcelable {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getThumbnail() {
+    public int getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(String thumbnail) {
+    public void setThumbnailAndPicture(int thumbnail, int picture) {
         this.thumbnail = thumbnail;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    public int getPicture() {
+        return picture;
     }
 
     public String getAnimation() {
         return animation;
     }
 
-    public void setAnimation(String animation) {
-        this.animation = animation;
-    }
-
     public boolean isFavourite() {
         return isFavourite;
     }
 
-    public void setFavourite(boolean favourite) {
-        isFavourite = favourite;
+    public void setFavourite(boolean isFavourite) {
+        this.isFavourite = isFavourite;
+    }
+
+    @Override
+    public String toString() {
+        return "Illusion{" + ", name='" + name + '\'' + ", category='" + category + '\'' +
+                ", description='" + description + '\'' + ", thumbnail='" + thumbnail + '\'' +
+                ", picture=" + picture + ", animation='" + animation + '\'' +
+                "is favourite? " + isFavourite + '\'' + '}';
     }
 
     @Override
@@ -128,22 +124,9 @@ public class Illusion extends RealmObject implements Parcelable {
         dest.writeString(name);
         dest.writeString(category);
         dest.writeString(description);
-        dest.writeString(thumbnail);
-        dest.writeString(picture);
+        dest.writeInt(thumbnail);
+        dest.writeInt(picture);
         dest.writeString(animation);
         dest.writeByte((byte) (isFavourite ? 1 : 0));
-    }
-
-    @Override
-    public String toString() {
-        return "Illusion{" +
-                "name='" + name + '\'' +
-                ", category='" + category + '\'' +
-                ", description='" + description + '\'' +
-                ", thumbnail='" + thumbnail + '\'' +
-                ", picture='" + picture + '\'' +
-                ", animation='" + animation + '\'' +
-                ", isFavourite=" + isFavourite +
-                '}';
     }
 }

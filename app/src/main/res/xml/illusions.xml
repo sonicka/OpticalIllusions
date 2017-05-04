@@ -4,161 +4,139 @@
         name="Cafe Wall Illusion"
         category="Geometric Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail="http://www.sonaleitmanova.esy.es/thumbs/thumb_cafe%20wall.jpg"
-        picture="http://www.sonaleitmanova.esy.es/pics/cafe%20wall%20(0-00-00-00).jpg"
         animation="http://www.sonaleitmanova.esy.es/vids/mp4_cafe_wall_small.mp4"
         isFavourite="false"/>
 
     <illusion
-        name="Color Difference Illusion"
-        animation=""
+        name="Color Difference 1"
         category="Color Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        isFavourite="false"
-        picture=""
-        thumbnail="" />
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_color_difference1_small.mp4"
+        isFavourite="false" />
+
+    <illusion
+        name="Color Difference 2"
+        category="Color Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_color_difference2_small.mp4"
+        isFavourite="false" />
 
     <illusion
         name="Ebbinghaus Illusion"
         category="Size Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_ebbinghaus_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Hering Illusion"
         category="Geometric Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_hering_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Hermann Grid Illusion"
         category="Fictional Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_hermann_grid_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Illusory Contours"
         category="Fictional Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_illusorycontours_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Impossible Stairs"
         category="3D Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_stairs_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Impossible Triangle"
         category="3D Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_triangle_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Jastrow Illusion"
         category="Size Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_jastrow_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Motion Illusion"
         category="Fictional Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_motion_small.mp4"
+        isFavourite="false"/>
+
+    <illusion
+        name="Munker Illusion"
+        category="Color Illusions"
+        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_munker_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Müller-Lyer Illusion"
         category="Size Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_muller_lyer_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Necker Cube"
         category="3D Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_necker_cube_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Oppel-Kundt Illusion"
         category="Size Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_oppel_kundt_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Poggendorf Illusion"
         category="Geometric Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_poggendorf_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Ponzo Illusion"
         category="Geometric Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_ponzo_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Rubin Vase Illusion"
-        category="3D Illusions"
+        category="Fictional Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_rubin_vase_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Vertical-horizontal Illusion"
         category="Size Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_vertical_horizontal_small.mp4"
         isFavourite="false"/>
 
     <illusion
         name="Zollner Illusion"
         category="Geometric Illusions"
         description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
-        thumbnail=""
-        picture=""
-        animation=""
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_zollner_small.mp4"
         isFavourite="false"/>
 </illusions>

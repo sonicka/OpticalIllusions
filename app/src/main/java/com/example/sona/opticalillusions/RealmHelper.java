@@ -14,6 +14,7 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 
 /**
+ * Helper class to handle operations within Realm database.
  * Created by Soňa on 09-Apr-17.
  */
 
@@ -23,6 +24,18 @@ public class RealmHelper {
 
     public RealmHelper(Realm realm) {
         this.realm = realm;
+    }
+
+    /**
+     * Sends content of a list to Realm database.
+     * @param list list of data from xml file
+     */
+    void listToDb(ArrayList<Illusion> list) {
+        realm.beginTransaction();
+        for (Illusion i : list) {
+            realm.copyToRealmOrUpdate(i);
+        }
+        realm.commitTransaction();
     }
 
     void save(final Illusion illusion) {
@@ -69,7 +82,13 @@ public class RealmHelper {
         return illusions;
     }
 
-    public void setFavourite(Realm realm, View v, Illusion illusion) {
+    /**
+     * Favourite illusion sets to non-favourite and vice versa.
+     * @param realm Reealm db
+     * @param v current view
+     * @param illusion current illusion
+     */
+    void setFavourite(Realm realm, View v, Illusion illusion) {
         realm.beginTransaction();
         if (illusion.isFavourite()) {
             ((ImageButton) v).setImageResource(R.drawable.ic_favourite);
