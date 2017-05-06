@@ -49,9 +49,8 @@ public class ViewIllusionActivity extends AppCompatActivity {
     private Stack stack;
     private GridElementAdapter adapter;
     private HorizontalGridView horizontalGridView;
-    private LinearLayout graphicsLayout;
-    private boolean bVideoIsBeingTouched = false;
-    private Handler mHandler = new Handler();
+    private boolean isVideoBeingTouched = false;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,19 +96,20 @@ public class ViewIllusionActivity extends AppCompatActivity {
         videoView = (VideoView) findViewById(R.id.vv_video);
         description = (TextView) findViewById(R.id.tv_description);
 
+        handler = new Handler();
         videoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (!bVideoIsBeingTouched) {
-                    bVideoIsBeingTouched = true;
+                if (!isVideoBeingTouched) {
+                    isVideoBeingTouched = true;
                     if (videoView.isPlaying()) {
                         videoView.pause();
                     } else {
                         videoView.start();
                     }
-                    mHandler.postDelayed(new Runnable() {
+                    handler.postDelayed(new Runnable() {
                         public void run() {
-                            bVideoIsBeingTouched = false;
+                            isVideoBeingTouched = false;
                         }
                     }, 100);
                 }
@@ -120,14 +120,9 @@ public class ViewIllusionActivity extends AppCompatActivity {
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         final int width = display.widthPixels;
 
-//        graphicsLayout = (LinearLayout) findViewById(R.id.ll_graphics);
-//        graphicsLayout.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-
-
-        LinearLayout videoLayout = (LinearLayout) findViewById(R.id.ll_video);
-        videoLayout.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-
-
+        imageView.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+        videoView.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+        description.setLayoutParams(new LinearLayout.LayoutParams(width, width));
 
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -203,7 +198,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton toAll = (ImageButton) findViewById(R.id.b_last_viewed);
+        ImageButton toAll = (ImageButton) findViewById(R.id.b_to_all);
         toAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -270,7 +265,6 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         } else {
             if (cm != null) {
-                //noinspection deprecation
                 NetworkInfo[] info = cm.getAllNetworkInfo();
                 if (info != null) {
                     for (NetworkInfo anInfo : info) {

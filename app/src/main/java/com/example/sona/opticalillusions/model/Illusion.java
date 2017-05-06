@@ -22,19 +22,20 @@ public class Illusion extends RealmObject implements Parcelable {
     private String animation;
     private boolean isFavourite;
 
+    /**
+     * Empty constructor of illusion object.
+     */
     public Illusion() {
     }
 
-    public Illusion(String name, String category, String description, int thumbnail, int picture, String animation, boolean isFavourite) {
-        this.name = name;
-        this.category = category;
-        this.description = description;
-        this.thumbnail = thumbnail;
-        this.picture = picture;
-        this.animation = animation;
-        this.isFavourite = isFavourite;
-    }
-
+    /**
+     * Constructor of illusion object with attributes.
+     * @param name String
+     * @param category String
+     * @param description String
+     * @param animation URL String
+     * @param isFavourite boolean
+     */
     public Illusion(String name, String category, String description, String animation, boolean isFavourite) {
         this.name = name;
         this.category = category;
@@ -43,6 +44,10 @@ public class Illusion extends RealmObject implements Parcelable {
         this.isFavourite = isFavourite;
     }
 
+    /**
+     * Constructor of a parcel used when object sent to another activity.
+     * @param in Parcel
+     */
     protected Illusion(Parcel in) {
         name = in.readString();
         category = in.readString();
@@ -53,18 +58,10 @@ public class Illusion extends RealmObject implements Parcelable {
         isFavourite = in.readByte() != 0;
     }
 
-    public static final Creator<Illusion> CREATOR = new Creator<Illusion>() {
-        @Override
-        public Illusion createFromParcel(Parcel in) {
-            return new Illusion(in);
-        }
-
-        @Override
-        public Illusion[] newArray(int size) {
-            return new Illusion[size];
-        }
-    };
-
+    /**
+     * Getters and setters of attributes needed throughout the app.
+     * @return void / obtained value
+     */
     public String getName() {
         return name;
     }
@@ -106,6 +103,10 @@ public class Illusion extends RealmObject implements Parcelable {
         this.isFavourite = isFavourite;
     }
 
+    /**
+     * Makes string out of object's attributes.
+     * @return String
+     */
     @Override
     public String toString() {
         return "Illusion{" + ", name='" + name + '\'' + ", category='" + category + '\'' +
@@ -113,6 +114,21 @@ public class Illusion extends RealmObject implements Parcelable {
                 ", picture=" + picture + ", animation='" + animation + '\'' +
                 "is favourite? " + isFavourite + '\'' + '}';
     }
+
+    /**
+     * Methods overridden to be able to send illusion objects between activities.
+     */
+    public static final Creator<Illusion> CREATOR = new Creator<Illusion>() {
+        @Override
+        public Illusion createFromParcel(Parcel in) {
+            return new Illusion(in);
+        }
+
+        @Override
+        public Illusion[] newArray(int size) {
+            return new Illusion[size];
+        }
+    };
 
     @Override
     public int describeContents() {

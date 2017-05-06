@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,12 +24,12 @@ import android.widget.TextView;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.realm.Case;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -43,12 +42,13 @@ import io.realm.RealmConfiguration;
 public class AllIllusionsActivity extends AppCompatActivity {
 
     private OrderedRealmCollection<Illusion> listIllusions;
+    private RealmHelper helper;
     private LinkedHashMap<String, List<Illusion>> linkedMap;
     private GridView gridView;
     private Realm realm;
     private ImageAdapter imageAdapter;
     private ListAdapter adapter;
-    private EditText et;
+    private EditText editTextSearch;
     private ImageButton searchButton;
     private int previousGroup = -1;
 
@@ -65,9 +65,9 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         realm = Realm.getInstance(config);
+        helper = new RealmHelper(realm);
 
         listIllusions = realm.where(Illusion.class).findAll();
-        Log.v("trololo", listIllusions.toString());
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar);
         if (toolbar != null) {
@@ -75,6 +75,16 @@ public class AllIllusionsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
+
+        ImageView logo = (ImageView) findViewById(R.id.ib_logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AllIllusionsActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         final TextView title = (TextView) findViewById(R.id.tv_title);
         title.setText(R.string.preview);
@@ -133,16 +143,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
-        ImageView logo = (ImageView) findViewById(R.id.ib_logo);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(AllIllusionsActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
-
         ImageButton favouritesButton = (ImageButton) findViewById(R.id.b_left_button);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,25 +167,30 @@ public class AllIllusionsActivity extends AppCompatActivity {
                     title.setText(R.string.preview);
                     switchViewButton.setImageResource(R.drawable.ic_list);
                 }
-                et.setText("");
+                editTextSearch.setText("");
             }
         });
 
-        et = (EditText) findViewById(R.id.et_search);
-        et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        editTextSearch = (EditText) findViewById(R.id.et_search);
+        editTextSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus && searchButton.isPressed()) {
+                    try {
+                        Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
+                        f.setAccessible(true);
+                        f.set(editTextSearch, R.drawable.color_cursor);
+                    } catch (Exception ignored) {}
                     openKeyboard(v);
                 }
-                if (v.getId() == R.id.et_search && !hasFocus && !et.isPressed()) {
-                    et.setEnabled(false);
+                if (v.getId() == R.id.et_search && !hasFocus && !editTextSearch.isPressed()) {
+                    editTextSearch.setEnabled(false);
                     hideKeyboard(v);
                 }
             }
         });
 
-        et.addTextChangedListener(new TextWatcher() {
+        editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -195,14 +200,9 @@ public class AllIllusionsActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                 if (s != null && s.length() > 0) {
-                    listIllusions = realm.where(Illusion.class).contains("name", s.toString(), Case.INSENSITIVE)
-                            .or()
-                            .contains("category", s.toString(), Case.INSENSITIVE)
-                            .or()
-                            .contains("description", s.toString(), Case.INSENSITIVE)
-                            .findAll();
+                    listIllusions = helper.searchIllusions(s);
                 } else {
-                    listIllusions = realm.where(Illusion.class).findAll();
+                    listIllusions = helper.getAll();
                 }
 
                 if (gridView.getVisibility() == View.VISIBLE) {
@@ -228,14 +228,20 @@ public class AllIllusionsActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                et.setEnabled(true);
-                et.setFocusableInTouchMode(true);
-                et.clearFocus();
-                et.requestFocus();
+                editTextSearch.setEnabled(true);
+                editTextSearch.setFocusableInTouchMode(true);
+                editTextSearch.clearFocus();
+                editTextSearch.requestFocus();
             }
         });
     }
 
+    /**
+     * Creates map from illusions from database to fill the ListView.
+     *
+     * @param listIllusions List of illusions
+     * @return Map of illusions
+     */
     public LinkedHashMap<String, List<Illusion>> fillMap(OrderedRealmCollection<Illusion> listIllusions) {
         linkedMap = new LinkedHashMap<>();
         List<String> headers = new ArrayList<>();
@@ -271,6 +277,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
     /**
      * Opens keyboard when needed.
+     *
      * @param view current view
      */
     public void openKeyboard(View view) {
@@ -280,6 +287,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
     /**
      * Closes keyboard when no longer needed.
+     *
      * @param view current view
      */
     public void hideKeyboard(View view) {
@@ -289,6 +297,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
     /**
      * Overrides default method in order to clear focus of an EditText when tapped outside of it.
+     *
      * @param event current motion event
      * @return true/false
      */

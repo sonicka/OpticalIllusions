@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -27,24 +29,29 @@ import android.widget.Toast;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
-import io.realm.Case;
+import java.lang.reflect.Field;
+
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
+ * This activity shows a grid of illusions set as favourite.
  * Created by Soňa on 04-Apr-17.
  */
 
 public class FavouritesActivity extends AppCompatActivity {
 
     private Realm realm;
-    private Illusion draggedIllusion;
     private OrderedRealmCollection<Illusion> favouriteIllusions;
-    private static GridView gridView;
-    private static ImageAdapter adapter;
-    private Typeface type;
+    private RealmHelper helper;
+    private Illusion draggedIllusion;
+    private GridView gridView;
+    private ImageAdapter adapter;
     private ImageButton removeButton;
+    private EditText editTextSearch;
+    private ImageButton searchButton;
+    private Typeface type;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +66,7 @@ public class FavouritesActivity extends AppCompatActivity {
                 .deleteRealmIfMigrationNeeded()
                 .build();
         realm = Realm.getInstance(config);
+        helper = new RealmHelper(realm);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
@@ -66,6 +74,16 @@ public class FavouritesActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
+
+        ImageView logo = (ImageView) findViewById(R.id.ib_logo);
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FavouritesActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
         TextView title = (TextView) findViewById(R.id.tv_title);
         title.setText(R.string.favourites);
@@ -150,16 +168,6 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
 
-        ImageView logo = (ImageView) findViewById(R.id.ib_logo);
-        logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FavouritesActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
-
         ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_view);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,50 +176,36 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
 
-        final EditText et = (EditText) findViewById(R.id.et_search);
-        final ImageButton searchButton = (ImageButton) findViewById(R.id.ib_search);
-        searchButton.setOnClickListener(new View.OnClickListener()
-
-        {
-            @Override
-            public void onClick(View v) {
-                et.setEnabled(true);
-                et.setFocusableInTouchMode(true);
-                et.clearFocus();
-                et.requestFocus();
-            }
-        });
-
-        et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        editTextSearch = (EditText) findViewById(R.id.et_search);
+        editTextSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                if (hasFocus && searchButton.isPressed()) {
+                    try {
+                        Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
+                        f.setAccessible(true);
+                        f.set(editTextSearch, R.drawable.color_cursor);
+                    } catch (Exception ignored) {}
                     openKeyboard(v);
                 }
-                if (v.getId() == R.id.et_search && !hasFocus) {
-                    et.setEnabled(false);
+                if (v.getId() == R.id.et_search && !hasFocus && !editTextSearch.isPressed()) {
+                    editTextSearch.setEnabled(false);
                     hideKeyboard(v);
                 }
             }
         });
 
-        et.addTextChangedListener(new TextWatcher() {
+        editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s != null && s.length() > 0) {
-                    favouriteIllusions = realm.where(Illusion.class).equalTo("isFavourite", true)
-                            .contains("name", s.toString(), Case.INSENSITIVE)
-                            .or()
-                            .contains("category", s.toString(), Case.INSENSITIVE)
-                            .or()
-                            .contains("description", s.toString(), Case.INSENSITIVE).findAll();
-                } else {
-                    favouriteIllusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
+                if (realm.where(Illusion.class).equalTo("isFavourite", true).findAll().isEmpty()) {
+                    return;
                 }
+                favouriteIllusions = helper.searchInFavourites(s);
                 adapter = new ImageAdapter(FavouritesActivity.this, favouriteIllusions);
                 gridView.setAdapter(adapter);
             }
@@ -220,28 +214,51 @@ public class FavouritesActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        searchButton = (ImageButton) findViewById(R.id.ib_search);
+        searchButton.setOnClickListener(new View.OnClickListener()
+
+        {
+            @Override
+            public void onClick(View v) {
+                editTextSearch.setEnabled(true);
+                editTextSearch.setFocusableInTouchMode(true);
+                editTextSearch.clearFocus();
+                editTextSearch.requestFocus();
+            }
+        });
     }
 
-    private void showDeleteDialog(final int i) {
+    /**
+     * Shows alert dialog when attempted to delete favourite illusions.
+     * @param deleteMode selected / all illusions to be deleted
+     */
+    private void showDeleteDialog(final int deleteMode) {
         removeButton.setImageResource(R.drawable.ic_delete_open);
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(FavouritesActivity.this, R.style.DialogLight);
         View mView = getLayoutInflater().inflate(R.layout.dialog_box, null);
+
         final TextView title = (TextView) mView.findViewById(R.id.tv_delete_title);
         title.setTypeface(type);
         title.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.black));
+
         final TextView text = (TextView) mView.findViewById(R.id.tv_delete_text);
-        text.setText(i);
+        text.setText(deleteMode);
         text.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.black));
+
         ImageButton del = (ImageButton) mView.findViewById(R.id.b_delete_yes);
         ImageButton cancel = (ImageButton) mView.findViewById(R.id.b_delete_cancel);
+
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
+
         dialog.show();
+
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 realm.beginTransaction();
-                if (i == R.string.delete_text) {
+                if (deleteMode == R.string.delete_text) {
                     for (Illusion i : realm.where(Illusion.class).equalTo("isFavourite", true).findAll()) {
                         i.setFavourite(false);
                     }
@@ -263,13 +280,46 @@ public class FavouritesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Opens keyboard when needed.
+     *
+     * @param view current view
+     */
     public void openKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_FORCED);
     }
 
+    /**
+     * Closes keyboard when no longer needed.
+     *
+     * @param view current view
+     */
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    /**
+     * Overrides default method in order to clear focus of an EditText when tapped outside of it.
+     *
+     * @param event current motion event
+     * @return true/false
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 }

@@ -47,29 +47,22 @@ public class MainActivity extends AppCompatActivity {
         RealmHelper realmHelper = new RealmHelper(realm);
         ArrayList<Illusion> listFromXml;
 
-        XmlResourceParser parser = getResources().getXml(R.xml.illusions);
-        XmlParser mParser = new XmlParser();
-        try {
-            mParser.processData(parser);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
+        if (realm.isEmpty()) {
+            XmlResourceParser parser = getResources().getXml(R.xml.illusions);
+            XmlParser mParser = new XmlParser();
+            try {
+                mParser.processData(parser);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            }
+            parser.close();
+            listFromXml = mParser.getList();
+            setPictures(listFromXml);
+            realmHelper.listToDb(listFromXml);
         }
-        parser.close();
-
-        listFromXml = mParser.getList();
-        Log.v("lalala", listFromXml.toString());
-        Log.v("lalala", listFromXml.get(0).toString());
-        Log.v("lalala", String.valueOf(listFromXml.size()));
-
-
-        setPictures(listFromXml);
-        realmHelper.listToDb(listFromXml);
-
         RealmResults<Illusion> list = realm.where(Illusion.class).findAll();
-
-        Log.v("LISTIK", list.toString());
 
         ImageButton startButton = (ImageButton) findViewById(R.id.buttonStart);
         startButton.setOnClickListener(new View.OnClickListener() {
