@@ -30,7 +30,8 @@
                 android:paddingTop="10dp"
                 android:textAlignment="viewEnd"
                 android:textSize="24sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:ellipsize="marquee"/>
 
             <TextView
                 android:id="@+id/tv_category"

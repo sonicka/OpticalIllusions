@@ -52,6 +52,15 @@ class RealmHelper {
     }
 
     /**
+     * Gets all favourite illusions from Realm database.
+     *
+     * @return collection of favourite illusions
+     */
+    OrderedRealmCollection<Illusion> getFavourites() {
+        return realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
+    }
+
+    /**
      * Filters illusions in Realm database.
      *
      * @return filtered list of illusions
@@ -72,19 +81,25 @@ class RealmHelper {
      * @return filtered list of illusions
      */
     OrderedRealmCollection<Illusion> searchInFavourites(CharSequence search) {
-        OrderedRealmCollection<Illusion> favouriteIllusions;
-        if (search != null && search.length() > 0) {
-            OrderedRealmCollection<Illusion> aux = realm.where(Illusion.class).equalTo("isFavourite", true)
+        OrderedRealmCollection<Illusion> illusions;
+        if (search == null || search.length() == 0) {
+            illusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
+
+        } else {
+            illusions = realm.where(Illusion.class)
+                    .beginGroup()
+                    .equalTo("isFavourite", true)
+                    .endGroup()
+                    .beginGroup()
                     .contains("name", search.toString(), Case.INSENSITIVE)
                     .or()
                     .contains("category", search.toString(), Case.INSENSITIVE)
                     .or()
-                    .contains("description", search.toString(), Case.INSENSITIVE).findAll();
-            favouriteIllusions = aux;
-        } else {
-            favouriteIllusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
+                    .contains("description", search.toString(), Case.INSENSITIVE)
+                    .endGroup()
+                    .findAll();
         }
-        return favouriteIllusions;
+        return illusions;
     }
 
     /**
@@ -98,7 +113,7 @@ class RealmHelper {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                if (illusion.isFavourite()) {
+                if (illusion.isfavourite()) {
                     ((ImageButton) v).setImageResource(R.drawable.ic_favourite);
                     illusion.setFavourite(false);
                 } else {

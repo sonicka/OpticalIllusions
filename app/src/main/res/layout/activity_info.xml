@@ -1,19 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.sona.opticalillusions.InfoActivity"
-    android:background="@drawable/bg1">
+    android:background="@drawable/bg1"
+    tools:context="com.example.sona.opticalillusions.InfoActivity">
+
+    <Space
+        android:id="@+id/info_space"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true" />
+
+    <Space
+        android:id="@+id/info_space2"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_centerInParent="true" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_info1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_above="@id/info_space"
+        android:paddingEnd="15dp"
+        android:paddingStart="15dp"
+        android:text="@string/info_text1"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
 
-    <EditText
+    <TextView
+        android:id="@+id/tv_info2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/info_space"
+        android:textSize="15sp"
+        android:textColor="@color/green"
+        android:layout_centerHorizontal="true"
+        android:text="@string/info_text2" />
+
+    <TextView
+        android:id="@+id/tv_info3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/green"
+        android:textSize="15sp"
+        android:layout_below="@+id/tv_info2"
+        android:layout_centerHorizontal="true"
+        android:text="@string/info_text3" />
+
+    <ImageButton
+        android:id="@+id/buttonStart2"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/ett"/>
-</android.support.constraint.ConstraintLayout>
+        android:adjustViewBounds="true"
+        android:background="@drawable/circle_shape_drawable"
+        android:gravity="center"
+        android:scaleType="fitCenter"
+        android:src="@drawable/icon_start2"
+        android:layout_above="@+id/info_space2"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

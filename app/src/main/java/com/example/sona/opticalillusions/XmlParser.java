@@ -19,10 +19,20 @@ public class XmlParser extends Activity {
 
     private ArrayList<Illusion> list = new ArrayList<>();
 
+    /**
+     * Returns list of parsed data.
+     * @return ArrayList
+     */
     public ArrayList<Illusion> getList() {
         return list;
     }
 
+    /**
+     * Reads an XML file with data used in the app.
+     * @param parser parser
+     * @throws IOException exception thrown when an error occur
+     * @throws XmlPullParserException exception thrown when an error occur
+     */
     public void processData(XmlResourceParser parser) throws IOException, XmlPullParserException {
         int eventType = -1;
         while (eventType != XmlResourceParser.END_DOCUMENT) {
@@ -41,6 +51,14 @@ public class XmlParser extends Activity {
         }
     }
 
+    /**
+     * Creates an Illusion object from parsed element in the XML file and saves it into a list.
+     * @param name of the illusion
+     * @param category of the illusion
+     * @param description of the illusion
+     * @param animation of the illusion
+     * @param isFavourite value of the illusion
+     */
     private void saveValues(String name, String category, String description, String animation, boolean isFavourite) {
         Illusion illusion = new Illusion(name, category, description, animation, isFavourite);
         list.add(illusion);

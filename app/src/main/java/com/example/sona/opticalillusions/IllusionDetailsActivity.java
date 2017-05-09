@@ -23,7 +23,8 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -35,7 +36,7 @@ import java.util.Stack;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class ViewIllusionActivity extends AppCompatActivity {
+public class IllusionDetailsActivity extends AppCompatActivity {
 
     private Realm realm;
     private RealmHelper realmHelper;
@@ -51,11 +52,14 @@ public class ViewIllusionActivity extends AppCompatActivity {
     private HorizontalGridView horizontalGridView;
     private boolean isVideoBeingTouched = false;
     private Handler handler;
+    private DisplayMetrics display;
+    private int width;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_illusion);
+        setContentView(R.layout.activity_illusion_details);
 
         stack = new Stack();
         final Illusion illusion = getIntent().getExtras().getParcelable("item");
@@ -80,7 +84,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewIllusionActivity.this, MainActivity.class);
+                Intent intent = new Intent(IllusionDetailsActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -97,6 +101,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
         description = (TextView) findViewById(R.id.tv_description);
 
         handler = new Handler();
+
         videoView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -117,12 +122,16 @@ public class ViewIllusionActivity extends AppCompatActivity {
             }
         });
 
-        DisplayMetrics display = this.getResources().getDisplayMetrics();
-        final int width = display.widthPixels;
+        display = this.getResources().getDisplayMetrics();
+        width = display.widthPixels;
 
-        imageView.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-        videoView.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-        description.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+        RelativeLayout rl = (RelativeLayout) findViewById(R.id.rl_view);
+        //rl.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+        imageView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
+        videoView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
+
+//        imageView.setLayoutParams(new LinearLayout.LayoutParams(width, width));
+//        videoView.setLayoutParams(new LinearLayout.LayoutParams(width, width));
 
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -148,7 +157,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
                 description.setBackground(backgroundColor);
                 //description.setBackgroundResource(currentIllusion.getPicture());
 
-               // description.getBackground().setAlpha(80);
+                // description.getBackground().setAlpha(80);
 
                 //description.getBackground().setAlpha(80);
             }
@@ -159,13 +168,13 @@ public class ViewIllusionActivity extends AppCompatActivity {
                     imageView.setVisibility(View.GONE);
                     videoView.setVisibility(View.VISIBLE);
 
-                    Toast toast = Toast.makeText(ViewIllusionActivity.this, R.string.animation_loading, Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(IllusionDetailsActivity.this, R.string.animation_loading, Toast.LENGTH_SHORT);
                     toast.show();
 
                     videoView.setVideoPath(currentIllusion.getAnimation());
                     videoView.start();
                 } else {    //todo http://stackoverflow.com/a/33193463/7813295
-                    Toast.makeText(ViewIllusionActivity.this, R.string.connect_to_internet, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(IllusionDetailsActivity.this, R.string.connect_to_internet, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -228,7 +237,7 @@ public class ViewIllusionActivity extends AppCompatActivity {
         category.setText(illusion.getCategory());
         imageView.setImageResource(illusion.getPicture());
 
-        if (illusion.isFavourite()) {
+        if (illusion.isfavourite()) {
             setFavourite.setImageResource(R.drawable.ic_unfavourite);
         } else {
             setFavourite.setImageResource(R.drawable.ic_favourite);
@@ -239,7 +248,13 @@ public class ViewIllusionActivity extends AppCompatActivity {
                 break;
             }
         }
+
+        final ScrollView mScrollView = (ScrollView) findViewById(R.id.sv_scroller);
+        mScrollView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
+
+        //mScrollView.setLayoutParams(new LinearLayout.LayoutParams(width, width));
         description.setText(currentIllusion.getDescription());
+
         imageView.setVisibility(View.VISIBLE);
         description.setVisibility(View.GONE);
         videoView.stopPlayback();

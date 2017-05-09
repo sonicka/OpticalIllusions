@@ -54,8 +54,8 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ViewIllusionActivity) context).addIllusionToStack();
-                ((ViewIllusionActivity) context).updateActivity(illusion);
+                ((IllusionDetailsActivity) context).addIllusionToStack();
+                ((IllusionDetailsActivity) context).updateActivity(illusion);
             }
         });
     }

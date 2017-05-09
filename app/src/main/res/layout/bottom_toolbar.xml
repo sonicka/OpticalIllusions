@@ -53,7 +53,8 @@
             android:layout_toRightOf="@id/ib_search"
             android:background="@android:color/transparent"
             android:enabled="false"
-            android:inputType="textNoSuggestions|textMultiLine"
+            android:imeOptions="actionDone"
+            android:inputType="textNoSuggestions|textMultiLine|textAutoComplete"
             android:maxLength="12"
             android:textColor="@color/green" />
 

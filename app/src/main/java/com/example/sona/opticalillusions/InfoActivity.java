@@ -1,11 +1,15 @@
 package com.example.sona.opticalillusions;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.ImageButton;
 
+/**
+ * This activity shows basic info about the app.
+ * Created by Soňa on 04-Apr-17.
+ */
 public class InfoActivity extends AppCompatActivity {
 
     @Override
@@ -13,8 +17,12 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        EditText et = (EditText) findViewById(R.id.ett);
-        if(et.requestFocus() && et.isPressed())
-            ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        ImageButton start = (ImageButton) findViewById(R.id.buttonStart2);
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(InfoActivity.this, AllIllusionsActivity.class));
+            }
+        });
     }
 }

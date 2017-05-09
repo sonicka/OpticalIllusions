@@ -99,7 +99,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
-                Intent intent = new Intent(AllIllusionsActivity.this, ViewIllusionActivity.class);
+                Intent intent = new Intent(AllIllusionsActivity.this, IllusionDetailsActivity.class);
                 intent.putExtra("item", i);
                 startActivity(intent);
             }
@@ -115,7 +115,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 long packedPosition = ExpandableListView.getPackedPositionForChild(groupPosition, childPosition);
                 int flatPosition = parent.getFlatListPosition(packedPosition);
                 Illusion i = (Illusion) parent.getItemAtPosition(flatPosition);
-                Intent intent = new Intent(AllIllusionsActivity.this, ViewIllusionActivity.class);
+                Intent intent = new Intent(AllIllusionsActivity.this, IllusionDetailsActivity.class);
                 intent.putExtra("item", i);
                 startActivity(intent);
                 return false;
@@ -135,6 +135,9 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        listView.setDivider(null);
+        listView.setDividerHeight(0);
 
         Toolbar bottomToolbar = (Toolbar) findViewById(R.id.all_bottom_toolbar);
         if (bottomToolbar != null) {

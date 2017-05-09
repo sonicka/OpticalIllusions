@@ -92,14 +92,14 @@ public class FavouritesActivity extends AppCompatActivity {
         title.setPadding(0, 30, 0, 0);
 
         gridView = (GridView) findViewById(R.id.gv_favourites_grid);
-        favouriteIllusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
+        favouriteIllusions = helper.getFavourites();
         adapter = new ImageAdapter(this, favouriteIllusions);
         gridView.setAdapter(adapter);
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
-                Intent intent = new Intent(FavouritesActivity.this, ViewIllusionActivity.class);
+                Intent intent = new Intent(FavouritesActivity.this, IllusionDetailsActivity.class);
                 intent.putExtra("item", i);
                 startActivity(intent);
             }
@@ -202,11 +202,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (realm.where(Illusion.class).equalTo("isFavourite", true).findAll().isEmpty()) {
-                    return;
-                }
-                favouriteIllusions = helper.searchInFavourites(s);
-                adapter = new ImageAdapter(FavouritesActivity.this, favouriteIllusions);
+                adapter = new ImageAdapter(FavouritesActivity.this, helper.searchInFavourites(s));
                 gridView.setAdapter(adapter);
             }
 
@@ -216,15 +212,17 @@ public class FavouritesActivity extends AppCompatActivity {
         });
 
         searchButton = (ImageButton) findViewById(R.id.ib_search);
-        searchButton.setOnClickListener(new View.OnClickListener()
-
-        {
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editTextSearch.setEnabled(true);
-                editTextSearch.setFocusableInTouchMode(true);
-                editTextSearch.clearFocus();
-                editTextSearch.requestFocus();
+                if (!favouriteIllusions.isEmpty()) {
+                    editTextSearch.setEnabled(true);
+                    editTextSearch.setFocusableInTouchMode(true);
+                    editTextSearch.clearFocus();
+                    editTextSearch.requestFocus();
+                } else {
+                    Toast.makeText(FavouritesActivity.this, R.string.no_illusions_to_filter, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -246,7 +244,7 @@ public class FavouritesActivity extends AppCompatActivity {
         text.setText(deleteMode);
         text.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.black));
 
-        ImageButton del = (ImageButton) mView.findViewById(R.id.b_delete_yes);
+        ImageButton delete = (ImageButton) mView.findViewById(R.id.b_delete_yes);
         ImageButton cancel = (ImageButton) mView.findViewById(R.id.b_delete_cancel);
 
         mBuilder.setView(mView);
@@ -254,7 +252,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
         dialog.show();
 
-        del.setOnClickListener(new View.OnClickListener() {
+        delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 realm.beginTransaction();

@@ -3,7 +3,7 @@
     <illusion
         name="Cafe Wall Illusion"
         category="Geometric Illusions"
-        description="sadfghjgfassdfghgfdsdfghhgfdsdfghg"
+        description="Are the grey lines parallel or sloped?\n\nThis illusion is created when offset rows of alternating dark and light tiles are surrounded by a line of shade somewhere between tile colors. When the tiles are offset by half a tile width, the horizontal lines appear to slant diagonally. The effect is affected by the position of the tiles and the thickness and color of the lines. The effect is caused by way neurons interact in the brain.  Different types of neurons react to the perception of dark and light colors, and because of the placement of the dark and light tiles, different parts of the lines are dimmed or brightened in the retina. Where there is a brightness contrast across the grout line, a small scale asymmetry occurs whereby half the dark and light tiles move toward each other forming small wedges. These little wedges are then integrated into long wedges with the brain interpreting the line as a sloping line, although they are perfectly parallel.."
         animation="http://www.sonaleitmanova.esy.es/vids/mp4_cafe_wall_small.mp4"
         isFavourite="false"/>
 

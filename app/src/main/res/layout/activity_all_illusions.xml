@@ -22,9 +22,9 @@
             android:id="@+id/gv_illusion_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:columnWidth="180dp"
             android:gravity="center"
-            android:numColumns="auto_fit"
-            android:columnWidth="180dp"/>
+            android:numColumns="auto_fit" />
 
         <ExpandableListView
             android:id="@+id/id_list_view"
