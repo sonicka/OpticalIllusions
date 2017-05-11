@@ -1,13 +1,10 @@
 package com.example.sona.opticalillusions;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.example.sona.opticalillusions.model.Illusion;
@@ -16,6 +13,7 @@ import io.realm.OrderedRealmCollection;
 import io.realm.RealmRecyclerViewAdapter;
 
 /**
+ * Adapter used to fill the horizontal grid of illusions.
  * Created by Soňa on 13-Apr-17.
  */
 
@@ -23,11 +21,13 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
 
     private Context context;
     private OrderedRealmCollection<Illusion> list;
+    private int size;
 
-    GridElementAdapter(Context context, OrderedRealmCollection<Illusion> list) {
+    GridElementAdapter(Context context, OrderedRealmCollection<Illusion> list, int size) {
         super(list, true);
         this.context = context;
         this.list = list;
+        this.size = size;
     }
 
     private static class SimpleViewHolder extends RecyclerView.ViewHolder {
@@ -50,6 +50,9 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
         final Illusion illusion = getData().get(position);
         ImageView imageView = (ImageView) holder.itemView.findViewById(R.id.iv_small_preview);
         imageView.setImageResource(illusion.getThumbnail());
+        imageView.requestLayout();
+        imageView.getLayoutParams().height = size;
+        imageView.getLayoutParams().width = size;
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,18 +72,4 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
     public int getItemCount() {
         return this.list.size();
     }
-
-    public static int getScreenWidth(Context context) {
-        int screenWidth = 0;
-
-        if (screenWidth == 0) {
-            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-            Display display = wm.getDefaultDisplay();
-            Point size = new Point();
-            display.getSize(size);
-            screenWidth = size.x;
-        }
-        return screenWidth;
-    }
-
 }

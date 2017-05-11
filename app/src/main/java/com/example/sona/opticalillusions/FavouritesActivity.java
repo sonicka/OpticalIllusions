@@ -14,7 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.DragEvent;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -24,6 +26,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ import java.lang.reflect.Field;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import me.grantland.widget.AutofitTextView;
 
 /**
  * This activity shows a grid of illusions set as favourite.
@@ -52,6 +56,11 @@ public class FavouritesActivity extends AppCompatActivity {
     private EditText editTextSearch;
     private ImageButton searchButton;
     private Typeface type;
+    private int toolbarHeight;
+    private int contentHeight;
+    private int itemSize;
+    private int categoryHeight;
+    private int nameSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +77,17 @@ public class FavouritesActivity extends AppCompatActivity {
         realm = Realm.getInstance(config);
         helper = new RealmHelper(realm);
 
+        favouriteIllusions = helper.getFavourites();
+
+        DisplayMetrics display = this.getResources().getDisplayMetrics();
+        int width = display.widthPixels;
+        int height = display.heightPixels;
+        toolbarHeight = (int) (height/8.4873);
+        contentHeight = height-(2*toolbarHeight);
+        itemSize = width/3;
+        categoryHeight = height/8;
+        nameSize = categoryHeight/2;
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -76,6 +96,9 @@ public class FavouritesActivity extends AppCompatActivity {
         }
 
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
+        setCustomParams(logo, toolbarHeight, toolbarHeight);
+        int p = toolbarHeight/10;
+        logo.setPadding(p,p,p,p);
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,15 +108,13 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
 
-        TextView title = (TextView) findViewById(R.id.tv_title);
+        AutofitTextView title = (AutofitTextView) findViewById(R.id.tv_title);
+        setCustomParams(title, width-4*toolbarHeight/3, toolbarHeight);
         title.setText(R.string.favourites);
-        type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
-        title.setTypeface(type);
-        title.setPadding(0, 30, 0, 0);
+        title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf"));
+        title.setGravity(Gravity.CENTER);
 
         gridView = (GridView) findViewById(R.id.gv_favourites_grid);
-        favouriteIllusions = helper.getFavourites();
-        adapter = new ImageAdapter(this, favouriteIllusions);
         gridView.setAdapter(adapter);
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -105,6 +126,8 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         };
         gridView.setOnItemClickListener(onItemClickListener);
+        gridView.setLayoutParams(new RelativeLayout.LayoutParams(width, contentHeight));
+        gridView.setColumnWidth(itemSize+itemSize/3);
 
         AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
             @Override
@@ -124,6 +147,8 @@ public class FavouritesActivity extends AppCompatActivity {
         };
 
         gridView.setOnItemLongClickListener(onItemLongClickListener);
+        gridView.setLayoutParams(new RelativeLayout.LayoutParams(width, contentHeight));
+        gridView.setColumnWidth(itemSize+itemSize/3);
 
         Toolbar bottomToolbar = (Toolbar) findViewById(R.id.favourites_bottom_toolbar);
         if (bottomToolbar != null) {
@@ -132,7 +157,12 @@ public class FavouritesActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
+        bottomToolbar.requestLayout();
+        bottomToolbar.getLayoutParams().height = toolbarHeight;
+        bottomToolbar.getLayoutParams().width = width;
+
         removeButton = (ImageButton) findViewById(R.id.b_left_button);
+        setCustomParams(removeButton, toolbarHeight, toolbarHeight);
         removeButton.setImageResource(R.drawable.ic_delete);
         removeButton.setOnDragListener(new View.OnDragListener() {
             @Override
@@ -169,6 +199,7 @@ public class FavouritesActivity extends AppCompatActivity {
         });
 
         ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_view);
+        setCustomParams(switchViewButton, toolbarHeight, toolbarHeight);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,7 +233,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter = new ImageAdapter(FavouritesActivity.this, helper.searchInFavourites(s));
+                adapter = new ImageAdapter(FavouritesActivity.this, helper.searchInFavourites(s), itemSize);
                 gridView.setAdapter(adapter);
             }
 
@@ -212,6 +243,7 @@ public class FavouritesActivity extends AppCompatActivity {
         });
 
         searchButton = (ImageButton) findViewById(R.id.ib_search);
+        setCustomParams(searchButton, toolbarHeight, toolbarHeight);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -276,6 +308,14 @@ public class FavouritesActivity extends AppCompatActivity {
                 removeButton.setImageResource(R.drawable.ic_delete);
             }
         });
+    }
+
+
+    //// TODO: 10-May-17
+    public void setCustomParams(View v, int width, int height) {
+        v.requestLayout();
+        v.getLayoutParams().width = width;
+        v.getLayoutParams().height = height;
     }
 
     /**

@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,6 +22,7 @@ import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.sona.opticalillusions.model.Illusion;
@@ -33,6 +36,7 @@ import java.util.Map;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import me.grantland.widget.AutofitTextView;
 
 /**
  * This activity shows all illusions in a grid or in a list.
@@ -51,6 +55,11 @@ public class AllIllusionsActivity extends AppCompatActivity {
     private EditText editTextSearch;
     private ImageButton searchButton;
     private int previousGroup = -1;
+    private int toolbarHeight;
+    private int contentHeight;
+    private int itemSize;
+    private int categoryHeight;
+    private int nameSize;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -69,14 +78,27 @@ public class AllIllusionsActivity extends AppCompatActivity {
 
         listIllusions = realm.where(Illusion.class).findAll();
 
+        DisplayMetrics display = this.getResources().getDisplayMetrics();
+        int width = display.widthPixels;
+        int height = display.heightPixels;
+        toolbarHeight = (int) (height/8.4873);
+        contentHeight = height-(2*toolbarHeight);
+        itemSize = width/3;
+        categoryHeight = height/8;
+        nameSize = categoryHeight/2;
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
+        setCustomParams(toolbar, width, toolbarHeight);
 
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
+        setCustomParams(logo, toolbarHeight, toolbarHeight);
+        int p = toolbarHeight/10;
+        logo.setPadding(p,p,p,p);
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,13 +108,13 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
-        final TextView title = (TextView) findViewById(R.id.tv_title);
+        final AutofitTextView title = (AutofitTextView) findViewById(R.id.tv_title);
+        setCustomParams(title, width-4*toolbarHeight/3, toolbarHeight);
         title.setText(R.string.preview);
-        Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
-        title.setTypeface(type);
-        title.setPadding(0, 30, 0, 0);
+        title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf"));
+        title.setGravity(Gravity.CENTER);
 
-        imageAdapter = new ImageAdapter(this, listIllusions);
+        imageAdapter = new ImageAdapter(this, listIllusions, itemSize);
         gridView = (GridView) findViewById(R.id.gv_illusion_grid);
         gridView.setAdapter(imageAdapter);
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
@@ -104,9 +126,12 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-        gridView.setOnItemClickListener(onItemClickListener);
 
-        adapter = new ListAdapter(this, fillMap(listIllusions));
+        gridView.setOnItemClickListener(onItemClickListener);
+        gridView.setLayoutParams(new RelativeLayout.LayoutParams(width, contentHeight));
+        gridView.setColumnWidth(itemSize+itemSize/3);
+
+        adapter = new ListAdapter(this, fillMap(listIllusions), categoryHeight, nameSize);
         final ExpandableListView listView = (ExpandableListView) findViewById(R.id.id_list_view);
         listView.setAdapter(adapter);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -146,7 +171,12 @@ public class AllIllusionsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
+        bottomToolbar.requestLayout();
+        bottomToolbar.getLayoutParams().height = toolbarHeight;
+        bottomToolbar.getLayoutParams().width = width;
+
         ImageButton favouritesButton = (ImageButton) findViewById(R.id.b_left_button);
+        setCustomParams(favouritesButton, toolbarHeight, toolbarHeight);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,6 +185,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         });
 
         final ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_view);
+        setCustomParams(switchViewButton, toolbarHeight, toolbarHeight);
         switchViewButton.setImageResource(R.drawable.ic_list);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,10 +240,10 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 }
 
                 if (gridView.getVisibility() == View.VISIBLE) {
-                    imageAdapter = new ImageAdapter(AllIllusionsActivity.this, listIllusions);
+                    imageAdapter = new ImageAdapter(AllIllusionsActivity.this, listIllusions, itemSize);
                     gridView.setAdapter(imageAdapter);
                 } else {
-                    adapter = new ListAdapter(AllIllusionsActivity.this, fillMap(listIllusions));
+                    adapter = new ListAdapter(AllIllusionsActivity.this, fillMap(listIllusions), categoryHeight, nameSize);
                     listView.setAdapter(adapter);
                     if (!listIllusions.isEmpty()) {
                         listView.expandGroup(0, true);
@@ -228,6 +259,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         });
 
         searchButton = (ImageButton) findViewById(R.id.ib_search);
+        setCustomParams(searchButton, toolbarHeight, toolbarHeight);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -237,6 +269,14 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 editTextSearch.requestFocus();
             }
         });
+    }
+
+
+    //// TODO: 10-May-17
+    public void setCustomParams(View v, int width, int height) {
+        v.requestLayout();
+        v.getLayoutParams().width = width;
+        v.getLayoutParams().height = height;
     }
 
     /**

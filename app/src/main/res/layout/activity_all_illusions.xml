@@ -30,9 +30,11 @@
             android:id="@+id/id_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:descendantFocusability="blocksDescendants"
             android:groupIndicator="@null"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:smoothScrollbar="true"/>
 
     </RelativeLayout>
 

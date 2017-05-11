@@ -1,8 +1,11 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="68dp"
-    android:layout_gravity="top">
+    android:layout_gravity="top"
+    app:contentInsetStart="0dp">
 
         <ImageButton
             android:id="@+id/ib_logo"
@@ -21,19 +24,20 @@
             android:orientation="vertical"
             android:paddingEnd="12dp">
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:adjustViewBounds="true"
-                android:paddingTop="10dp"
                 android:textAlignment="viewEnd"
-                android:textSize="24sp"
                 android:textColor="@color/black"
-                android:ellipsize="marquee"/>
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:textSize="100sp"
+                autofit:minTextSize="16sp"/>
 
-            <TextView
+            <me.grantland.widget.AutofitTextView
                 android:id="@+id/tv_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,8 +45,11 @@
                 android:paddingBottom="5dp"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/green"
-                android:layout_below="@+id/tv_title" />
+                android:visibility="gone"
+                android:layout_below="@+id/tv_title"
+                android:maxLines="1"
+                android:textSize="40sp"
+                autofit:minTextSize="16sp"/>
         </RelativeLayout>
-
 
 </android.support.v7.widget.Toolbar>

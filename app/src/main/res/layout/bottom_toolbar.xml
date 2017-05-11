@@ -61,30 +61,3 @@
     </RelativeLayout>
 
 </android.support.v7.widget.Toolbar>
-
-    <!--<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:app="http://schemas.android.com/apk/res-auto"--><!--android:id="@+id/bottom_toolbar"--><!--android:layout_width="match_parent"--><!--android:layout_height="72dp"--><!--android:layout_alignParentBottom="true"--><!--app:contentInsetStart="0dp">-->
-
-    <!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:gravity="center">-->
-
-    <!--<LinearLayout--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_weight="1"--><!--android:gravity="end">-->
-
-
-    <!--<ImageButton--><!--android:id="@+id/b_left_button"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:adjustViewBounds="true"--><!--android:background="@drawable/circle_shape_drawable"--><!--android:cropToPadding="false"--><!--android:paddingBottom="10dp"--><!--android:paddingTop="5dp"--><!--android:scaleType="centerInside"--><!--android:src="@drawable/ic_favourite" />--><!--</LinearLayout>-->
-
-    <!--<LinearLayout--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_weight="1"--><!--android:gravity="center">-->
-
-
-    <!--<ImageButton--><!--android:id="@+id/b_switch_view"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:adjustViewBounds="true"--><!--android:background="@drawable/circle_shape_drawable"--><!--android:paddingBottom="10dp"--><!--android:paddingEnd="10dp"--><!--android:paddingStart="10dp"--><!--android:paddingTop="5dp"--><!--android:scaleType="centerInside"-->
-
-    <!--android:src="@drawable/ic_grid" />--><!--</LinearLayout>-->
-
-    <!--<LinearLayout--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_weight="1"--><!--android:gravity="start">-->
-
-
-    <!--<ImageButton--><!--android:id="@+id/ib_search"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:adjustViewBounds="true"--><!--android:background="@drawable/circle_shape_drawable"--><!--android:paddingBottom="10dp"--><!--android:paddingTop="5dp"--><!--android:scaleType="centerInside"--><!--android:src="@drawable/ic_search" />-->
-
-    <!--<EditText--><!--android:id="@+id/et_search"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:background="@android:color/transparent"--><!--android:enabled="false"--><!--android:inputType="textNoSuggestions|textMultiLine"--><!--android:maxLength="12"--><!--android:paddingStart="10dp"--><!--android:textColor="@color/green"--><!--android:textCursorDrawable="@drawable/color_cursor">-->
-
-    <!--<requestFocus />--><!--</EditText>--><!--</LinearLayout>--><!--</LinearLayout>-->
-
-    <!--</android.support.v7.widget.Toolbar>-->

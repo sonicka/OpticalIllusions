@@ -1,22 +1,24 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/favourite_layout"
-    android:background="@drawable/bg1">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg1"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/fav_toolbar"
+        layout="@layout/toolbar" />
 
     <GridView
         android:id="@+id/gv_favourites_grid"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/favourites_bottom_toolbar"
+        android:layout_below="@+id/fav_toolbar"
         android:gravity="center"
-        android:numColumns="auto_fit"
-        />
+        android:numColumns="auto_fit" />
 
     <include
         android:id="@+id/favourites_bottom_toolbar"
-        layout="@layout/bottom_toolbar"/>
-</LinearLayout>
+        layout="@layout/bottom_toolbar" />
+</RelativeLayout>
