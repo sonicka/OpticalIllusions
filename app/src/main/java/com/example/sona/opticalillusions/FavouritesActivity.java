@@ -26,7 +26,6 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -115,6 +114,7 @@ public class FavouritesActivity extends AppCompatActivity {
         title.setGravity(Gravity.CENTER);
 
         gridView = (GridView) findViewById(R.id.gv_favourites_grid);
+        adapter = new ImageAdapter(this, favouriteIllusions, itemSize);
         gridView.setAdapter(adapter);
         AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
             @Override
@@ -126,8 +126,8 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         };
         gridView.setOnItemClickListener(onItemClickListener);
-        gridView.setLayoutParams(new RelativeLayout.LayoutParams(width, contentHeight));
-        gridView.setColumnWidth(itemSize+itemSize/3);
+    //    gridView.setLayoutParams(new LinearLayout.LayoutParams(width, contentHeight));
+        //gridView.setColumnWidth(itemSize+itemSize/3);
 
         AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
             @Override
@@ -147,8 +147,6 @@ public class FavouritesActivity extends AppCompatActivity {
         };
 
         gridView.setOnItemLongClickListener(onItemLongClickListener);
-        gridView.setLayoutParams(new RelativeLayout.LayoutParams(width, contentHeight));
-        gridView.setColumnWidth(itemSize+itemSize/3);
 
         Toolbar bottomToolbar = (Toolbar) findViewById(R.id.favourites_bottom_toolbar);
         if (bottomToolbar != null) {
@@ -157,9 +155,7 @@ public class FavouritesActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
-        bottomToolbar.requestLayout();
-        bottomToolbar.getLayoutParams().height = toolbarHeight;
-        bottomToolbar.getLayoutParams().width = width;
+        setCustomParams(bottomToolbar, width, toolbarHeight);
 
         removeButton = (ImageButton) findViewById(R.id.b_left_button);
         setCustomParams(removeButton, toolbarHeight, toolbarHeight);

@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -66,6 +67,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_illusions);
 
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Realm.init(this);
@@ -86,6 +88,8 @@ public class AllIllusionsActivity extends AppCompatActivity {
         itemSize = width/3;
         categoryHeight = height/8;
         nameSize = categoryHeight/2;
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar);
         if (toolbar != null) {
@@ -269,6 +273,13 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 editTextSearch.requestFocus();
             }
         });
+
+        Log.v("logsizew", String.valueOf(width));
+        Log.v("logsizeh", String.valueOf(height));
+        Log.v("logsizeh", String.valueOf(contentHeight));
+        Log.v("logsizeh", String.valueOf(toolbarHeight));
+        Log.v("logsizeh", String.valueOf(itemSize));
+
     }
 
 

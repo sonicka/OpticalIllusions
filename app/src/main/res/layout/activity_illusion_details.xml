@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:autofit="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg1">
@@ -14,12 +13,11 @@
         autofit:layout_constraintLeft_toLeftOf="parent"
         autofit:layout_constraintTop_toTopOf="parent"
         autofit:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="0dp"
         autofit:layout_constraintHorizontal_bias="0.0" />
 
     <RelativeLayout
         android:id="@+id/ll_details"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/top_toolbar_details"
         android:orientation="horizontal"
@@ -63,7 +61,7 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,52 +73,64 @@
         autofit:layout_constraintTop_toBottomOf="@+id/ll_details">
 
         <ImageButton
-            android:id="@+id/b_last_viewed"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:background="@drawable/circle_shape_drawable"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_previous" />
-
-        <ImageButton
             android:id="@+id/b_to_all"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_centerInParent="true"
             android:adjustViewBounds="true"
             android:background="@drawable/circle_shape_drawable"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_grid" />
 
+        <Space
+            android:id="@+id/sp_details1"
+            android:layout_width="10dp"
+            android:layout_toStartOf="@id/b_to_all"
+            android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/b_last_viewed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/sp_details1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_previous" />
+
+        <Space
+            android:id="@+id/sp_details2"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/b_to_all"/>
+
         <ImageButton
             android:id="@+id/b_to_favourites"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_toEndOf="@id/sp_details2"
+            android:layout_centerVertical="true"
             android:adjustViewBounds="true"
             android:background="@drawable/circle_shape_drawable"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_favourite" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/llImg"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="0dp"
         autofit:layout_constraintBottom_toBottomOf="parent"
         autofit:layout_constraintLeft_toLeftOf="parent"
         autofit:layout_constraintRight_toRightOf="parent"
         autofit:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-        
+
         <android.support.v17.leanback.widget.HorizontalGridView
             android:id="@+id/gv_small_preview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="335dp"
-            tools:layout_editor_absoluteY="114dp" />
+             />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -53,12 +54,6 @@ public class IllusionDetailsActivity extends AppCompatActivity {
     private HorizontalGridView horizontalGridView;
     private boolean isVideoBeingTouched = false;
     private Handler handler;
-    private int toolbarHeight;
-    private int contentHeight;
-    private int itemSize;
-    private int categoryHeight;
-    private int nameSize;
-    private int bottomHeight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,12 +74,12 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         int width = display.widthPixels;
         int height = display.heightPixels;
-        toolbarHeight = (int) (height/8.4873);
-        contentHeight = height-(2*toolbarHeight);
-        itemSize = width/3;
-        categoryHeight = height/8;
-        nameSize = categoryHeight/2;
-        bottomHeight = height-width-toolbarHeight;
+        int statusBarHeight = getStatusBarHeight();
+        int toolbarHeight = (height / 13);
+        int bottomHeight = height - width - toolbarHeight - statusBarHeight;
+        int buttonSize = (bottomHeight / 10) * 3;
+
+        Log.v("gggg", String.valueOf(statusBarHeight));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar_details);
         if (toolbar != null) {
@@ -96,7 +91,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
 
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
         setCustomParams(logo, toolbarHeight, toolbarHeight);
-        int p = toolbarHeight/10;
+        int p = toolbarHeight /10;
         logo.setPadding(p,p,p,p);
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,10 +104,12 @@ public class IllusionDetailsActivity extends AppCompatActivity {
 
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
         title = (AutofitTextView) findViewById(R.id.tv_title);
-        setCustomParams(title, width-4*toolbarHeight/3, toolbarHeight); //TODO
+        setCustomParams(title, width-4* toolbarHeight /3, 2*toolbarHeight/3-toolbarHeight/10); //TODO
+        title.setPadding(0,toolbarHeight/15,0,0);
         title.setTypeface(type);
         category = (AutofitTextView) findViewById(R.id.tv_category);
         category.setVisibility(View.VISIBLE);
+        setCustomParams(category, width-4* toolbarHeight /3,toolbarHeight/3-toolbarHeight/10 );
         category.setTypeface(type);
 
         Log.v("hahaha1", String.valueOf(height));
@@ -195,22 +192,19 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             @Override
             public void onSwipeRight() {
                 imageView.setVisibility(View.VISIBLE);
-                imageView.setAlpha((float) 1.0);
-
                 imageView.setImageResource(currentIllusion.getPicture());
-                //imageView.setImageAlpha(255);
                 textView.setVisibility(View.GONE);
             }
         });
 
-        LinearLayout ll = (LinearLayout) findViewById(R.id.linearLayout2);
+        RelativeLayout ll = (RelativeLayout) findViewById(R.id.linearLayout2);
         ll.requestLayout();
         ll.getLayoutParams().width = width;
-        ll.getLayoutParams().height = bottomHeight/2;
-        ll.setGravity(RelativeLayout.ALIGN_BOTTOM);
+        ll.getLayoutParams().height = 2* bottomHeight /5;
 
         ImageButton back = (ImageButton) findViewById(R.id.b_last_viewed);
-        setCustomParams(back, 3*(bottomHeight/2)/4, 3*(bottomHeight/2)/4);
+
+        setCustomParams(back, buttonSize, buttonSize);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,17 +220,11 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             }
         });
 
-
-        back.setLayoutParams(new LinearLayout.LayoutParams((bottomHeight/2)*3, bottomHeight/2));
-//        LinearLayout ll2 = (LinearLayout) findViewById(R.id.linearLayout2);
-//        ll.requestLayout();
-//        ll.getLayoutParams().width = (bottomHeight/2)*3;
-//        ll.getLayoutParams().height = bottomHeight/2;
-       // ll.setGravity(RelativeLayout.CENTER_IN_PARENT);
-
+        Space sp1 = (Space) findViewById(R.id.sp_details1);
+        setCustomParams(sp1, buttonSize /2, buttonSize /2);
 
         ImageButton toAll = (ImageButton) findViewById(R.id.b_to_all);
-        setCustomParams(toAll, 3*(bottomHeight/2)/4, 3*(bottomHeight/2)/4);
+        setCustomParams(toAll, buttonSize, buttonSize);
         toAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -245,9 +233,11 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             }
         });
 
+        Space sp2 = (Space) findViewById(R.id.sp_details2);
+        setCustomParams(sp2, buttonSize /2, buttonSize /2);
 
         setFavourite = (ImageButton) findViewById(R.id.b_to_favourites);
-        setCustomParams(setFavourite, 3*(bottomHeight/2)/4, 3*(bottomHeight/2)/4);
+        setCustomParams(setFavourite, buttonSize, buttonSize);
         setFavourite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -256,11 +246,9 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         });
 
         horizontalGridView = (HorizontalGridView) findViewById(R.id.gv_small_preview);
-        adapter = new GridElementAdapter(this, realm.where(Illusion.class).findAll(), bottomHeight/2); //// TODO: 11-May-17
+        horizontalGridView.setLayoutParams(new LinearLayout.LayoutParams(width, 3* bottomHeight /5));
+        adapter = new GridElementAdapter(this, realm.where(Illusion.class).findAll(), 3* bottomHeight /5);
         horizontalGridView.setAdapter(adapter);
-
-
-        horizontalGridView.setLayoutParams(new LinearLayout.LayoutParams(width, bottomHeight/2));
 
         updateActivity(currentIllusion);
     }
@@ -282,7 +270,6 @@ public class IllusionDetailsActivity extends AppCompatActivity {
                 break;
             }
         }
-
 
         textView.setText(currentIllusion.getDescription());
 
@@ -330,5 +317,14 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    public int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
     }
 }
