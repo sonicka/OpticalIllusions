@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:autofit="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg2">
+
+    <include
+        android:id="@+id/top_toolbar_details"
+        layout="@layout/top_toolbar_details"
+        android:layout_width="0dp"
+        android:layout_height="51dp"
+        autofit:layout_constraintHorizontal_bias="0.0"
+        autofit:layout_constraintLeft_toLeftOf="parent"
+        autofit:layout_constraintRight_toRightOf="parent"
+        autofit:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/ll_details"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/top_toolbar_details"
+        android:orientation="horizontal"
+        autofit:layout_constraintHorizontal_bias="0.0"
+        autofit:layout_constraintLeft_toLeftOf="parent"
+        autofit:layout_constraintRight_toRightOf="parent"
+        autofit:layout_constraintTop_toBottomOf="@+id/top_toolbar_details">
+
+        <VideoView
+            android:id="@+id/vv_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_view_illusion"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vv_video"
+            android:clickable="true"
+            android:keepScreenOn="true"
+            android:longClickable="true"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            style="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:maxLines="30"
+            android:paddingBottom="15dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingTop="9dp"
+            android:scrollbars="vertical"
+            android:textColor="@color/grey"
+            android:textSize="12dp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/llImg"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        autofit:layout_constraintLeft_toLeftOf="parent"
+        autofit:layout_constraintRight_toRightOf="parent"
+        autofit:layout_constraintTop_toBottomOf="@+id/ll_details">
+
+        <ImageButton
+            android:id="@+id/b_to_all"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_grid" />
+
+        <Space
+            android:id="@+id/sp_details1"
+            android:layout_width="9dp"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/b_to_all" />
+
+        <ImageButton
+            android:id="@+id/b_last_viewed"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/sp_details1"
+            android:adjustViewBounds="true"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_previous" />
+
+        <Space
+            android:id="@+id/sp_details2"
+            android:layout_width="9dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/b_to_all" />
+
+        <ImageButton
+            android:id="@+id/b_to_favourites"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/sp_details2"
+            android:adjustViewBounds="true"
+            android:background="@drawable/circle_shape_drawable"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_favourite" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llImg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        autofit:layout_constraintBottom_toBottomOf="parent"
+        autofit:layout_constraintLeft_toLeftOf="parent"
+        autofit:layout_constraintRight_toRightOf="parent"
+        autofit:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <android.support.v17.leanback.widget.HorizontalGridView
+            android:id="@+id/gv_small_preview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

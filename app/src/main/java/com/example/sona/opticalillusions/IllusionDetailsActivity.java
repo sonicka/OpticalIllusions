@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
@@ -25,7 +26,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Space;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -71,6 +71,10 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         realmHelper = new RealmHelper(realm);
 
         DisplayMetrics display = this.getResources().getDisplayMetrics();
+        int densityDpi = (int) (display.density * 160f);
+
+        Log.v("loldpi", String.valueOf(densityDpi));
+
         int width = display.widthPixels;
         int height = display.heightPixels;
         int statusBarHeight = getStatusBarHeight();
@@ -87,14 +91,6 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
         setCustomParams(toolbar, width, toolbarHeight);
-//
-//        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rl_toolbar2);
-//
-//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-//                (int) (width-(toolbarHeight*1.1)+12), 3*toolbarHeight/4);
-//        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-//        relativeLayout.setLayoutParams(layoutParams);
-
 
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
         setCustomParams(logo, toolbarHeight, toolbarHeight);
@@ -109,30 +105,18 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             }
         });
 
-
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
         title = (TextView) findViewById(R.id.tv_title);
-        setCustomParams(title, width - 4 * toolbarHeight / 3, 2 * toolbarHeight / 3 - toolbarHeight); //TODO
-        title.setPadding(0, toolbarHeight / 15, 0, 0);
         title.setTypeface(type);
-        if (height <= 1280) {
-            title.setTextSize(16);
-        } else {
-            title.setTextSize(33);
-        }
+
         category = (TextView) findViewById(R.id.tv_category);
         category.setVisibility(View.VISIBLE);
-        setCustomParams(category, width - 4 * toolbarHeight / 3, toolbarHeight / 3 - toolbarHeight);
         category.setTypeface(type);
-
 
         RelativeLayout.LayoutParams rlTitle = new RelativeLayout.LayoutParams(width - 4 * toolbarHeight / 3, 2 * toolbarHeight / 3 - toolbarHeight);
         rlTitle.addRule(RelativeLayout.ALIGN_PARENT_END);
         title.setLayoutParams(rlTitle);
         title.requestLayout();
-
-        //title.setTextSize(TypedValue.COMPLEX_UNIT_PX, width - 4 * toolbarHeight / 3); //todo kktina
-
 
         RelativeLayout.LayoutParams rlCategory = new RelativeLayout.LayoutParams(width - 4 * toolbarHeight / 3, toolbarHeight / 3 - toolbarHeight);
         rlCategory.addRule(RelativeLayout.ALIGN_PARENT_END);
@@ -154,10 +138,6 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         textView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
 
         videoView.setVideoPath(currentIllusion.getAnimation());
-
-
-        //videoView.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-        //textView.setLayoutParams(new LinearLayout.LayoutParams(width,width));
 
         handler = new Handler();
 
@@ -199,6 +179,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
                 Drawable backgroundColor = new ColorDrawable(Color.parseColor(String.valueOf(R.color.black)));
                 backgroundColor.setAlpha(200);
                 textView.setBackground(backgroundColor);
+                backgroundColor.setAlpha(200);
             }
 
             @Override
@@ -249,9 +230,6 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             }
         });
 
-        Space sp1 = (Space) findViewById(R.id.sp_details1);
-        setCustomParams(sp1, buttonSize / 2, buttonSize / 2);
-
         ImageButton toAll = (ImageButton) findViewById(R.id.b_to_all);
         setCustomParams(toAll, buttonSize, buttonSize);
         toAll.setOnClickListener(new View.OnClickListener() {
@@ -261,9 +239,6 @@ public class IllusionDetailsActivity extends AppCompatActivity {
                 stack.clear();
             }
         });
-
-        Space sp2 = (Space) findViewById(R.id.sp_details2);
-        setCustomParams(sp2, buttonSize / 2, buttonSize / 2);
 
         setFavourite = (ImageButton) findViewById(R.id.b_to_favourites);
         setCustomParams(setFavourite, buttonSize, buttonSize);
@@ -355,5 +330,10 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             result = getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    public static float convertDpToPixels(float dp, Context context) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, dp,
+                context.getResources().getDisplayMetrics());
     }
 }

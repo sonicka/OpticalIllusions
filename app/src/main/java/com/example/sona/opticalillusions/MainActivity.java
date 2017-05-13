@@ -86,6 +86,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Adds pictures to illusion objects.
+     * @param listFromXml data from xml
+     */
     private void setPictures(ArrayList<Illusion> listFromXml) {
         for (Illusion i : listFromXml) {
             switch (i.getName()) {

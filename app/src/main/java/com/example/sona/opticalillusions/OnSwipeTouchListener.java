@@ -6,7 +6,9 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Created by Soňa on 30-Apr-17.
+ * Custom touch listener used to add functionality to swipe and click on an image in IllusionDetailsActivity.
+ * Created by Mohit Goenka, used here on 30-Apr-17.
+ * Source: https://github.com/mgoenka/AnimationPlay/blob/master/src/com/mgoenka/animationplay/OnSwipeTouchListener.java
  */
 
 public class OnSwipeTouchListener implements View.OnTouchListener {

@@ -54,11 +54,7 @@ public class FavouritesActivity extends AppCompatActivity {
     private EditText editTextSearch;
     private ImageButton searchButton;
     private Typeface type;
-    private int toolbarHeight;
-    private int contentHeight;
     private int itemSize;
-    private int categoryHeight;
-    private int nameSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,14 +75,9 @@ public class FavouritesActivity extends AppCompatActivity {
 
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         int width = display.widthPixels;
-        int height = display.heightPixels;
-        toolbarHeight = (height/13);
-        contentHeight = height-(2*toolbarHeight);
         itemSize = width/3;
-        categoryHeight = height/8;
-        nameSize = categoryHeight/2;
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.fav_toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -94,9 +85,6 @@ public class FavouritesActivity extends AppCompatActivity {
         }
 
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
-        setCustomParams(logo, toolbarHeight, toolbarHeight);
-        int p = toolbarHeight/10;
-        logo.setPadding(p,p,p,p);
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +95,6 @@ public class FavouritesActivity extends AppCompatActivity {
         });
 
         TextView title = (TextView) findViewById(R.id.tv_title);
-        setCustomParams(title, width-4*toolbarHeight/3, toolbarHeight);
         title.setText(R.string.favourites);
         title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf"));
         title.setGravity(Gravity.CENTER);
@@ -125,8 +112,6 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         };
         gridView.setOnItemClickListener(onItemClickListener);
-    //    gridView.setLayoutParams(new LinearLayout.LayoutParams(width, contentHeight));
-        //gridView.setColumnWidth(itemSize+itemSize/3);
 
         AdapterView.OnItemLongClickListener onItemLongClickListener = new AdapterView.OnItemLongClickListener() {
             @Override
@@ -154,10 +139,7 @@ public class FavouritesActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
-        setCustomParams(bottomToolbar, width, toolbarHeight);
-
         removeButton = (ImageButton) findViewById(R.id.b_left_button);
-        setCustomParams(removeButton, toolbarHeight, toolbarHeight);
         removeButton.setImageResource(R.drawable.ic_delete);
         removeButton.setOnDragListener(new View.OnDragListener() {
             @Override
@@ -194,7 +176,6 @@ public class FavouritesActivity extends AppCompatActivity {
         });
 
         ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_view);
-        setCustomParams(switchViewButton, toolbarHeight, toolbarHeight);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,7 +219,6 @@ public class FavouritesActivity extends AppCompatActivity {
         });
 
         searchButton = (ImageButton) findViewById(R.id.ib_search);
-        setCustomParams(searchButton, toolbarHeight, toolbarHeight);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -303,14 +283,6 @@ public class FavouritesActivity extends AppCompatActivity {
                 removeButton.setImageResource(R.drawable.ic_delete);
             }
         });
-    }
-
-
-    //// TODO: 10-May-17
-    public void setCustomParams(View v, int width, int height) {
-        v.requestLayout();
-        v.getLayoutParams().width = width;
-        v.getLayoutParams().height = height;
     }
 
     /**

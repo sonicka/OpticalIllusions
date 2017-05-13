@@ -23,6 +23,12 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
     private OrderedRealmCollection<Illusion> list;
     private int size;
 
+    /**
+     * GridElementAdapter constructor
+     * @param context of app
+     * @param list of illusions
+     * @param size of the element
+     */
     GridElementAdapter(Context context, OrderedRealmCollection<Illusion> list, int size) {
         super(list, true);
         this.context = context;
@@ -30,6 +36,9 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
         this.size = size;
     }
 
+    /**
+     * Class representing one item in a grid.
+     */
     private static class SimpleViewHolder extends RecyclerView.ViewHolder {
         final com.mikhaellopez.circularimageview.CircularImageView image;
 
@@ -39,12 +48,23 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
         }
     }
 
+    /**
+     * Creates new view of an item.
+     * @param parent view group
+     * @param viewType view type
+     * @return void
+     */
     @Override
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(this.context).inflate(R.layout.illusion_small_preview, parent, false);
         return new SimpleViewHolder(view);
     }
 
+    /**
+     * Sets parameters of the view of an item.
+     * @param holder holder
+     * @param position in grid
+     */
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final Illusion illusion = getData().get(position);
@@ -63,11 +83,20 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
         });
     }
 
+    /**
+     * Returns item id.
+     * @param position in grid
+     * @return long
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     * Returns number of items in grid.
+     * @return int
+     */
     @Override
     public int getItemCount() {
         return this.list.size();

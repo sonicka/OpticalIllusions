@@ -11,8 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,7 +21,6 @@ import android.widget.ExpandableListView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.sona.opticalillusions.model.Illusion;
@@ -49,17 +46,12 @@ public class AllIllusionsActivity extends AppCompatActivity {
     private RealmHelper helper;
     private LinkedHashMap<String, List<Illusion>> linkedMap;
     private GridView gridView;
-    private Realm realm;
     private ImageAdapter imageAdapter;
     private ListAdapter adapter;
     private EditText editTextSearch;
     private ImageButton searchButton;
     private int previousGroup = -1;
-    private int toolbarHeight;
-    private int contentHeight;
     private int itemSize;
-    private int categoryHeight;
-    private int nameSize;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -73,34 +65,23 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 .Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build();
-        realm = Realm.getInstance(config);
+        Realm realm = Realm.getInstance(config);
         helper = new RealmHelper(realm);
 
         listIllusions = realm.where(Illusion.class).findAll();
 
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         int width = display.widthPixels;
-        int height = display.heightPixels;
-        toolbarHeight = (height/13);
-        contentHeight = height-(2*toolbarHeight);
         itemSize = width/3;
-        categoryHeight = height/8;
-        nameSize = categoryHeight/2;
 
-
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar_all);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
-        setCustomParams(toolbar, width, toolbarHeight);
 
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
-        setCustomParams(logo, toolbarHeight, toolbarHeight);
-        int p = toolbarHeight/10;
-        logo.setPadding(p,p,p,p);
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,10 +92,8 @@ public class AllIllusionsActivity extends AppCompatActivity {
         });
 
         final TextView title = (TextView) findViewById(R.id.tv_title);
-        setCustomParams(title, width-4*toolbarHeight/3, toolbarHeight);
         title.setText(R.string.preview);
         title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf"));
-        title.setGravity(Gravity.CENTER);
 
         imageAdapter = new ImageAdapter(this, listIllusions, itemSize);
         gridView = (GridView) findViewById(R.id.gv_illusion_grid);
@@ -130,10 +109,9 @@ public class AllIllusionsActivity extends AppCompatActivity {
         };
 
         gridView.setOnItemClickListener(onItemClickListener);
-        gridView.setLayoutParams(new RelativeLayout.LayoutParams(width, contentHeight));
         gridView.setColumnWidth(itemSize+itemSize/3);
 
-        adapter = new ListAdapter(this, fillMap(listIllusions), categoryHeight, nameSize);
+        adapter = new ListAdapter(this, fillMap(listIllusions));
         final ExpandableListView listView = (ExpandableListView) findViewById(R.id.id_list_view);
         listView.setAdapter(adapter);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -173,12 +151,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
 
-        bottomToolbar.requestLayout();
-        bottomToolbar.getLayoutParams().height = toolbarHeight;
-        bottomToolbar.getLayoutParams().width = width;
-
         ImageButton favouritesButton = (ImageButton) findViewById(R.id.b_left_button);
-        setCustomParams(favouritesButton, toolbarHeight, toolbarHeight);
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,7 +160,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
         });
 
         final ImageButton switchViewButton = (ImageButton) findViewById(R.id.b_switch_view);
-        setCustomParams(switchViewButton, toolbarHeight, toolbarHeight);
         switchViewButton.setImageResource(R.drawable.ic_list);
         switchViewButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,7 +217,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
                     imageAdapter = new ImageAdapter(AllIllusionsActivity.this, listIllusions, itemSize);
                     gridView.setAdapter(imageAdapter);
                 } else {
-                    adapter = new ListAdapter(AllIllusionsActivity.this, fillMap(listIllusions), categoryHeight, nameSize);
+                    adapter = new ListAdapter(AllIllusionsActivity.this, fillMap(listIllusions));
                     listView.setAdapter(adapter);
                     if (!listIllusions.isEmpty()) {
                         listView.expandGroup(0, true);
@@ -261,7 +233,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
         });
 
         searchButton = (ImageButton) findViewById(R.id.ib_search);
-        setCustomParams(searchButton, toolbarHeight, toolbarHeight);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -271,21 +242,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
                 editTextSearch.requestFocus();
             }
         });
-
-        Log.v("logsizew", String.valueOf(width));
-        Log.v("logsizeh", String.valueOf(height));
-        Log.v("logsizeh", String.valueOf(contentHeight));
-        Log.v("logsizeh", String.valueOf(toolbarHeight));
-        Log.v("logsizeh", String.valueOf(itemSize));
-
-    }
-
-
-    //// TODO: 10-May-17
-    public void setCustomParams(View v, int width, int height) {
-        v.requestLayout();
-        v.getLayoutParams().width = width;
-        v.getLayoutParams().height = height;
     }
 
     /**
