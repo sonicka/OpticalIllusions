@@ -37,7 +37,6 @@ import java.util.Map;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import me.grantland.widget.AutofitTextView;
 
 /**
  * This activity shows all illusions in a grid or in a list.
@@ -67,7 +66,6 @@ public class AllIllusionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_illusions);
 
-
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         Realm.init(this);
@@ -83,7 +81,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         int width = display.widthPixels;
         int height = display.heightPixels;
-        toolbarHeight = (int) (height/8.4873);
+        toolbarHeight = (height/13);
         contentHeight = height-(2*toolbarHeight);
         itemSize = width/3;
         categoryHeight = height/8;
@@ -112,7 +110,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
             }
         });
 
-        final AutofitTextView title = (AutofitTextView) findViewById(R.id.tv_title);
+        final TextView title = (TextView) findViewById(R.id.tv_title);
         setCustomParams(title, width-4*toolbarHeight/3, toolbarHeight);
         title.setText(R.string.preview);
         title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf"));

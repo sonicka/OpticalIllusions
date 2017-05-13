@@ -10,10 +10,10 @@
         layout="@layout/toolbar"
         android:layout_width="0dp"
         android:layout_height="68dp"
+        autofit:layout_constraintHorizontal_bias="0.0"
         autofit:layout_constraintLeft_toLeftOf="parent"
-        autofit:layout_constraintTop_toTopOf="parent"
         autofit:layout_constraintRight_toRightOf="parent"
-        autofit:layout_constraintHorizontal_bias="0.0" />
+        autofit:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
         android:id="@+id/ll_details"
@@ -47,6 +47,7 @@
 
         <TextView
             android:id="@+id/tv_description"
+            style="@android:style/TextAppearance.DeviceDefault.Medium"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLines="30"
@@ -85,8 +86,8 @@
         <Space
             android:id="@+id/sp_details1"
             android:layout_width="10dp"
-            android:layout_toStartOf="@id/b_to_all"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/b_to_all" />
 
         <ImageButton
             android:id="@+id/b_last_viewed"
@@ -103,14 +104,14 @@
             android:id="@+id/sp_details2"
             android:layout_width="10dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/b_to_all"/>
+            android:layout_toEndOf="@id/b_to_all" />
 
         <ImageButton
             android:id="@+id/b_to_favourites"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toEndOf="@id/sp_details2"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/sp_details2"
             android:adjustViewBounds="true"
             android:background="@drawable/circle_shape_drawable"
             android:scaleType="fitCenter"
@@ -130,7 +131,6 @@
         <android.support.v17.leanback.widget.HorizontalGridView
             android:id="@+id/gv_small_preview"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-             />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

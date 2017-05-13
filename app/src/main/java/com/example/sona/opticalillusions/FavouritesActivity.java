@@ -36,7 +36,6 @@ import java.lang.reflect.Field;
 import io.realm.OrderedRealmCollection;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import me.grantland.widget.AutofitTextView;
 
 /**
  * This activity shows a grid of illusions set as favourite.
@@ -81,7 +80,7 @@ public class FavouritesActivity extends AppCompatActivity {
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         int width = display.widthPixels;
         int height = display.heightPixels;
-        toolbarHeight = (int) (height/8.4873);
+        toolbarHeight = (height/13);
         contentHeight = height-(2*toolbarHeight);
         itemSize = width/3;
         categoryHeight = height/8;
@@ -107,7 +106,7 @@ public class FavouritesActivity extends AppCompatActivity {
             }
         });
 
-        AutofitTextView title = (AutofitTextView) findViewById(R.id.tv_title);
+        TextView title = (TextView) findViewById(R.id.tv_title);
         setCustomParams(title, width-4*toolbarHeight/3, toolbarHeight);
         title.setText(R.string.favourites);
         title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf"));

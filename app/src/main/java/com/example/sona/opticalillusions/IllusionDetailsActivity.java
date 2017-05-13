@@ -36,7 +36,6 @@ import java.util.Stack;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
-import me.grantland.widget.AutofitTextView;
 
 public class IllusionDetailsActivity extends AppCompatActivity {
 
@@ -44,7 +43,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
     private RealmHelper realmHelper;
     private Illusion currentIllusion;
     private ImageView imageView;
-    private AutofitTextView category;
+    private TextView category;
     private TextView title;
     private ImageButton setFavourite;
     private TextView textView;
@@ -88,11 +87,19 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(false);
         }
         setCustomParams(toolbar, width, toolbarHeight);
+//
+//        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.rl_toolbar2);
+//
+//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+//                (int) (width-(toolbarHeight*1.1)+12), 3*toolbarHeight/4);
+//        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+//        relativeLayout.setLayoutParams(layoutParams);
+
 
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
         setCustomParams(logo, toolbarHeight, toolbarHeight);
-        int p = toolbarHeight /10;
-        logo.setPadding(p,p,p,p);
+        int p = toolbarHeight / 10;
+        logo.setPadding(p, p, p, p);
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,15 +109,37 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             }
         });
 
+
         Typeface type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
-        title = (AutofitTextView) findViewById(R.id.tv_title);
-        setCustomParams(title, width-4* toolbarHeight /3, 2*toolbarHeight/3-toolbarHeight/10); //TODO
-        title.setPadding(0,toolbarHeight/15,0,0);
+        title = (TextView) findViewById(R.id.tv_title);
+        setCustomParams(title, width - 4 * toolbarHeight / 3, 2 * toolbarHeight / 3 - toolbarHeight); //TODO
+        title.setPadding(0, toolbarHeight / 15, 0, 0);
         title.setTypeface(type);
-        category = (AutofitTextView) findViewById(R.id.tv_category);
+        if (height <= 1280) {
+            title.setTextSize(16);
+        } else {
+            title.setTextSize(33);
+        }
+        category = (TextView) findViewById(R.id.tv_category);
         category.setVisibility(View.VISIBLE);
-        setCustomParams(category, width-4* toolbarHeight /3,toolbarHeight/3-toolbarHeight/10 );
+        setCustomParams(category, width - 4 * toolbarHeight / 3, toolbarHeight / 3 - toolbarHeight);
         category.setTypeface(type);
+
+
+        RelativeLayout.LayoutParams rlTitle = new RelativeLayout.LayoutParams(width - 4 * toolbarHeight / 3, 2 * toolbarHeight / 3 - toolbarHeight);
+        rlTitle.addRule(RelativeLayout.ALIGN_PARENT_END);
+        title.setLayoutParams(rlTitle);
+        title.requestLayout();
+
+        //title.setTextSize(TypedValue.COMPLEX_UNIT_PX, width - 4 * toolbarHeight / 3); //todo kktina
+
+
+        RelativeLayout.LayoutParams rlCategory = new RelativeLayout.LayoutParams(width - 4 * toolbarHeight / 3, toolbarHeight / 3 - toolbarHeight);
+        rlCategory.addRule(RelativeLayout.ALIGN_PARENT_END);
+        rlCategory.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        rlCategory.addRule(RelativeLayout.BELOW, R.id.tv_title);
+        category.setLayoutParams(rlCategory);
+        category.requestLayout();
 
         Log.v("hahaha1", String.valueOf(height));
         Log.v("hahaha2", String.valueOf(width));
@@ -200,7 +229,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         RelativeLayout ll = (RelativeLayout) findViewById(R.id.linearLayout2);
         ll.requestLayout();
         ll.getLayoutParams().width = width;
-        ll.getLayoutParams().height = 2* bottomHeight /5;
+        ll.getLayoutParams().height = 2 * bottomHeight / 5;
 
         ImageButton back = (ImageButton) findViewById(R.id.b_last_viewed);
 
@@ -221,7 +250,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         });
 
         Space sp1 = (Space) findViewById(R.id.sp_details1);
-        setCustomParams(sp1, buttonSize /2, buttonSize /2);
+        setCustomParams(sp1, buttonSize / 2, buttonSize / 2);
 
         ImageButton toAll = (ImageButton) findViewById(R.id.b_to_all);
         setCustomParams(toAll, buttonSize, buttonSize);
@@ -234,7 +263,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         });
 
         Space sp2 = (Space) findViewById(R.id.sp_details2);
-        setCustomParams(sp2, buttonSize /2, buttonSize /2);
+        setCustomParams(sp2, buttonSize / 2, buttonSize / 2);
 
         setFavourite = (ImageButton) findViewById(R.id.b_to_favourites);
         setCustomParams(setFavourite, buttonSize, buttonSize);
@@ -246,8 +275,8 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         });
 
         horizontalGridView = (HorizontalGridView) findViewById(R.id.gv_small_preview);
-        horizontalGridView.setLayoutParams(new LinearLayout.LayoutParams(width, 3* bottomHeight /5));
-        adapter = new GridElementAdapter(this, realm.where(Illusion.class).findAll(), 3* bottomHeight /5);
+        horizontalGridView.setLayoutParams(new LinearLayout.LayoutParams(width, 3 * bottomHeight / 5));
+        adapter = new GridElementAdapter(this, realm.where(Illusion.class).findAll(), 3 * bottomHeight / 5);
         horizontalGridView.setAdapter(adapter);
 
         updateActivity(currentIllusion);

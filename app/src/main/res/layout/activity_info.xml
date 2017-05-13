@@ -6,6 +6,16 @@
     android:background="@drawable/bg1"
     tools:context="com.example.sona.opticalillusions.InfoActivity">
 
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textSize="54sp"
+        android:text="TextView" />
+
     <Space
         android:id="@+id/info_space"
         android:layout_width="wrap_content"
