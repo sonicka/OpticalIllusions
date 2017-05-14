@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:autofit="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_listitem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <Space
+        android:id="@+id/sp_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:id="@+id/ll_list"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_toEndOf="@id/sp_list"
         android:orientation="horizontal">
 
-            <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/iv_list_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:civ_border_color="@color/green"
-                app:civ_border_width="1dp" />
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/iv_list_item"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            app:civ_border_color="@color/green"
+            app:civ_border_width="1dp" />
 
-            <me.grantland.widget.AutofitTextView
-                android:id="@+id/tv_list_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/iv_list_item"
-                android:gravity="center_vertical|start"
-                android:maxLines="1"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                autofit:minTextSize="20sp"
-                android:ellipsize="marquee"/>
+        <TextView
+            android:id="@+id/tv_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@id/iv_list_item"
+            android:ellipsize="marquee"
+            android:gravity="center_vertical|start"
+            android:maxLines="2"
+            android:paddingStart="5dp"
+            android:textColor="@color/black"
+            android:textSize="14dp" />
     </RelativeLayout>
 </RelativeLayout>

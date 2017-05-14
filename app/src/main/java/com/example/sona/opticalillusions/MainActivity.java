@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 case "Vertical-horizontal Illusion":
                     i.setThumbnailAndPicture(R.drawable.thumb_verticalhorizontal, R.drawable.big_verticalhorizontal);
                     break;
-                case "Zollner Illusion":
+                case "Zöllner Illusion":
                     i.setThumbnailAndPicture(R.drawable.thumb_zollner, R.drawable.big_zollner);
                     break;
             }

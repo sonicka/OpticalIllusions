@@ -12,5 +12,5 @@
         android:padding="10dp"
         android:scaleType="centerCrop"
         app:civ_border_color="@color/green"
-        app:civ_border_width="1dp" />
+        app:civ_border_width="2dp" />
 </FrameLayout>

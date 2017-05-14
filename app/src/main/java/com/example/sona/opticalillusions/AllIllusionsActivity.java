@@ -71,8 +71,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         listIllusions = realm.where(Illusion.class).findAll();
 
         DisplayMetrics display = this.getResources().getDisplayMetrics();
-        int width = display.widthPixels;
-        itemSize = width/3;
+        itemSize = display.widthPixels/3;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar_all);
         if (toolbar != null) {
@@ -109,9 +108,9 @@ public class AllIllusionsActivity extends AppCompatActivity {
         };
 
         gridView.setOnItemClickListener(onItemClickListener);
-        gridView.setColumnWidth(itemSize+itemSize/3);
+        gridView.setColumnWidth(itemSize+itemSize/4);
 
-        adapter = new ListAdapter(this, fillMap(listIllusions));
+        adapter = new ListAdapter(this, fillMap(listIllusions), itemSize);
         final ExpandableListView listView = (ExpandableListView) findViewById(R.id.id_list_view);
         listView.setAdapter(adapter);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -217,7 +216,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
                     imageAdapter = new ImageAdapter(AllIllusionsActivity.this, listIllusions, itemSize);
                     gridView.setAdapter(imageAdapter);
                 } else {
-                    adapter = new ListAdapter(AllIllusionsActivity.this, fillMap(listIllusions));
+                    adapter = new ListAdapter(AllIllusionsActivity.this, fillMap(listIllusions), itemSize);
                     listView.setAdapter(adapter);
                     if (!listIllusions.isEmpty()) {
                         listView.expandGroup(0, true);

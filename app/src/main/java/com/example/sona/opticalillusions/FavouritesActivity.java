@@ -96,7 +96,8 @@ public class FavouritesActivity extends AppCompatActivity {
 
         TextView title = (TextView) findViewById(R.id.tv_title);
         title.setText(R.string.favourites);
-        title.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf"));
+        type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
+        title.setTypeface(type);
         title.setGravity(Gravity.CENTER);
 
         gridView = (GridView) findViewById(R.id.gv_favourites_grid);
@@ -245,7 +246,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
         final TextView title = (TextView) mView.findViewById(R.id.tv_delete_title);
         title.setTypeface(type);
-        title.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.black));
+        title.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.green));
 
         final TextView text = (TextView) mView.findViewById(R.id.tv_delete_text);
         text.setText(deleteMode);

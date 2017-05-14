@@ -36,5 +36,6 @@ dependencies {
     compile 'io.realm:android-adapters:2.0.0'
     compile 'com.mikhaellopez:circularimageview:3.0.2'
     compile 'me.grantland:autofittextview:0.2.1'
+    compile 'com.google.android.exoplayer:exoplayer:r2.4.0'
     testCompile 'junit:junit:4.12'
 }

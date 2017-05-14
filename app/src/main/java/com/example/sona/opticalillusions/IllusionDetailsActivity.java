@@ -2,23 +2,16 @@ package com.example.sona.opticalillusions;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
@@ -54,6 +47,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
     private boolean isVideoBeingTouched = false;
     private Handler handler;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,19 +64,25 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         realm = Realm.getInstance(config);
         realmHelper = new RealmHelper(realm);
 
+//               // 1. Create a default TrackSelector
+//        Handler mainHandler = new Handler();
+//        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+//        TrackSelection.Factory videoTrackSelectionFactory =
+//                new AdaptiveTrackSelection.Factory(bandwidthMeter);
+//        TrackSelector trackSelector =
+//                new DefaultTrackSelector(videoTrackSelectionFactory);
+//
+//        // 2. Create the player
+//        SimpleExoPlayer player =
+//                ExoPlayerFactory.newSimpleInstance(this, trackSelector);
+
         DisplayMetrics display = this.getResources().getDisplayMetrics();
-        int densityDpi = (int) (display.density * 160f);
-
-        Log.v("loldpi", String.valueOf(densityDpi));
-
         int width = display.widthPixels;
         int height = display.heightPixels;
         int statusBarHeight = getStatusBarHeight();
         int toolbarHeight = (height / 13);
         int bottomHeight = height - width - toolbarHeight - statusBarHeight;
         int buttonSize = (bottomHeight / 10) * 3;
-
-        Log.v("gggg", String.valueOf(statusBarHeight));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar_details);
         if (toolbar != null) {
@@ -125,10 +125,6 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         category.setLayoutParams(rlCategory);
         category.requestLayout();
 
-        Log.v("hahaha1", String.valueOf(height));
-        Log.v("hahaha2", String.valueOf(width));
-        Log.v("hahaha3", String.valueOf(bottomHeight));
-
         imageView = (ImageView) findViewById(R.id.iv_view_illusion);
         videoView = (VideoView) findViewById(R.id.vv_video);
         textView = (TextView) findViewById(R.id.tv_description);
@@ -137,7 +133,27 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         videoView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
         textView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
 
-        videoView.setVideoPath(currentIllusion.getAnimation());
+//        videoView.setPlayer(player);
+//
+//        // Measures bandwidth during playback. Can be null if not required.
+//        bandwidthMeter = new DefaultBandwidthMeter();
+//// Produces DataSource instances through which media data is loaded.
+//        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
+//                Util.getUserAgent(context, "yourApplicationName"), bandwidthMeter);
+//// Produces Extractor instances for parsing the media data.
+//        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
+//// This is the MediaSource representing the media to be played.
+//        MediaSource videoSource = new ExtractorMediaSource(mp4VideoUri,
+//                dataSourceFactory, extractorsFactory, null, null);
+//// Prepare the player with the source.
+//        player.prepare(videoSource);
+
+
+
+
+       videoView.setVideoPath(currentIllusion.getAnimation());
+//        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), currentIllusion.getPicture());
+//        videoView.setBackground(drawable);
 
         handler = new Handler();
 
@@ -176,10 +192,8 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             @Override
             public void onSwipeLeft() {
                 textView.setVisibility(View.VISIBLE);
-                Drawable backgroundColor = new ColorDrawable(Color.parseColor(String.valueOf(R.color.black)));
-                backgroundColor.setAlpha(200);
-                textView.setBackground(backgroundColor);
-                backgroundColor.setAlpha(200);
+                textView.setMovementMethod(new ScrollingMovementMethod());
+                ScrollingMovementMethod.getInstance();
             }
 
             @Override
@@ -187,12 +201,10 @@ public class IllusionDetailsActivity extends AppCompatActivity {
                 if (haveNetworkConnection()) {
                     imageView.setVisibility(View.GONE);
                     videoView.setVisibility(View.VISIBLE);
-
-                    Toast toast = Toast.makeText(IllusionDetailsActivity.this, R.string.animation_loading, Toast.LENGTH_SHORT);
-                    toast.show();
-
+                    Toast.makeText(IllusionDetailsActivity.this, R.string.animation_loading, Toast.LENGTH_SHORT).show();
                     videoView.start();
-                } else {    //todo http://stackoverflow.com/a/33193463/7813295
+                    videoView.setBackground(null);
+                } else {
                     Toast.makeText(IllusionDetailsActivity.this, R.string.connect_to_internet, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -262,6 +274,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         title.setText(illusion.getName());
         category.setText(illusion.getCategory());
         imageView.setImageResource(illusion.getPicture());
+        videoView.setVideoPath(illusion.getAnimation());
 
         if (illusion.isfavourite()) {
             setFavourite.setImageResource(R.drawable.ic_unfavourite);
@@ -275,6 +288,8 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             }
         }
 
+        textView.setMovementMethod(new ScrollingMovementMethod());
+        ScrollingMovementMethod.getInstance();
         textView.setText(currentIllusion.getDescription());
 
         imageView.setVisibility(View.VISIBLE);
@@ -283,46 +298,40 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         videoView.setVisibility(View.GONE);
     }
 
+    /**
+     * Adds illusion to stack.
+     */
     public void addIllusionToStack() {
         stack.push(currentIllusion);
     }
 
-    //// TODO: 10-May-17
+    /**
+     * Sets custom paramaters of a view.
+     * @param v view
+     * @param width width
+     * @param height height
+     */
     public void setCustomParams(View v, int width, int height) {
         v.requestLayout();
         v.getLayoutParams().width = width;
         v.getLayoutParams().height = height;
     }
 
+    /**
+     * Checks if network connections exists.
+     * @return true/false
+     */
     private boolean haveNetworkConnection() {
-
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Network[] networks = cm.getAllNetworks();
-            NetworkInfo networkInfo;
-            for (Network ni : networks) {
-                networkInfo = cm.getNetworkInfo(ni);
-                if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
-                    return true;
-                }
-            }
-        } else {
-            if (cm != null) {
-                NetworkInfo[] info = cm.getAllNetworkInfo();
-                if (info != null) {
-                    for (NetworkInfo anInfo : info) {
-                        if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
-                            Log.d("Network", "NETWORKNAME: " + anInfo.getTypeName());
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null &&
+                cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
+    /**
+     * Gets current status bar height.
+     * @return int
+     */
     public int getStatusBarHeight() {
         int result = 0;
         int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
@@ -330,10 +339,5 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             result = getResources().getDimensionPixelSize(resourceId);
         }
         return result;
-    }
-
-    public static float convertDpToPixels(float dp, Context context) {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, dp,
-                context.getResources().getDisplayMetrics());
     }
 }

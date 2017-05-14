@@ -5,7 +5,8 @@
     <color name="colorAccent">#009900</color>
     <color name="green">#009900</color>
     <color name="grey">#E6E5E4</color>
-    <color name="black_overlay">#66000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black_overlay">#99000000</color>
     <color name="black">#000000</color>
     <drawable name="green">#66009900</drawable>
 </resources>

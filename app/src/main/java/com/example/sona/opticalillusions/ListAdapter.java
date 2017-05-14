@@ -8,14 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.Space;
+import android.widget.TextView;
 
 import com.example.sona.opticalillusions.model.Illusion;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-
-import me.grantland.widget.AutofitTextView;
 
 /**
  * Adapter used to fill the list of illusions.
@@ -27,16 +27,18 @@ class ListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<String> headerList;
     private LinkedHashMap<String, List<Illusion>> listLinkedMap;
+    private int spaceSize;
 
     /**
      * Constructor for the adapter.
      * @param context context
      * @param listLinkedMap map
      */
-    ListAdapter(Context context, LinkedHashMap<String, List<Illusion>> listLinkedMap) {
+    ListAdapter(Context context, LinkedHashMap<String, List<Illusion>> listLinkedMap, int spaceSize) {
         this.context = context;
         this.headerList = new ArrayList<>(listLinkedMap.keySet());
         this.listLinkedMap = listLinkedMap;
+        this.spaceSize = spaceSize;
     }
 
     /**
@@ -123,7 +125,7 @@ class ListAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_group, null);
         }
-        AutofitTextView textView = (AutofitTextView) convertView.findViewById(R.id.tw_list_header);
+        TextView textView = (TextView) convertView.findViewById(R.id.tw_list_header);
         textView.requestLayout();
         textView.setTypeface(Typeface.createFromAsset(context.getAssets(), "fonts/gudea-regular.ttf"));
         textView.setTextColor(ContextCompat.getColor(context, R.color.green));
@@ -148,9 +150,13 @@ class ListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.illusion_list_item, null);
         }
 
+        Space space = (Space) convertView.findViewById(R.id.sp_list);
+        space.getLayoutParams().width = spaceSize/2;
+        space.requestLayout();
+
         Illusion illusion = (Illusion) getChild(groupPosition, childPosition);
         ImageView imageViewItem = (ImageView) convertView.findViewById(R.id.iv_list_item);
-        AutofitTextView textViewItem = (AutofitTextView) convertView.findViewById(R.id.tv_list_item);
+        TextView textViewItem = (TextView) convertView.findViewById(R.id.tv_list_item);
         imageViewItem.setImageResource(illusion.getThumbnail());
         textViewItem.setText(illusion.getName());
 
