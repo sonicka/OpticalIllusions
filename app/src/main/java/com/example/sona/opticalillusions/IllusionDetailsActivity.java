@@ -64,18 +64,6 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         realm = Realm.getInstance(config);
         realmHelper = new RealmHelper(realm);
 
-//               // 1. Create a default TrackSelector
-//        Handler mainHandler = new Handler();
-//        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-//        TrackSelection.Factory videoTrackSelectionFactory =
-//                new AdaptiveTrackSelection.Factory(bandwidthMeter);
-//        TrackSelector trackSelector =
-//                new DefaultTrackSelector(videoTrackSelectionFactory);
-//
-//        // 2. Create the player
-//        SimpleExoPlayer player =
-//                ExoPlayerFactory.newSimpleInstance(this, trackSelector);
-
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         int width = display.widthPixels;
         int height = display.heightPixels;
@@ -94,8 +82,8 @@ public class IllusionDetailsActivity extends AppCompatActivity {
 
         ImageView logo = (ImageView) findViewById(R.id.ib_logo);
         setCustomParams(logo, toolbarHeight, toolbarHeight);
-        int p = toolbarHeight / 10;
-        logo.setPadding(p, p, p, p);
+        int p = toolbarHeight/10;
+        logo.setPadding(p,p,p,p);
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,27 +121,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         videoView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
         textView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
 
-//        videoView.setPlayer(player);
-//
-//        // Measures bandwidth during playback. Can be null if not required.
-//        bandwidthMeter = new DefaultBandwidthMeter();
-//// Produces DataSource instances through which media data is loaded.
-//        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
-//                Util.getUserAgent(context, "yourApplicationName"), bandwidthMeter);
-//// Produces Extractor instances for parsing the media data.
-//        ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
-//// This is the MediaSource representing the media to be played.
-//        MediaSource videoSource = new ExtractorMediaSource(mp4VideoUri,
-//                dataSourceFactory, extractorsFactory, null, null);
-//// Prepare the player with the source.
-//        player.prepare(videoSource);
-
-
-
-
-       videoView.setVideoPath(currentIllusion.getAnimation());
-//        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), currentIllusion.getPicture());
-//        videoView.setBackground(drawable);
+        videoView.setVideoPath(currentIllusion.getAnimation());
 
         handler = new Handler();
 
@@ -307,8 +275,9 @@ public class IllusionDetailsActivity extends AppCompatActivity {
 
     /**
      * Sets custom paramaters of a view.
-     * @param v view
-     * @param width width
+     *
+     * @param v      view
+     * @param width  width
      * @param height height
      */
     public void setCustomParams(View v, int width, int height) {
@@ -319,6 +288,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
 
     /**
      * Checks if network connections exists.
+     *
      * @return true/false
      */
     private boolean haveNetworkConnection() {
@@ -330,6 +300,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
 
     /**
      * Gets current status bar height.
+     *
      * @return int
      */
     public int getStatusBarHeight() {
