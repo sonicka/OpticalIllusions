@@ -31,7 +31,8 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Constructor for the adapter.
-     * @param context context
+     *
+     * @param context       context
      * @param listLinkedMap map
      */
     ListAdapter(Context context, LinkedHashMap<String, List<Illusion>> listLinkedMap, int spaceSize) {
@@ -43,6 +44,7 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Returns the number of categories.
+     *
      * @return int
      */
     @Override
@@ -52,6 +54,7 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Returns the number of illusions within given category.
+     *
      * @param groupPosition int
      * @return int
      */
@@ -62,6 +65,7 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Returns list of illusions within given category.
+     *
      * @param groupPosition int
      * @return ArrayList
      */
@@ -72,6 +76,7 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Returns the illusion within given category on given position.
+     *
      * @param groupPosition int
      * @param childPosition int
      * @return Illusion
@@ -83,6 +88,7 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Returns category ID.
+     *
      * @param groupPosition int
      * @return int
      */
@@ -93,6 +99,7 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Returns illusion ID.
+     *
      * @param childPosition int
      * @return int
      */
@@ -103,6 +110,7 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Define objects not to have stable IDs.
+     *
      * @return false
      */
     @Override
@@ -112,10 +120,11 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Sets up the view of groups within the ListView.
+     *
      * @param groupPosition int
-     * @param isExpanded boolean
-     * @param convertView view
-     * @param parent viewgroup
+     * @param isExpanded    boolean
+     * @param convertView   view
+     * @param parent        viewgroup
      * @return view
      */
     @Override
@@ -136,11 +145,12 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Sets up the view of an illusion within each category.
+     *
      * @param groupPosition int
      * @param childPosition int
-     * @param isLastChild boolean
-     * @param convertView view
-     * @param parent viewgroup
+     * @param isLastChild   boolean
+     * @param convertView   view
+     * @param parent        viewgroup
      * @return view
      */
     @Override
@@ -151,7 +161,7 @@ class ListAdapter extends BaseExpandableListAdapter {
         }
 
         Space space = (Space) convertView.findViewById(R.id.sp_list);
-        space.getLayoutParams().width = spaceSize/2;
+        space.getLayoutParams().width = spaceSize / 2;
         space.requestLayout();
 
         Illusion illusion = (Illusion) getChild(groupPosition, childPosition);
@@ -165,6 +175,7 @@ class ListAdapter extends BaseExpandableListAdapter {
 
     /**
      * Returns true/false if the child is selectable.
+     *
      * @param groupPosition group position
      * @param childPosition child position
      * @return true/false

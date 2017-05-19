@@ -10,15 +10,16 @@ import android.os.Handler;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -32,21 +33,21 @@ import io.realm.RealmConfiguration;
 
 public class IllusionDetailsActivity extends AppCompatActivity {
 
+    private Illusion currentIllusion;
     private Realm realm;
     private RealmHelper realmHelper;
-    private Illusion currentIllusion;
-    private ImageView imageView;
-    private TextView category;
     private TextView title;
-    private ImageButton setFavourite;
-    private TextView textView;
+    private TextView category;
+    private ImageView imageView;
     private VideoView videoView;
-    private Stack stack;
+    private ScrollView scrollView;
+    private TextView textView;
+    private ImageButton setFavourite;
     private GridElementAdapter adapter;
     private HorizontalGridView horizontalGridView;
-    private boolean isVideoBeingTouched = false;
+    private Stack stack;
     private Handler handler;
-
+    private boolean isVideoBeingTouched = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,16 +117,19 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.iv_view_illusion);
         videoView = (VideoView) findViewById(R.id.vv_video);
         textView = (TextView) findViewById(R.id.tv_description);
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
+        scrollView.getBackground().setAlpha(200);
 
         imageView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
         videoView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
-        textView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
+        textView.setLayoutParams(new FrameLayout.LayoutParams(width, width));
+        scrollView.setLayoutParams(new RelativeLayout.LayoutParams(width, width));
 
         videoView.setVideoPath(currentIllusion.getAnimation());
 
         handler = new Handler();
 
-        videoView.setOnTouchListener(new View.OnTouchListener() {
+        videoView.setOnTouchListener(new OnSwipeTouchListener(this)  {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (!isVideoBeingTouched) {
@@ -159,9 +163,8 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         imageView.setOnTouchListener(new OnSwipeTouchListener(this) {
             @Override
             public void onSwipeLeft() {
+                scrollView.setVisibility(View.VISIBLE);
                 textView.setVisibility(View.VISIBLE);
-                textView.setMovementMethod(new ScrollingMovementMethod());
-                ScrollingMovementMethod.getInstance();
             }
 
             @Override
@@ -184,6 +187,16 @@ public class IllusionDetailsActivity extends AppCompatActivity {
                 imageView.setVisibility(View.VISIBLE);
                 imageView.setImageResource(currentIllusion.getPicture());
                 textView.setVisibility(View.GONE);
+                scrollView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onClick() {
+                super.onClick();
+                imageView.setVisibility(View.VISIBLE);
+                imageView.setImageResource(currentIllusion.getPicture());
+                textView.setVisibility(View.GONE);
+                scrollView.setVisibility(View.GONE);
             }
         });
 
@@ -243,6 +256,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         category.setText(illusion.getCategory());
         imageView.setImageResource(illusion.getPicture());
         videoView.setVideoPath(illusion.getAnimation());
+        textView.setText(currentIllusion.getDescription());
 
         if (illusion.isfavourite()) {
             setFavourite.setImageResource(R.drawable.ic_unfavourite);
@@ -256,14 +270,11 @@ public class IllusionDetailsActivity extends AppCompatActivity {
             }
         }
 
-        textView.setMovementMethod(new ScrollingMovementMethod());
-        ScrollingMovementMethod.getInstance();
-        textView.setText(currentIllusion.getDescription());
-
         imageView.setVisibility(View.VISIBLE);
-        textView.setVisibility(View.GONE);
         videoView.stopPlayback();
         videoView.setVisibility(View.GONE);
+        textView.setVisibility(View.GONE);
+        scrollView.setVisibility(View.GONE);
     }
 
     /**

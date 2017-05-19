@@ -71,7 +71,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         listIllusions = realm.where(Illusion.class).findAll();
 
         DisplayMetrics display = this.getResources().getDisplayMetrics();
-        itemSize = display.widthPixels/3;
+        itemSize = display.widthPixels / 3;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.top_toolbar_all);
         if (toolbar != null) {
@@ -108,7 +108,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         };
 
         gridView.setOnItemClickListener(onItemClickListener);
-        gridView.setColumnWidth(itemSize+itemSize/4);
+        gridView.setColumnWidth(itemSize + itemSize / 4);
 
         adapter = new ListAdapter(this, fillMap(listIllusions), itemSize);
         final ExpandableListView listView = (ExpandableListView) findViewById(R.id.id_list_view);
@@ -187,7 +187,8 @@ public class AllIllusionsActivity extends AppCompatActivity {
                         Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
                         f.setAccessible(true);
                         f.set(editTextSearch, R.drawable.color_cursor);
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
                     openKeyboard(v);
                 }
                 if (v.getId() == R.id.et_search && !hasFocus && !editTextSearch.isPressed()) {

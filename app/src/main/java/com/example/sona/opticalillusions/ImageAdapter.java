@@ -23,9 +23,10 @@ final class ImageAdapter extends RealmBaseAdapter<Illusion> {
 
     /**
      * Constructor of the image adapter.
-     * @param context of the app
+     *
+     * @param context   of the app
      * @param illusions list of illusions
-     * @param size of the element
+     * @param size      of the element
      */
     ImageAdapter(Context context, OrderedRealmCollection<Illusion> illusions, int size) {
         super(illusions);
@@ -35,9 +36,10 @@ final class ImageAdapter extends RealmBaseAdapter<Illusion> {
 
     /**
      * Returns view of a certain image.
-     * @param position in grid
+     *
+     * @param position    in grid
      * @param convertView view
-     * @param parent view group
+     * @param parent      view group
      * @return view
      */
     @Override

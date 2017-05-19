@@ -13,7 +13,7 @@
     <string name="connect_to_internet">Connect to internet to show animation</string>
     <string name="no_illusions_to_delete">No illusions to delete</string>
     <string name="no_illusions_to_filter">No illusions to filter</string>
-    <string name="info_text1">App for discovering popular optical illusions!</string>
+    <string name="info_text1">Discover popular optical illusions!\nTap on image to see animation.\nSwipe left to see description.\n</string>
     <string name="info_text2">Created by Soňa Leitmanová</string>
     <string name="info_text3">© 2017</string>
 </resources>

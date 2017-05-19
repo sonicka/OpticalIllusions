@@ -25,9 +25,10 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
 
     /**
      * GridElementAdapter constructor
+     *
      * @param context of app
-     * @param list of illusions
-     * @param size of the element
+     * @param list    of illusions
+     * @param size    of the element
      */
     GridElementAdapter(Context context, OrderedRealmCollection<Illusion> list, int size) {
         super(list, true);
@@ -50,7 +51,8 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
 
     /**
      * Creates new view of an item.
-     * @param parent view group
+     *
+     * @param parent   view group
      * @param viewType view type
      * @return void
      */
@@ -62,7 +64,8 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
 
     /**
      * Sets parameters of the view of an item.
-     * @param holder holder
+     *
+     * @param holder   holder
      * @param position in grid
      */
     @Override
@@ -85,6 +88,7 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
 
     /**
      * Returns item id.
+     *
      * @param position in grid
      * @return long
      */
@@ -95,6 +99,7 @@ class GridElementAdapter extends RealmRecyclerViewAdapter<Illusion, RecyclerView
 
     /**
      * Returns number of items in grid.
+     *
      * @return int
      */
     @Override

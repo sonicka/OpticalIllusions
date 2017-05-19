@@ -21,6 +21,7 @@ public class XmlParser extends Activity {
 
     /**
      * Returns list of parsed data.
+     *
      * @return ArrayList
      */
     public ArrayList<Illusion> getList() {
@@ -29,9 +30,10 @@ public class XmlParser extends Activity {
 
     /**
      * Reads an XML file with data used in the app.
+     *
      * @param parser parser
-     * @throws IOException exception thrown when an error occur
-     * @throws XmlPullParserException exception thrown when an error occur
+     * @throws IOException            exception thrown when an error occurs
+     * @throws XmlPullParserException exception thrown when an error occurs
      */
     public void processData(XmlResourceParser parser) throws IOException, XmlPullParserException {
         int eventType = -1;
@@ -53,10 +55,11 @@ public class XmlParser extends Activity {
 
     /**
      * Creates an Illusion object from parsed element in the XML file and saves it into a list.
-     * @param name of the illusion
-     * @param category of the illusion
+     *
+     * @param name        of the illusion
+     * @param category    of the illusion
      * @param description of the illusion
-     * @param animation of the illusion
+     * @param animation   of the illusion
      * @param isFavourite value of the illusion
      */
     private void saveValues(String name, String category, String description, String animation, boolean isFavourite) {

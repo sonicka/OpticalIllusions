@@ -44,15 +44,15 @@ import io.realm.RealmConfiguration;
 
 public class FavouritesActivity extends AppCompatActivity {
 
+    private Illusion draggedIllusion;
     private Realm realm;
     private OrderedRealmCollection<Illusion> favouriteIllusions;
     private RealmHelper helper;
-    private Illusion draggedIllusion;
     private GridView gridView;
     private ImageAdapter adapter;
     private ImageButton removeButton;
-    private EditText editTextSearch;
     private ImageButton searchButton;
+    private EditText editTextSearch;
     private Typeface type;
     private int itemSize;
 
@@ -75,7 +75,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         int width = display.widthPixels;
-        itemSize = width/3;
+        itemSize = width / 3;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.fav_toolbar);
         if (toolbar != null) {
@@ -193,7 +193,8 @@ public class FavouritesActivity extends AppCompatActivity {
                         Field f = TextView.class.getDeclaredField("mCursorDrawableRes");
                         f.setAccessible(true);
                         f.set(editTextSearch, R.drawable.color_cursor);
-                    } catch (Exception ignored) {}
+                    } catch (Exception ignored) {
+                    }
                     openKeyboard(v);
                 }
                 if (v.getId() == R.id.et_search && !hasFocus && !editTextSearch.isPressed()) {
@@ -237,6 +238,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
     /**
      * Shows alert dialog when attempted to delete favourite illusions.
+     *
      * @param deleteMode selected / all illusions to be deleted
      */
     private void showDeleteDialog(final int deleteMode) {
