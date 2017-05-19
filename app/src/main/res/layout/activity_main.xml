@@ -7,25 +7,24 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:weightSum="2.5">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:gravity="bottom"
-            android:scaleType="centerInside"
+            android:layout_width="320dp"
+            android:layout_height="109dp"
+            android:scaleType="fitStart"
             app:srcCompat="@drawable/main_logo" />
 
     </LinearLayout>
@@ -33,38 +32,45 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/buttonStart"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/circle_shape_drawable"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_start" />
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/buttonStart"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/circle_shape_drawable"
+                android:gravity="center"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_start" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
-        android:gravity="top|center"
-        android:orientation="horizontal">
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/buttonInfo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/circle_shape_drawable"
-            android:scaleType="fitStart"
-            android:src="@drawable/ic_info" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top|center"
+            android:orientation="horizontal">
 
+            <ImageButton
+                android:id="@+id/buttonInfo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/circle_shape_drawable"
+                android:scaleType="fitStart"
+                android:src="@drawable/ic_info" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
