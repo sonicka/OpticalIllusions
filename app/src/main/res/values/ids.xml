@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="gridView" type="id">gridView</item>
+    <item name="listView" type="id">listView</item>
+    <item name="bottomNavigation" type="id">bottomNavigation</item>
+    <item name="buttonStart" type="id">buttonStart</item>
+    <item name="buttonInfo" type="id">buttonInfo</item>
+    <item name="buttonFavourites" type="id">buttonFavourites</item>
+    <item name="buttonSwitchToList" type="id">buttonSwitchToList</item>
+    <item name="buttonSwitchToGris" type="id">buttonSwitchToGrid</item>
+    <item name="buttonSearch" type="id">buttonSearch</item>
+    <item name="buttonRemove" type="id">buttonRemove</item>
+    <item name="picture" type="id">picture</item>
+    <item name="gridView2" type="id">gridView2</item>
+    <item name="tv_grid_item" type="id">tv_grid_item</item>
+    <item name="tv_list_item" type="id">tv_list_item</item>
+    <item name="rv_illusion_list" type="id">rv_illusion_list</item>
+    <item name="rv_illusion_grid" type="id">rv_illusion_grird</item>
+    <item name="tv_view_holder_instance" type="id">view_holder_instance</item>
+    <item name="item_click_support" type="id" />
+    <item name="fr_illusions_view" type="id">fr_illusions_view</item>
+    <item name="ll1" type="id">ll1</item>
+</resources>

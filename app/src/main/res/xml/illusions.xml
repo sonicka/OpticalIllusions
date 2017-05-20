@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<illusions>
+    <illusion
+        name="Cafe Wall Illusion"
+        category="Geometric Illusions"
+        description="Are the grey lines parallel or sloped?\n\nPerfectly parallel lines look sloped, because different types of neurons react to the perception of dark and light colors. Because of the given placement of the dark and light tiles, different parts of the lines are dimmed or brightened in the retina. Where there is a brightness contrast, a small scale asymmetry occurs whereby half the dark and light tiles move toward each other forming small wedges. These little wedges are then integrated into long wedges with the brain interpreting the line as a sloping one."
+        thumb="thumb_cafewall"
+        pic="big_cafewall"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_cafe_wall_small.mp4"/>
+
+    <illusion
+        name="Color Difference 1"
+        category="Color Illusions"
+        description="Are those two circles of different or the same color gradient?\n\nAlthough it doesn’t seem like true, the circles have the same color gradient. The crucial role in explaining this effect has the fact, that when the brain interprets the perceived color, it takes into account the surroundings. Therefore when the color gradient around one circle is lighter, the circle appears to be darker than the other one surrounded by darker part of the gradient. The animation shows how the perceived color of the circles looks like it is changing during the movement although it remains constant over the time."
+        thumb="thumb_colordifference1"
+        pic="big_colordifference1"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_color_difference1_small.mp4"/>
+
+    <illusion
+        name="Color Difference 2"
+        category="Color Illusions"
+        description="Which part of the object is darker?\n\nThis illusion works with the way human visual system deals with shadows. When attempting to determine the color of a surface, the brain knows that shadows are misleading and they make surfaces look darker than they actually are. It is compensated by interpreting shadowy surfaces as being lighter than they technically appear to the eye. Therefore as the bottom part appears to be tilted towards the ground and logically getting less light landing on its surface, it is perceived as lighter than the top part. The effect is enhanced by the colors used in the middle, by which we assume the actual color of both parts to be white and dark grey, although they are of the same color."
+        thumb="thumb_colordifference2"
+        pic="big_colordifference2"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_color_difference2_small.mp4"/>
+
+    <illusion
+        name="Ebbinghaus Illusion"
+        category="Size Illusions"
+        description="Which green circle is larger?\n\nThe illusion is based on the fact that the visual-attention system uses context to determine the size of objects. The green circle on the left is surrounded by larger circles, making it seem small by comparison and on the other hand, the one on the right is surrounded by smaller circles, which make it seem big. In fact, both of them have the exact same size. An interesting thing is that this context-based perception is developed during person’s lifetime, which result in the fact that young children are rarely fooled by this illusion."
+        thumb="thumb_ebbinghaus"
+        pic="big_ebbinghaus"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_ebbinghaus_small.mp4"/>
+
+    <illusion
+        name="Hering Illusion"
+        category="Geometric Illusions"
+        description="Are the green lines bowing outwards?\n\nThe perfectly straight vertical lines appear to bow outwards. German physiologist Ewald Hering ascribed this effect to our brains overestimating the angle made at the points of intersection between the radiating lines and the green ones. Researcher Mark Changizi believes that it has something to do with the human tendency to visually predict the near future. He says that The converging lines toward a vanishing point (the spokes) are cues that trick our brains into thinking we are moving forward as we would in the real world, where the door frame (a pair of vertical lines) seems to bow out as we move through it and we try to perceive what that world will look like in the next instant."
+        thumb="thumb_hering"
+        pic="big_hering"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_hering_small.mp4"/>
+
+    <illusion
+        name="Hermann Grid Illusion"
+        category="Fictional Illusions"
+        description="How many dark spots do you see?\n\nNo dark spots are in there and the illusory appearance of them is often explained by a neural process called lateral inhibition. The perception of the viewed point is not only result of a single receptor, but also the group of receptors responding to stimuli in the receptive field around the point. The intersections of white lines appear to be more illuminated than other parts of white lines since they are surrounded by more white space, so that the brain visually balances the luminosity by darkening the intersections. However this theory is not completely proved, since the effect is inhibited when for example the lines are wavy."
+        thumb="thumb_hermanngrid"
+        pic="big_hermanngrid"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_hermann_grid_small.mp4"/>
+
+    <illusion
+        name="Illusory Contours"
+        category="Fictional Illusions"
+        description="Do you see a star?\n\nThere is none, but the brain makes you see it due to the way how we see objects. We perceive edges not only by interpreting light differences, but also by using various other clues. It is so, because in real world eye often receives noisy inputs and in order to obtain a compact visual information, the brain completes the missing contours caused by lighting, shading, or occlusion. That’s why you see familiar shapes in this type of illusions, because it makes more sense to brain to see those, instead of a bunch of Pac-men and random lines."
+        thumb="thumb_illusorycontours"
+        pic="big_illusorycontours"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_illusorycontours_small.mp4"/>
+
+    <illusion
+        name="Impossible Stairs"
+        category="3D Illusions"
+        description="What’s wrong with this staircase?\n\nAlso called Penrose stairs, this illusion represents a staircase, which forms a continuous loop by making four 90-degree turns as they ascend and descend. That would make a person to climb them forever and never get any higher. This phenomenon is impossible in real 3-dimensional world, but as you lose one dimension by moving the object into an image, you can easily simulate connection between edges which would not overlap in real world."
+        thumb="thumb_stairs"
+        pic="big_stairs"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_stairs_small.mp4"/>
+
+    <illusion
+        name="Impossible Triangle"
+        category="3D Illusions"
+        description="What’s wrong with this triangle?\n\nPenrose triangle as well as other impossible objects (see also Impossible Stairs) can be physiologically explained by the fact that there are more levels of vision processing in the brain. There are cells responsive exclusively to vertical/horizontal lines, or corners, or points of light. Taking it all together, brain can determine that it is, for example, seeing a triangle. Global consistency is therefore more important than overall consistency, so that the brain sees the solid object even though it’s not possible to construct it the exact way it is perceived."
+        thumb="thumb_triangle"
+        pic="big_triangle"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_triangle_small.mp4"/>
+
+    <illusion
+        name="Jastrow Illusion"
+        category="Size Illusions"
+        description="Which object is larger?\n\nAlthough this illusions may look simple, it is not actually fully understood by scientists. It has something to do with brain evaluate the size of an object relative to the nearby one. The fact that the shorter side of one figure is next to the longer side of the other somehow tricks the brain into perceiving one shape as longer and the other as shorter, although it is unclear why this is so. The irregular shapes and the skewed ends certainly play role in enhancing the effect."
+        thumb="thumb_jastrow"
+        pic="big_jastrow"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_jastrow_small.mp4"/>
+
+    <illusion
+        name="Motion Illusion"
+        category="Fictional Illusions"
+        description="Is the image moving?\n\nNo, it is a still, motionless picture. This type of illusions are affected by the use of complementary colors with strong contrast and the deformation which makes it look three-dimensional. The black and white border of each oval enhances the perceived depth of the picture. There's no solid explanation for this effect, but some visual scientists think it has to do with fixation jitter: involuntary eye movements that give the illusion that objects near what you're fixated on are moving. Others think that when you glance around the image, motion detectors in your brain get 'confused' by dynamical changes in neurons, and think you're seeing movements."
+        thumb="thumb_motion"
+        pic="big_motion"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_motion_small.mp4"/>
+
+    <illusion
+        name="Munker Illusion"
+        category="Color Illusions"
+        description="Which green stripe is darker?\n\nEven though you already know, that the stripes are of the color, it’s still hard to look at the picture and not see the illusory difference in the shade. That’s because the way how brain processes colors depends on the context in which the colors are seen. It’s still not fully understood, but the most common theory suggests, that it has to do with so-called simultaneous contrast effect, according to which adjacent colors affect perception of each other and that the total luminosity emitted is combined, therefore the stripe between white lines appears to be lighter than the green-black one."
+        thumb="thumb_munker"
+        pic="big_munker"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_munker_small.mp4"/>
+
+    <illusion
+        name="Müller-Lyer Illusion"
+        category="Size Illusions"
+        description="Which line is longer?\n\nThe simplest explanations for this effect is that the bottom line appears longer because the arrowheads extensions make the eyes move a greater distance from end to end. Another explanation suggests that the endings make the observer feel as if the central line were being either stretched or compressed. There is also a theory which compares the lines to corners in perspective – the “longer” line is perceived as an “inside corner”, that is usually further away from us, and when we see an “outside corner”, it is closer to us. Therefore the more distant object must be longer."
+        thumb="thumb_mullerlyer"
+        pic="big_mullerlyer"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_muller_lyer_small.mp4"/>
+
+    <illusion
+        name="Necker Cube"
+        category="3D Illusions"
+        description="Where is the front side of the cube?\n\nIt is an ambiguous image, which we perceive as a cube drawn in 2-dimensional space, but it doesn’t provide enough visual information to clearly decide, which side of is in the front – either the lower-left or the upper-right square. It can also appear to be changing while being observed for the same reason and the effect can be intentionally evoked by focusing on the base or the left side of the cube."
+        thumb="thumb_neckercube"
+        pic="big_neckercube"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_necker_cube_small.mp4"/>
+
+    <illusion
+        name="Oppel-Kundt Illusion"
+        category="Size Illusions"
+        description="Is the white space longer than the filled one or the other way around?\n\nThe filled extend appears to be longer than unfilled one and this effect can be compared to a real world example where empty rooms look smaller than furnished one. It is believed that it is caused by brain overestimating the size of the filled space due to the visual noise caused by objects lying within the space. It is one of the oldest and at the same time the least understood geometrical visual illusion."
+        thumb="thumb_oppelkundt"
+        pic="big_oppelkundt"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_oppel_kundt_small.mp4"/>
+
+    <illusion
+        name="Poggendorf Illusion"
+        category="Geometric Illusions"
+        description="Is the line actually all black or black and green?\n\nThis illusion is a result of the perceptual enlargement of acute angles. According to various studies, these angles are overestimated, while obtuse angles are slightly underestimated. This faulty perception result in an assumption that the lower black line is the continuation of the upper line, although the green one is. The crucial role of angles in this illusion is supported by the fact that it doesn’t work with vertical or horizontal lines."
+        thumb="thumb_poggendorf"
+        pic="big_poggendorf"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_poggendorf_small.mp4"/>
+
+    <illusion
+        name="Ponzo Illusion"
+        category="Geometric Illusions"
+        description="Which green line is longer?\n\nThis illusion is a classic example where perception of linear perspective plays a role. Although it’s a flat 2-dimensional image, we tend to look at it as if it was a scene from real 3-dimensional life, so that we interpret the side converging lines as receding into the distance. Therefore the upper line, which is farther away, must be longer that the lower (and nearer to us) for both to produce retinal images of the same size. This explanation is often referred to as the perspective hypothesis."
+        thumb="thumb_ponzo"
+        pic="big_ponzo"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_ponzo_small.mp4"/>
+
+    <illusion
+        name="Rubin Vase Illusion"
+        category="Fictional Illusions"
+        description="Do you see a vase or a pair of faces?\n\nIt is hard for a brain to decide if it is looking at a vase or a pair of faces, since they share the same borders and have too few details. It makes it too ambiguous to determine what it actually depicts. If the scene was in real life, it could be possible to distinguish which part of the image is background and which is the actual object and therefore the brain would know on what it should focus, but since in this case it is too flat and doesn’t indicate any depth, it’s just not possible."
+        thumb="thumb_rubinvase"
+        pic="big_rubinvase"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_rubin_vase_small.mp4"/>
+
+    <illusion
+        name="Vertical-horizontal Illusion"
+        category="Size Illusions"
+        description="Is the vertical line longer than the horizontal one?\n\nThe vertical line appears to be longer although they are of their same size. This illusion is not completely understood yet, but one of the possible explanation is that the inequality between width and height of the visual field of the normal binocular vision causes the difference between perceived lengths. Another theory suggests that the effort needed to move eyes in vertical direction is larger than in horizontal direction, therefore the vertical distance is perceived as larger. The slight changes in the effect can be observed while lines are changing their relative positions, as seen on the given animation."
+        thumb="thumb_verticalhorizontal"
+        pic="big_verticalhorizontal"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_vertical_horizontal_small.mp4"/>
+
+    <illusion
+        name="Zöllner Illusion"
+        category="Geometric Illusions"
+        description="Are those long lines parallel or sloped?\n\nThere is no exact explanation how this illusion works, but most commonly the effect is attributes to the way the brain processes angles. This theory suggests that the brain exaggerates acute angles and underestimates obtuse angles. The brain tries to adjust angles on the transverse lines that in the end created the slanting effect on the longer lines. Another theory suggests, that the illusion may be caused by an impression of depth. The angles of the shorter lines create impression that one end of the longer lines is nearer to the viewer than the other."
+        thumb="thumb_zollner"
+        pic="big_zollner"
+        animation="http://www.sonaleitmanova.esy.es/vids/mp4_zollner_small.mp4"/>
+</illusions>
