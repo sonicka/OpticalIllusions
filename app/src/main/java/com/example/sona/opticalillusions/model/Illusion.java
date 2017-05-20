@@ -95,7 +95,7 @@ public class Illusion extends RealmObject implements Parcelable {
         return animation;
     }
 
-    public boolean isfavourite() {
+    public boolean isFavourite() {
         return isFavourite;
     }
 

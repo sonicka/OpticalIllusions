@@ -31,6 +31,11 @@ import java.util.Stack;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+/**
+ * This activity shows details about an illusion.
+ * Created by Soňa on 04-Apr-17.
+ */
+
 public class IllusionDetailsActivity extends AppCompatActivity {
 
     private Illusion currentIllusion;
@@ -258,7 +263,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         videoView.setVideoPath(illusion.getAnimation());
         textView.setText(currentIllusion.getDescription());
 
-        if (illusion.isfavourite()) {
+        if (illusion.isFavourite()) {
             setFavourite.setImageResource(R.drawable.ic_unfavourite);
         } else {
             setFavourite.setImageResource(R.drawable.ic_favourite);

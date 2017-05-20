@@ -70,8 +70,6 @@ class RealmHelper {
                 .contains("name", search.toString(), Case.INSENSITIVE)
                 .or()
                 .contains("category", search.toString(), Case.INSENSITIVE)
-                .or()
-                .contains("description", search.toString(), Case.INSENSITIVE)
                 .findAll();
     }
 
@@ -94,8 +92,6 @@ class RealmHelper {
                     .contains("name", search.toString(), Case.INSENSITIVE)
                     .or()
                     .contains("category", search.toString(), Case.INSENSITIVE)
-                    .or()
-                    .contains("description", search.toString(), Case.INSENSITIVE)
                     .endGroup()
                     .findAll();
         }
@@ -113,7 +109,7 @@ class RealmHelper {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                if (illusion.isfavourite()) {
+                if (illusion.isFavourite()) {
                     ((ImageButton) v).setImageResource(R.drawable.ic_favourite);
                     illusion.setFavourite(false);
                 } else {
