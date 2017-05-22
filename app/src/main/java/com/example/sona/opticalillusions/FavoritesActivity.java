@@ -42,7 +42,7 @@ import io.realm.RealmConfiguration;
  * Created by Soňa on 04-Apr-17.
  */
 
-public class FavouritesActivity extends AppCompatActivity {
+public class FavoritesActivity extends AppCompatActivity {
 
     private Illusion draggedIllusion;
     private Realm realm;
@@ -59,7 +59,7 @@ public class FavouritesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favourites);
+        setContentView(R.layout.activity_favorites);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -88,14 +88,14 @@ public class FavouritesActivity extends AppCompatActivity {
         logo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FavouritesActivity.this, MainActivity.class);
+                Intent intent = new Intent(FavoritesActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
 
         TextView title = (TextView) findViewById(R.id.tv_title);
-        title.setText(R.string.favourites);
+        title.setText(R.string.favorites);
         type = Typeface.createFromAsset(getAssets(), "fonts/Giorgio.ttf");
         title.setTypeface(type);
         title.setGravity(Gravity.CENTER);
@@ -107,7 +107,7 @@ public class FavouritesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Illusion i = (Illusion) parent.getItemAtPosition(position);
-                Intent intent = new Intent(FavouritesActivity.this, IllusionDetailsActivity.class);
+                Intent intent = new Intent(FavoritesActivity.this, IllusionDetailsActivity.class);
                 intent.putExtra("item", i);
                 startActivity(intent);
             }
@@ -153,7 +153,7 @@ public class FavouritesActivity extends AppCompatActivity {
                         break;
                     case DragEvent.ACTION_DROP:
                         realm.beginTransaction();
-                        draggedIllusion.setFavourite(false);
+                        draggedIllusion.setFavorite(false);
                         realm.copyToRealmOrUpdate(draggedIllusion);
                         realm.commitTransaction();
                         draggedIllusion = null;
@@ -171,7 +171,7 @@ public class FavouritesActivity extends AppCompatActivity {
                 if (!favouriteIllusions.isEmpty()) {
                     showDeleteDialog(R.string.delete_text);
                 } else {
-                    Toast.makeText(FavouritesActivity.this, R.string.no_illusions_to_delete, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FavoritesActivity.this, R.string.no_illusions_to_delete, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -211,7 +211,7 @@ public class FavouritesActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter = new ImageAdapter(FavouritesActivity.this, helper.searchInFavourites(s), itemSize);
+                adapter = new ImageAdapter(FavoritesActivity.this, helper.searchInFavourites(s), itemSize);
                 gridView.setAdapter(adapter);
             }
 
@@ -230,7 +230,7 @@ public class FavouritesActivity extends AppCompatActivity {
                     editTextSearch.clearFocus();
                     editTextSearch.requestFocus();
                 } else {
-                    Toast.makeText(FavouritesActivity.this, R.string.no_illusions_to_filter, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FavoritesActivity.this, R.string.no_illusions_to_filter, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -243,16 +243,16 @@ public class FavouritesActivity extends AppCompatActivity {
      */
     private void showDeleteDialog(final int deleteMode) {
         removeButton.setImageResource(R.drawable.ic_delete_open);
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(FavouritesActivity.this, R.style.DialogLight);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(FavoritesActivity.this, R.style.DialogLight);
         View mView = getLayoutInflater().inflate(R.layout.dialog_box, null);
 
         final TextView title = (TextView) mView.findViewById(R.id.tv_delete_title);
         title.setTypeface(type);
-        title.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.green));
+        title.setTextColor(ContextCompat.getColor(FavoritesActivity.this, R.color.green));
 
         final TextView text = (TextView) mView.findViewById(R.id.tv_delete_text);
         text.setText(deleteMode);
-        text.setTextColor(ContextCompat.getColor(FavouritesActivity.this, R.color.black));
+        text.setTextColor(ContextCompat.getColor(FavoritesActivity.this, R.color.black));
 
         ImageButton delete = (ImageButton) mView.findViewById(R.id.b_delete_yes);
         ImageButton cancel = (ImageButton) mView.findViewById(R.id.b_delete_cancel);
@@ -267,11 +267,11 @@ public class FavouritesActivity extends AppCompatActivity {
             public void onClick(View view) {
                 realm.beginTransaction();
                 if (deleteMode == R.string.delete_text) {
-                    for (Illusion i : realm.where(Illusion.class).equalTo("isFavourite", true).findAll()) {
-                        i.setFavourite(false);
+                    for (Illusion i : realm.where(Illusion.class).equalTo("isFavorite", true).findAll()) {
+                        i.setFavorite(false);
                     }
                 } else {
-                    draggedIllusion.setFavourite(false);
+                    draggedIllusion.setFavorite(false);
 
                 }
                 realm.commitTransaction();

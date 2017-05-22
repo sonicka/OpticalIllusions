@@ -20,7 +20,7 @@ public class Illusion extends RealmObject implements Parcelable {
     private int thumbnail;
     private int picture;
     private String animation;
-    private boolean isFavourite;
+    private boolean isFavorite;
 
     /**
      * Empty constructor of illusion object.
@@ -34,14 +34,14 @@ public class Illusion extends RealmObject implements Parcelable {
      * @param category String
      * @param description String
      * @param animation URL String
-     * @param isFavourite boolean
+     * @param isFavorite boolean
      */
-    public Illusion(String name, String category, String description, String animation, boolean isFavourite) {
+    public Illusion(String name, String category, String description, String animation, boolean isFavorite) {
         this.name = name;
         this.category = category;
         this.description = description;
         this.animation = animation;
-        this.isFavourite = isFavourite;
+        this.isFavorite = isFavorite;
     }
 
     /**
@@ -55,7 +55,7 @@ public class Illusion extends RealmObject implements Parcelable {
         thumbnail = in.readInt();
         picture = in.readInt();
         animation = in.readString();
-        isFavourite = in.readByte() != 0;
+        isFavorite = in.readByte() != 0;
     }
 
     /**
@@ -95,12 +95,12 @@ public class Illusion extends RealmObject implements Parcelable {
         return animation;
     }
 
-    public boolean isFavourite() {
-        return isFavourite;
+    public boolean isFavorite() {
+        return isFavorite;
     }
 
-    public void setFavourite(boolean isFavourite) {
-        this.isFavourite = isFavourite;
+    public void setFavorite(boolean isFavourite) {
+        this.isFavorite = isFavourite;
     }
 
     /**
@@ -112,7 +112,7 @@ public class Illusion extends RealmObject implements Parcelable {
         return "Illusion{" + ", name='" + name + '\'' + ", category='" + category + '\'' +
                 ", description='" + description + '\'' + ", thumbnail='" + thumbnail + '\'' +
                 ", picture=" + picture + ", animation='" + animation + '\'' +
-                "is favourite? " + isFavourite + '\'' + '}';
+                "is favorite? " + isFavorite + '\'' + '}';
     }
 
     /**
@@ -143,6 +143,6 @@ public class Illusion extends RealmObject implements Parcelable {
         dest.writeInt(thumbnail);
         dest.writeInt(picture);
         dest.writeString(animation);
-        dest.writeByte((byte) (isFavourite ? 1 : 0));
+        dest.writeByte((byte) (isFavorite ? 1 : 0));
     }
 }

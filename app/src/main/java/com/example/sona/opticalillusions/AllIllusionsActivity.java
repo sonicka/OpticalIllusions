@@ -154,7 +154,7 @@ public class AllIllusionsActivity extends AppCompatActivity {
         favouritesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AllIllusionsActivity.this, FavouritesActivity.class));
+                startActivity(new Intent(AllIllusionsActivity.this, FavoritesActivity.class));
             }
         });
 

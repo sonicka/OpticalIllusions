@@ -263,7 +263,7 @@ public class IllusionDetailsActivity extends AppCompatActivity {
         videoView.setVideoPath(illusion.getAnimation());
         textView.setText(currentIllusion.getDescription());
 
-        if (illusion.isFavourite()) {
+        if (illusion.isFavorite()) {
             setFavourite.setImageResource(R.drawable.ic_unfavourite);
         } else {
             setFavourite.setImageResource(R.drawable.ic_favourite);

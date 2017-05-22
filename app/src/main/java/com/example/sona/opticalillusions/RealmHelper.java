@@ -57,7 +57,7 @@ class RealmHelper {
      * @return collection of favourite illusions
      */
     OrderedRealmCollection<Illusion> getFavourites() {
-        return realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
+        return realm.where(Illusion.class).equalTo("isFavorite", true).findAll();
     }
 
     /**
@@ -81,12 +81,12 @@ class RealmHelper {
     OrderedRealmCollection<Illusion> searchInFavourites(CharSequence search) {
         OrderedRealmCollection<Illusion> illusions;
         if (search == null || search.length() == 0) {
-            illusions = realm.where(Illusion.class).equalTo("isFavourite", true).findAll();
+            illusions = realm.where(Illusion.class).equalTo("isFavorite", true).findAll();
 
         } else {
             illusions = realm.where(Illusion.class)
                     .beginGroup()
-                    .equalTo("isFavourite", true)
+                    .equalTo("isFavorite", true)
                     .endGroup()
                     .beginGroup()
                     .contains("name", search.toString(), Case.INSENSITIVE)
@@ -109,12 +109,12 @@ class RealmHelper {
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                if (illusion.isFavourite()) {
+                if (illusion.isFavorite()) {
                     ((ImageButton) v).setImageResource(R.drawable.ic_favourite);
-                    illusion.setFavourite(false);
+                    illusion.setFavorite(false);
                 } else {
                     ((ImageButton) v).setImageResource(R.drawable.ic_unfavourite);
-                    illusion.setFavourite(true);
+                    illusion.setFavorite(true);
                 }
                 realm.copyToRealmOrUpdate(illusion);
             }
