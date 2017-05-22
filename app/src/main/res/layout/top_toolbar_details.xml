@@ -1,0 +1,55 @@
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_details"
+    android:layout_width="match_parent"
+    android:layout_height="68dp"
+    android:layout_gravity="top"
+    app:contentInsetStart="0dp">
+
+    <ImageButton
+        android:id="@+id/ib_logo"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:adjustViewBounds="true"
+        android:background="@null"
+        android:paddingBottom="7dp"
+        android:paddingStart="7dp"
+        android:paddingTop="7dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_unfilled_logo" />
+
+    <RelativeLayout
+        android:id="@+id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingEnd="12dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:adjustViewBounds="true"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:paddingTop="4dp"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/tv_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/tv_title"
+            android:maxLines="1"
+            android:paddingBottom="4dp"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/green"
+            android:textSize="12dp"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

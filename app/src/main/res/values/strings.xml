@@ -1,6 +1,19 @@
 <resources>
-    <string name="app_name">Optical Illusions</string>
-
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="app_name">Undeceived</string>
+    <string name="categories">Categories of Illusions</string>
+    <string name="preview">Preview of Illusions</string>
+    <string name="about">About</string>
+    <string name="favourites">Favourite Illusions</string>
+    <string name="click_back_again_to_exit">Tap back again to exit</string>
+    <string name="delete_text">Do you want to delete all favourite illusions?</string>
+    <string name="delete_text2">Do you want to remove this illusion from favourites?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="animation_loading">Animation is loading</string>
+    <string name="connect_to_internet">Connect to internet to show animation</string>
+    <string name="no_illusions_to_delete">No illusions to delete</string>
+    <string name="no_illusions_to_filter">No illusions to filter</string>
+    <string name="info_text1">Discover popular optical illusions!\nTap on image to see animation.\nSwipe left to see description.\n</string>
+    <string name="info_text2">Created by Soňa Leitmanová</string>
+    <string name="info_text3">© 2017</string>
 </resources>
