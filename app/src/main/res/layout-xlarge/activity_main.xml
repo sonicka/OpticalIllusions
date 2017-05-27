@@ -23,7 +23,6 @@
 
 
             <ImageView
-                android:id="@+id/imageView"
                 android:layout_width="720dp"
                 android:layout_height="244dp"
                 android:layout_gravity="center_horizontal"

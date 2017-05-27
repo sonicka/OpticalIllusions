@@ -21,7 +21,6 @@
             android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/imageView"
             android:layout_width="320dp"
             android:layout_height="109dp"
             android:scaleType="fitStart"
